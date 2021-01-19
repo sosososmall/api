@@ -2,13 +2,24 @@ package com.pokerstar.api.domain.service.channel;
 
 import com.pokerstar.api.domain.dto.channel.ChannelDTO;
 import com.pokerstar.api.domain.entity.channel.Channel;
+import com.pokerstar.api.domain.model.channel.ChannelIpBO;
+import com.pokerstar.api.domain.model.channel.ChannelRateBO;
+import com.pokerstar.api.domain.model.channel.ChannelUrlBO;
 
 import java.util.List;
 
 public interface IChannelService {
-    List<ChannelDTO> getChannels();
+    boolean addChannel(Channel channel);
+
+    boolean deleteChannel(int channelId);
 
     List<ChannelDTO> getChannels(int index, int pageSize);
 
-    int addChannel(Channel channel);
+    boolean enableChannel(int channelId);
+
+    boolean updateChannelRateInfo(ChannelRateBO param);
+
+    boolean updateChannelIp(ChannelIpBO param);
+
+    boolean updateChannelUrl(ChannelUrlBO param);
 }

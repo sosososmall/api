@@ -33,5 +33,11 @@ public class ChannelDTO implements Serializable {
 
     private  String supportCountry;
 
+    private String ip;
+
+    private int createTime;
+
+    private int lastUpdateTime;
+
     private  String remark;
 }

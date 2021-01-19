@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.country.CountryMapper">
+    <insert id="addCountry" parameterType="com.pokerstar.api.domain.entity.country.Country"
+            useGeneratedKeys="true" keyColumn="country_id" keyProperty="country_id">
+        insert into country
+            (country_cn_name,country_eg_name,country_iso_code,country_sort)
+        values
+            (#{country_cn_name},#{country_eg_name},#{country_iso_code},#{country_sort})
+    </insert>
+
+</mapper>

@@ -34,5 +34,11 @@ public class Channel implements Serializable {
 
     private BigDecimal channel_withdraw_rate;
 
+    private String channel_ip;
+
+    private int channel_create_time;
+
+    private int channel_last_update_time;
+
     private  String channel_remark;
 }
