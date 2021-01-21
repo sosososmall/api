@@ -1,32 +1,40 @@
 package com.pokerstar.api;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokerstar.api.domain.entity.country.Country;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
+import com.pokerstar.api.infrastructure.entity.Result;
+import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import com.pokerstar.api.infrastructure.util.HttpUtil;
+import org.asynchttpclient.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+import sun.security.timestamp.Timestamper;
+
+import java.security.Timestamp;
+import java.time.*;
 import java.util.Iterator;
 
 @SpringBootTest
 class ApiApplicationTests {
+
+    private static Logger Log = LoggerFactory.getLogger(ApiApplication.class);
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void contextLoads() {
     }
 
     public static void main(String[] args) {
-
+        //initCountry();
     }
 
     /**
@@ -65,8 +73,14 @@ class ApiApplicationTests {
                     country.setCountry_sort(0);
 
                     json = mapper.writeValueAsString(country);
-                    sendPost(url, json);
+//                    json = HttpUtil.sendPostAsync(url, json);
+//                    System.out.println("print post result:" + json);
+//                    Log.debug("post result:", json);
+//                    Result result = mapper.readValue(json, Result.class);
+//                    Log.debug("post result code:", result.getCode());
+                    HttpUtil.sendPost(url, json);
                 } catch (Exception ex) {
+                    Log.debug("error ????:", ex);
                     continue;
                 }
 
@@ -77,45 +91,9 @@ class ApiApplicationTests {
         }
     }
 
-    private static String sendPost(String url, String param) throws Exception {
-
-        try {
-            HttpClient client = HttpClients.createDefault();
-            HttpPost post = new HttpPost(url);
-
-            //添加请求头
-            post.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36");
-            post.setHeader("Content-type", "application/json");
-
-            StringEntity entity = new StringEntity(param, "UTF-8");
-            post.setEntity(entity);
-
-            HttpResponse response = client.execute(post);
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + post.getEntity());
-            System.out.println("Response Code : " +
-                    response.getStatusLine().getStatusCode());
-
-            BufferedReader rd = new BufferedReader(
-                    new InputStreamReader(response.getEntity().getContent()));
-
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-
-            System.out.println(result.toString());
-            return result.toString();
-        } catch (Exception ex) {
-            System.out.println(ex.getCause());
-            return null;
-        }
-    }
-
-    private static String concatSpecStr(String [] source) {
+    private static String concatSpecStr(String[] source) {
         StringBuilder sb = new StringBuilder(64);
-        for (int i = 2; i< source.length; i++) {
+        for (int i = 2; i < source.length; i++) {
             sb.append(source[i]).append(" ");
         }
         sb.deleteCharAt(sb.length() - 1);
