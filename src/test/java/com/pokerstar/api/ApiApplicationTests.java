@@ -96,6 +96,9 @@ class ApiApplicationTests {
         return sb.toString();
     }
 
+    /**
+     * 初始化 country 表 货币信息 有些国家因为翻译问题或者叫法不同没对应上的手工补上
+     */
     private static void initCurrency() {
         try {
             Document doc = Jsoup.connect("https://www.iban.hk/currency-codes").timeout(10000).get();
