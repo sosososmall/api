@@ -4,4 +4,6 @@ import com.pokerstar.api.domain.entity.country.Country;
 
 public interface ICountryDao {
     int addCountry(Country entity);
+
+    int updateCountryCurrency(Country entity);
 }

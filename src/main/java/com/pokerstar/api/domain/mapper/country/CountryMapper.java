@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CountryMapper {
     boolean addCountry(Country entity);
+
+    int updateCountryCurrency(Country entity);
 }

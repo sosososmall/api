@@ -29,4 +29,15 @@ public class CountryController {
         }
     }
 
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/initCurrency")
+    public Result initCurrency(@RequestBody Country country) {
+        try {
+            return Result.success(countryService.updateCountryCurrency(country));
+        } catch (Exception ex) {
+            Log.error("ChannelController initCurrency error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
 }

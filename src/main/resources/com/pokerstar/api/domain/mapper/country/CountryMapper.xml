@@ -12,4 +12,13 @@
             (#{country_cn_name},#{country_eg_name},#{country_iso_code},#{country_sort})
     </insert>
 
+    <update id="updateCountryCurrency" parameterType="com.pokerstar.api.domain.entity.country.Country">
+        update country set
+            country_currency_name = #{country_currency_name},
+            country_currency_iso_code = #{country_currency_iso_code},
+            country_currency_code = #{country_currency_code}
+        where
+            country_cn_name = #{country_cn_name}
+    </update>
+
 </mapper>

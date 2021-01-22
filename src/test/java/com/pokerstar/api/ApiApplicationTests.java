@@ -20,7 +20,9 @@ import sun.security.timestamp.Timestamper;
 
 import java.security.Timestamp;
 import java.time.*;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 @SpringBootTest
 class ApiApplicationTests {
@@ -34,6 +36,7 @@ class ApiApplicationTests {
     }
 
     public static void main(String[] args) {
+        initCurrency();
         //initCountry();
     }
 
@@ -73,18 +76,11 @@ class ApiApplicationTests {
                     country.setCountry_sort(0);
 
                     json = mapper.writeValueAsString(country);
-//                    json = HttpUtil.sendPostAsync(url, json);
-//                    System.out.println("print post result:" + json);
-//                    Log.debug("post result:", json);
-//                    Result result = mapper.readValue(json, Result.class);
-//                    Log.debug("post result code:", result.getCode());
                     HttpUtil.sendPost(url, json);
                 } catch (Exception ex) {
                     Log.debug("error ????:", ex);
                     continue;
                 }
-
-
             }
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
@@ -98,5 +94,47 @@ class ApiApplicationTests {
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    private static void initCurrency() {
+        try {
+            Document doc = Jsoup.connect("https://www.iban.hk/currency-codes").timeout(10000).get();
+            Elements elements = doc.select("table[class=table table-bordered downloads tablesorter]").select("tr");
+            elements.remove(0);
+            Iterator<Element> iterator = elements.iterator();
+
+            String[] str;
+
+            String url = "http://192.168.2.132:8080/country/initCurrency";
+
+            Set<String> s = new HashSet<>(280);
+            while (iterator.hasNext()) {
+                Element el = iterator.next();
+                try {
+                    Elements els = el.getElementsByTag("td");
+                    Country country;
+                    String json;
+
+                    String cnName = els.get(0).text().trim();
+                    if(s.contains(cnName)) {
+                        continue;
+                    }
+                    s.add(cnName);
+                    country = new Country();
+                    country.setCountry_cn_name(cnName);
+                    country.setCountry_currency_name(els.get(1).text().trim());
+                    country.setCountry_currency_iso_code(els.get(2).text().trim());
+                    country.setCountry_currency_code(els.get(3).text().trim());
+
+                    json = mapper.writeValueAsString(country);
+                    HttpUtil.sendPost(url, json);
+                } catch (Exception ex) {
+                    Log.debug("error ????:", ex);
+                    continue;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
     }
 }

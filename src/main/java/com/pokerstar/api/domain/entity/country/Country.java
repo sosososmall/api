@@ -16,6 +16,12 @@ public class Country implements Serializable {
 
     private String country_iso_code;
 
+    private String country_currency_name;
+
+    private String country_currency_iso_code;
+
+    private String country_currency_code;
+
     private int country_sort;
 
     private String country_remark;
