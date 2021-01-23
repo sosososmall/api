@@ -22,4 +22,9 @@ public class CountryDaoImpl implements ICountryDao {
     public int updateCountryCurrency(Country entity) {
        return countryMapper.updateCountryCurrency(entity);
     }
+
+    @Override
+    public int updateCountryCurrencyRate(Country entity) {
+        return countryMapper.updateCountryCurrencyRate(entity);
+    }
 }

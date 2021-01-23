@@ -6,4 +6,6 @@ public interface ICountryDao {
     int addCountry(Country entity);
 
     int updateCountryCurrency(Country entity);
+
+    int updateCountryCurrencyRate(Country entity);
 }

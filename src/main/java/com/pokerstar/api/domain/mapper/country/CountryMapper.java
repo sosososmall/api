@@ -8,4 +8,6 @@ public interface CountryMapper {
     boolean addCountry(Country entity);
 
     int updateCountryCurrency(Country entity);
+
+    int updateCountryCurrencyRate(Country entity);
 }

@@ -6,6 +6,7 @@ import com.pokerstar.api.domain.entity.country.Country;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import com.pokerstar.api.infrastructure.util.HttpUtil;
+import com.pokerstar.api.infrastructure.util.PropertyUtil;
 import org.asynchttpclient.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,11 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import sun.security.timestamp.Timestamper;
 
+import java.math.BigDecimal;
 import java.security.Timestamp;
 import java.time.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SpringBootTest
 class ApiApplicationTests {
@@ -36,14 +40,19 @@ class ApiApplicationTests {
     }
 
     public static void main(String[] args) {
-        initCurrency();
-        //initCountry();
+        String host = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.address");
+        String port = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.port");
+        String apiHost = "http://" + host + ":" + port;
+
+        updateCurrencyExchangeRate(apiHost);
+        //initCurrency(domain);
+        //initCountry(domain);
     }
 
     /**
      * 初始化 country 表
      */
-    private static void initCountry() {
+    private static void initCountry(String domain) {
         try {
             Document doc = Jsoup.connect("http://www.jctrans.com/tool/gjym.htm").timeout(10000).get();
             Elements elements = doc.select("table[align=center]").get(3).select("tr");
@@ -53,7 +62,7 @@ class ApiApplicationTests {
             String[] str;
             ObjectMapper mapper = new ObjectMapper();
 
-            String url = "http://192.168.2.132:8080/country/addCountry";
+            String url = domain + "/country/addCountry";
 
             while (iterator.hasNext()) {
                 Element el = iterator.next();
@@ -99,7 +108,7 @@ class ApiApplicationTests {
     /**
      * 初始化 country 表 货币信息 有些国家因为翻译问题或者叫法不同没对应上的手工补上
      */
-    private static void initCurrency() {
+    private static void initCurrency(String domain) {
         try {
             Document doc = Jsoup.connect("https://www.iban.hk/currency-codes").timeout(10000).get();
             Elements elements = doc.select("table[class=table table-bordered downloads tablesorter]").select("tr");
@@ -108,7 +117,7 @@ class ApiApplicationTests {
 
             String[] str;
 
-            String url = "http://192.168.2.132:8080/country/initCurrency";
+            String url = domain + "/country/initCurrency";
 
             Set<String> s = new HashSet<>(280);
             while (iterator.hasNext()) {
@@ -119,7 +128,7 @@ class ApiApplicationTests {
                     String json;
 
                     String cnName = els.get(0).text().trim();
-                    if(s.contains(cnName)) {
+                    if (s.contains(cnName)) {
                         continue;
                     }
                     s.add(cnName);
@@ -128,6 +137,46 @@ class ApiApplicationTests {
                     country.setCountry_currency_name(els.get(1).text().trim());
                     country.setCountry_currency_iso_code(els.get(2).text().trim());
                     country.setCountry_currency_code(els.get(3).text().trim());
+
+                    json = mapper.writeValueAsString(country);
+                    HttpUtil.sendPost(url, json);
+                } catch (Exception ex) {
+                    Log.debug("error ????:", ex);
+                    continue;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getStackTrace());
+        }
+    }
+
+    /**
+     * 更新汇率  脚本每日定时更新汇率  初次更新完缺少信息的 币种没对应上，根据此代码修改币种iso code
+     */
+    private static void updateCurrencyExchangeRate(String domain) {
+        try {
+            Document doc = Jsoup.connect("https://huobiduihuan.bmcx.com/").timeout(10000).get();
+            Elements elements = doc.select("div[id=main_content]").select("table").get(2).select("tr");
+            elements.remove(0);
+            Iterator<Element> iterator = elements.iterator();
+
+            String[] str;
+
+            String url = domain + "/country/updateCurrencyRate";
+
+            while (iterator.hasNext()) {
+                Element el = iterator.next();
+                try {
+                    Elements els = el.getElementsByTag("td");
+                    Country country;
+                    String json;
+                    String[] source = els.get(0).select("a").text().split(" ");
+
+                    String datetime = els.get(1).text();
+                    country = new Country();
+                    country.setCountry_currency_iso_code(source[2].replace("(", "").replace(")", ""));
+                    country.setCountry_currency_latest_exchange_rate(BigDecimal.valueOf(Double.parseDouble(source[0])));
+                    country.setCountry_currency_rate_update_time(DateTimeUtil.getDateTimeTimestamp(LocalDateTime.parse(datetime, DateTimeUtil.dateTimeFormatter)));
 
                     json = mapper.writeValueAsString(country);
                     HttpUtil.sendPost(url, json);

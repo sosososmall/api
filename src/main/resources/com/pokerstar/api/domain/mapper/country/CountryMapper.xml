@@ -21,4 +21,13 @@
             country_cn_name = #{country_cn_name}
     </update>
 
+    <update id="updateCountryCurrencyRate" parameterType="com.pokerstar.api.domain.entity.country.Country">
+        update country set
+            country_currency_latest_exchange_rate = #{country_currency_latest_exchange_rate},
+            country_currency_rate_update_time = #{country_currency_rate_update_time},
+            country_currency_update_time = #{country_currency_update_time}
+        where
+            country_currency_iso_code = #{country_currency_iso_code}
+    </update>
+
 </mapper>

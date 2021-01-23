@@ -6,4 +6,6 @@ public interface ICountryService {
     boolean addCountry(Country entity);
 
     boolean updateCountryCurrency(Country entity);
+
+    boolean updateCountryCurrencyRate(Country entity);
 }

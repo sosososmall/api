@@ -4,6 +4,7 @@ import com.pokerstar.api.domain.entity.country.Country;
 import com.pokerstar.api.domain.service.country.ICountryService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
+import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,19 @@ public class CountryController {
             return Result.success(countryService.updateCountryCurrency(country));
         } catch (Exception ex) {
             Log.error("ChannelController initCurrency error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/updateCurrencyRate")
+    public Result updateCurrencyRate(@RequestBody Country country) {
+        try {
+            country.setCountry_currency_update_time(DateTimeUtil.getCurrentSecondTimestamp());
+            return Result.success(countryService.updateCountryCurrencyRate(country));
+        } catch (Exception ex) {
+            Log.error("ChannelController updateCurrencyRate error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
         }
     }

@@ -21,4 +21,9 @@ public class CountryServiceImpl implements ICountryService {
     public boolean updateCountryCurrency(Country entity) {
         return countryDao.updateCountryCurrency(entity) > 0;
     }
+
+    @Override
+    public boolean updateCountryCurrencyRate(Country entity) {
+        return countryDao.updateCountryCurrencyRate(entity) > 0;
+    }
 }

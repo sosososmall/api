@@ -66,4 +66,13 @@ public class DateTimeUtil {
         Instant instant = Instant.ofEpochMilli(timestamp);
         return LocalDateTime.ofInstant(instant, ZoneOffset.of("+8"));
     }
+
+    /**
+     * 获取指定时间 秒级时间戳 11位
+     * @param dateTime
+     * @return
+     */
+    public static long getDateTimeTimestamp(LocalDateTime dateTime) {
+        return dateTime.atZone(ZoneOffset.of("+8")).toEpochSecond();
+    }
 }
