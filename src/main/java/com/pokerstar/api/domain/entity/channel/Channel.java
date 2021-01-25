@@ -24,15 +24,13 @@ public class Channel implements Serializable {
 
     private boolean channel_status;
 
-    private  String channel_support_country;
+    private  String channel_support_country_cn_name;
 
-    private int channel_deduct_deposit_amount;
+    private  String channel_support_country_eg_name;
 
-    private int channel_deduct_withdraw_amount;
+    private  String channel_support_country_iso_code;
 
-    private BigDecimal channel_deposit_rate;
-
-    private BigDecimal channel_withdraw_rate;
+    private int channel_support_country_id;
 
     private String channel_ip;
 
