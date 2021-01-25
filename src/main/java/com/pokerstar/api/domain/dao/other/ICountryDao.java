@@ -1,6 +1,6 @@
-package com.pokerstar.api.domain.dao.country;
+package com.pokerstar.api.domain.dao.other;
 
-import com.pokerstar.api.domain.entity.country.Country;
+import com.pokerstar.api.domain.entity.other.Country;
 
 public interface ICountryDao {
     int addCountry(Country entity);

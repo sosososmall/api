@@ -1,8 +1,8 @@
-package com.pokerstar.api.domain.serviceimpl.country;
+package com.pokerstar.api.domain.serviceimpl.other;
 
-import com.pokerstar.api.domain.dao.country.ICountryDao;
-import com.pokerstar.api.domain.entity.country.Country;
-import com.pokerstar.api.domain.service.country.ICountryService;
+import com.pokerstar.api.domain.dao.other.ICountryDao;
+import com.pokerstar.api.domain.entity.other.Country;
+import com.pokerstar.api.domain.service.other.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

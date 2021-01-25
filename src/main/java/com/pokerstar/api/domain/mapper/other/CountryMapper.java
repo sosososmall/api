@@ -1,6 +1,6 @@
-package com.pokerstar.api.domain.mapper.country;
+package com.pokerstar.api.domain.mapper.other;
 
-import com.pokerstar.api.domain.entity.country.Country;
+import com.pokerstar.api.domain.entity.other.Country;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

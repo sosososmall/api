@@ -1,4 +1,4 @@
-package com.pokerstar.api.domain.entity.country;
+package com.pokerstar.api.domain.entity.other;
 
 import lombok.Data;
 

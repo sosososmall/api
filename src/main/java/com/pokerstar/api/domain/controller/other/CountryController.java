@@ -1,7 +1,7 @@
-package com.pokerstar.api.domain.controller.country;
+package com.pokerstar.api.domain.controller.other;
 
-import com.pokerstar.api.domain.entity.country.Country;
-import com.pokerstar.api.domain.service.country.ICountryService;
+import com.pokerstar.api.domain.entity.other.Country;
+import com.pokerstar.api.domain.service.other.ICountryService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;

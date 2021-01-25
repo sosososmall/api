@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pokerstar.api.domain.mapper.country.CountryMapper">
-    <insert id="addCountry" parameterType="com.pokerstar.api.domain.entity.country.Country"
+<mapper namespace="com.pokerstar.api.domain.mapper.other.CountryMapper">
+    <insert id="addCountry" parameterType="com.pokerstar.api.domain.entity.other.Country"
             useGeneratedKeys="true" keyColumn="country_id" keyProperty="country_id">
         insert into country
             (country_cn_name,country_eg_name,country_iso_code,country_sort)
@@ -12,7 +12,7 @@
             (#{country_cn_name},#{country_eg_name},#{country_iso_code},#{country_sort})
     </insert>
 
-    <update id="updateCountryCurrency" parameterType="com.pokerstar.api.domain.entity.country.Country">
+    <update id="updateCountryCurrency" parameterType="com.pokerstar.api.domain.entity.other.Country">
         update country set
             country_currency_name = #{country_currency_name},
             country_currency_iso_code = #{country_currency_iso_code},
@@ -21,7 +21,7 @@
             country_cn_name = #{country_cn_name}
     </update>
 
-    <update id="updateCountryCurrencyRate" parameterType="com.pokerstar.api.domain.entity.country.Country">
+    <update id="updateCountryCurrencyRate" parameterType="com.pokerstar.api.domain.entity.other.Country">
         update country set
             country_currency_latest_exchange_rate = #{country_currency_latest_exchange_rate},
             country_currency_rate_update_time = #{country_currency_rate_update_time},

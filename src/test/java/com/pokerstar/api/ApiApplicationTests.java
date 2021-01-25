@@ -1,13 +1,10 @@
 package com.pokerstar.api;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pokerstar.api.domain.entity.country.Country;
-import com.pokerstar.api.infrastructure.entity.Result;
+import com.pokerstar.api.domain.entity.other.Country;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import com.pokerstar.api.infrastructure.util.HttpUtil;
 import com.pokerstar.api.infrastructure.util.PropertyUtil;
-import org.asynchttpclient.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,16 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import sun.security.timestamp.Timestamper;
 
 import java.math.BigDecimal;
-import java.security.Timestamp;
 import java.time.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @SpringBootTest
 class ApiApplicationTests {

@@ -17,4 +17,12 @@ public class AdminLoginLog implements Serializable {
     private String admin_nick_name;
 
     private int admin_type;
+
+    private String admin_login_log_ip;
+
+    private long admin_login_log_time;
+
+    private boolean admin_login_log_status;
+
+    private String admin_login_log_password;
 }

@@ -1,6 +1,6 @@
-package com.pokerstar.api.domain.service.country;
+package com.pokerstar.api.domain.service.other;
 
-import com.pokerstar.api.domain.entity.country.Country;
+import com.pokerstar.api.domain.entity.other.Country;
 
 public interface ICountryService {
     boolean addCountry(Country entity);
