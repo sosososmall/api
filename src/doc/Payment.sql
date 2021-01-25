@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 25/01/2021 17:06:58
+ Date: 25/01/2021 18:18:14
 */
 
 SET NAMES utf8mb4;
@@ -277,7 +277,7 @@ CREATE TABLE `channel_deposit`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `channel_deposit_merchant`;
 CREATE TABLE `channel_deposit_merchant`  (
-  `channel_deposit_merchant_id` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_deposit_merchant_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商户充值渠道ID',
   `channel_id` int(11) NOT NULL COMMENT '渠道ID',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
   `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
