@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 23/01/2021 18:50:39
+ Date: 25/01/2021 13:54:08
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,6 @@ DROP TABLE IF EXISTS `admin_log`;
 CREATE TABLE `admin_log`  (
   `admin_log_id` bigint(20) NOT NULL,
   `admin_id` int(11) NOT NULL COMMENT '管理员ID',
-  `admin_account` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员名称',
   `admin_nick_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员昵称',
   `admin_type` tinyint(1) NOT NULL COMMENT '账号类型  1-超管  2-普通  3-客服？？',
   `admin_log_operate_method` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作动作',
@@ -121,7 +120,8 @@ CREATE TABLE `agent_balance`  (
   `agent_id` int(11) NOT NULL COMMENT '代理ID',
   `agent_balance_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种iso code',
   `agent_balance_amount` decimal(15, 2) NOT NULL COMMENT '所属币种金额',
-  `agent_balance_freeze_amount` decimal(15, 2) NOT NULL COMMENT '所属币种冻结金额',
+  `agent_balance_amount_withdraw` decimal(15, 2) NULL DEFAULT NULL COMMENT '所属币种提现金额',
+  `agent_balance_amount_freeze` decimal(15, 2) NOT NULL COMMENT '所属币种冻结金额',
   `agent_balance_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`agent_balance_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n代理资金信息表\r\n*/' ROW_FORMAT = Compact;
@@ -182,6 +182,7 @@ CREATE TABLE `agent_withdraw_order`  (
   `agent_real_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '真实姓名',
   `agent_nick_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称',
   `agent_withdraw_order_balance` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现金额',
+  `agent_withdraw_order_balance_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资金币种',
   `agent_withdraw_order_create_time` int(11) NOT NULL COMMENT '申请时间',
   `agent_withdraw_order_status` int(11) NOT NULL DEFAULT 0 COMMENT '当前状态 0=待处理  1=成功  2=驳回  3=通过',
   `admin_id` int(11) NULL DEFAULT NULL COMMENT '管理员ID',
@@ -719,20 +720,20 @@ CREATE TABLE `merchant_deposit_order`  (
   `channel_deposit_merchant_id` int(11) NOT NULL COMMENT '商户支付通道ID',
   `channel_merchant_number` int(11) NOT NULL COMMENT '商户号',
   `channel_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
-  `merchant_deposit_order_merchant_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户订单号',
   `merchant_deposit_order_plat_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台订单号',
   `merchant_deposit_order_channel_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道订单号',
+  `merchant_deposit_order_merchant_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户订单号',
   `merchant_deposit_order_amount` decimal(65, 2) NOT NULL COMMENT '充值金额',
+  `merchant_deposit_order_fee` decimal(15, 2) NOT NULL COMMENT '订单手续费',
   `merchant_deposit_order_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户异步通知地址',
   `merchant_deposit_order_request_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户请求地址',
   `merchant_deposit_order_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种',
   `merchant_deposit_order_merchant_sign` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '签名',
-  `merchant_deposit_order_product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
-  `merchant_deposit_order_desc` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述信息',
-  `merchant_deposit_order_extra` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '额外扩展',
   `merchant_deposit_order_create_time` bigint(14) NOT NULL COMMENT '创建时间',
   `merchant_deposit_order_notify_merchant_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '商户异步通知状态  1=商户收到回调通知并返回成功',
   `merchant_deposit_order_notify_channel_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
+  `merchant_deposit_order_extra` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '额外扩展',
+  `merchant_deposit_order_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_deposit_order_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n充值订单表\r\n*/' ROW_FORMAT = Compact;
 
@@ -764,7 +765,7 @@ CREATE TABLE `merchant_login_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `merchant_withdraw_order`;
 CREATE TABLE `merchant_withdraw_order`  (
-  `merchant_withdraw_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `merchant_withdraw_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
   `channel_id` int(11) NOT NULL COMMENT '渠道ID',
   `channel_short_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
@@ -776,8 +777,11 @@ CREATE TABLE `merchant_withdraw_order`  (
   `merchant_withdraw_order_plat_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台订单号',
   `merchant_withdraw_order_channel_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道订单号',
   `merchant_withdraw_order_amount` decimal(65, 2) NOT NULL COMMENT '提现金额',
+  `merchant_withdraw_order_fee` decimal(15, 2) NOT NULL COMMENT '手续费',
   `merchant_withdraw_order_real_name` varchar(65) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现用户真实姓名',
-  `merchant_withdraw_order_bankcard_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现用户卡号',
+  `merchant_withdraw_order_bank_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现银行代码',
+  `merchant_withdraw_order_bank_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现用户卡号',
+  `merchant_withdraw_order_bank_branch` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '提现银行所在支行',
   `merchant_withdraw_order_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户异步通知地址',
   `merchant_withdraw_order_request_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户请求地址',
   `merchant_withdraw_order_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种',
@@ -785,7 +789,8 @@ CREATE TABLE `merchant_withdraw_order`  (
   `merchant_withdraw_order_create_time` bigint(14) NOT NULL COMMENT '创建时间',
   `merchant_withdraw_order_notify_merchant_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '商户异步通知状态  1=商户收到回调通知并返回成功',
   `merchant_withdraw_order_notify_channel_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
-  PRIMARY KEY (`merchant_withdraw_id`) USING BTREE
+  `merchant_withdraw_order_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`merchant_withdraw_order_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户提现订单信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
