@@ -1,9 +1,7 @@
 package com.pokerstar.api.domain.service.agent;
 
 import com.pokerstar.api.domain.entity.agent.Agent;
-import com.pokerstar.api.domain.entity.agent.AgentBalance;
-import com.pokerstar.api.domain.entity.agent.AgentBalanceLog;
-import com.pokerstar.api.domain.entity.agent.AgentLoginLog;
+import com.pokerstar.api.domain.model.agent.AgentBank;
 
 import java.util.List;
 
@@ -17,4 +15,10 @@ public interface IAgentService {
     int updateAgent(Agent param);
 
     int toggleAgentStatus(int agentId, int status);
+
+    int updateAgentBankInfo(AgentBank param);
+
+    int updateAgentPassword(int agentId, String password);
+
+    int updateAgentWithdrawPassword(int agentId, String withdrawPassword);
 }

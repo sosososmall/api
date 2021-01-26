@@ -5,7 +5,14 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelDepositMapper">
     <insert id="addChannelDeposit" parameterType="com.pokerstar.api.domain.entity.channel.ChannelDeposit">
-
+        insert into channel_deposit_order
+            (channel_id,channel_deposit_type_id,channel_deposit_code,channel_deposit_code_extra,
+            channel_deposit_min_amount,channel_deposit_max_amount,channel_deposit_type_status,
+            channel_deduct_deposit_amount,channel_deposit_rate,channel_deposit_type_remark)
+        values
+            (#{channel_id},#{channel_deposit_type_id},#{channel_deposit_code},#{channel_deposit_code_extra},
+            #{channel_deposit_min_amount},#{channel_deposit_max_amount},#{channel_deposit_type_status},
+            #{channel_deduct_deposit_amount},#{channel_deposit_rate},#{channel_deposit_type_remark})
     </insert>
 
     <delete id="deleteChannelDeposit" parameterType="int">

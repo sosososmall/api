@@ -16,7 +16,7 @@ public interface ChannelWithdrawTypeMapper {
 
     List<ChannelWithdrawType> getAllChannelWithdrawType();
 
-    int updateChannelWithdrawType(ChannelWithdrawType param);
+    List<ChannelWithdrawType> lstChannelWithdrawType(int channelId);
 
-    int toggleChannelWithdrawTypeStatus(@Param("channelWithdrawTypeId") int channelWithdrawTypeId, @Param("status") int status);
+    int updateChannelWithdrawType(ChannelWithdrawType param);
 }

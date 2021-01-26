@@ -4,27 +4,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelWithdrawTypeMapper">
-
-
-    <insert id="addChannelWithdrawType">
-
+    <insert id="addChannelWithdrawType" useGeneratedKeys="true" keyProperty="channel_withdraw_type_id"
+            keyColumn="channel_withdraw_type_id"
+            parameterType="com.pokerstar.api.domain.entity.channel.ChannelWithdrawType">
+        insert into channel_withdraw_type
+            (channel_id,channel_withdraw_type_cn_name,channel_withdraw_type_eg_name,
+            channel_withdraw_type_native_name,channel_withdraw_type_remark)
+        values
+            (#{channel_id},#{channel_withdraw_type_cn_name},#{channel_withdraw_type_eg_name},
+            #{channel_withdraw_type_native_name},#{channel_withdraw_type_remark})
     </insert>
 
     <delete id="deleteChannelWithdrawType">
-
+        delete from channel_withdraw_type where channel_withdraw_type_id = #{channelWithdrawTypeId}
     </delete>
 
     <select id="getAllChannelWithdrawType"
             resultType="com.pokerstar.api.domain.entity.channel.ChannelWithdrawType">
-
+        select * from channel_withdraw_type
     </select>
 
-    <update id="updateChannelWithdrawType">
+    <select id="lstChannelWithdrawType"
+            resultType="com.pokerstar.api.domain.entity.channel.ChannelWithdrawType">
+        select * from channel_withdraw_type where channel_id = #{channelId}
+    </select>
 
+    <update id="updateChannelWithdrawType" parameterType="com.pokerstar.api.domain.entity.channel.ChannelWithdrawType">
+        update channel_withdraw_type set
+            channel_withdraw_type_cn_name = #{channel_withdraw_type_cn_name},
+            channel_withdraw_type_eg_name = #{channel_withdraw_type_eg_name},
+            channel_withdraw_type_native_name = #{channel_withdraw_type_native_name},
+            channel_withdraw_type_remark = #{channel_withdraw_type_remark}
+        where channel_withdraw_type_id = #{channel_withdraw_type_id}
     </update>
-
-    <update id="toggleChannelWithdrawTypeStatus">
-
-    </update>
-
 </mapper>

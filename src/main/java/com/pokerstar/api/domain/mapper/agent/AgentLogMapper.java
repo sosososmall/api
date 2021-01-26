@@ -22,6 +22,4 @@ public interface AgentLogMapper {
     List<AgentLoginLog> getAllAgentLoginLog();
 
     List<AgentBalanceLog> getAllAgentBalanceLog();
-
-    int updateAgentBalance(AgentBalance param);
 }

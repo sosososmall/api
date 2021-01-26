@@ -5,15 +5,24 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.admin.AdminMapper">
     <insert id="addAdmin">
-
+        insert into admin
+            (admin_account,admin_nick_name,admin_password,admin_status,admin_phone,
+            admin_type,admin_white_ip,admin_daily_max_login_fail_count,
+            admin_daily_login_fail_count,admin_max_confirm_withdraw_count,
+            admin_max_confirm_withdraw_amount,admin_create_time,admin_remark)
+        values
+            (#{admin_account},#{admin_nick_name},#{admin_password},#{admin_status},#{admin_phone},
+            #{admin_type},#{admin_white_ip},#{admin_daily_max_login_fail_count},
+            #{admin_daily_login_fail_count},#{admin_max_confirm_withdraw_count},
+            #{admin_max_confirm_withdraw_amount},#{admin_create_time},#{admin_remark})
     </insert>
 
     <delete id="deleteAdmin">
-
+        delete from admin where admin_id = #{adminId}
     </delete>
 
     <select id="getAllAdmin" resultType="com.pokerstar.api.domain.entity.admin.Admin">
-
+        select * from admin
     </select>
 
     <update id="updateAdmin">
@@ -21,6 +30,6 @@
     </update>
 
     <update id="toggleAdminStatus">
-
+        update admin set admin_status = #{status} where admin_id = #{adminId}
     </update>
 </mapper>

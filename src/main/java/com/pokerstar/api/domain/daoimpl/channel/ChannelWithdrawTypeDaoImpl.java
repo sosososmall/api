@@ -32,9 +32,4 @@ public class ChannelWithdrawTypeDaoImpl implements IChannelWithdrawTypeDao {
     public int updateChannelWithdrawType(ChannelWithdrawType param) {
         return channelWithdrawTypeMapper.updateChannelWithdrawType(param);
     }
-
-    @Override
-    public int toggleChannelWithdrawTypeStatus(int channelWithdrawTypeId, int status) {
-        return channelWithdrawTypeMapper.toggleChannelWithdrawTypeStatus(channelWithdrawTypeId, status);
-    }
 }

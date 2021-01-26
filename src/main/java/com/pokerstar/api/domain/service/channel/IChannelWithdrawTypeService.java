@@ -12,6 +12,4 @@ public interface IChannelWithdrawTypeService {
     List<ChannelWithdrawType> getAllChannelWithdrawType();
 
     int updateChannelWithdrawType(ChannelWithdrawType param);
-
-    int toggleChannelWithdrawTypeStatus(int channelWithdrawTypeId, int status);
 }

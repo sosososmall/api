@@ -1,6 +1,5 @@
 package com.pokerstar.api.domain.service.agent;
 
-import com.pokerstar.api.domain.entity.agent.AgentBalance;
 import com.pokerstar.api.domain.entity.agent.AgentBalanceLog;
 import com.pokerstar.api.domain.entity.agent.AgentLoginLog;
 
@@ -18,6 +17,4 @@ public interface IAgentLogService {
     List<AgentLoginLog> getAllAgentLoginLog();
 
     List<AgentBalanceLog> getAllAgentBalanceLog();
-
-    int updateAgentBalance(AgentBalance param);
 }

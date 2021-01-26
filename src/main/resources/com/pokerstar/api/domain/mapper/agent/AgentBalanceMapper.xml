@@ -6,16 +6,28 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.agent.AgentBalanceMapper">
 
     <insert id="addAgentBalance">
-
+        insert into agent_balance
+            (agent_id,agent_balance_currency_iso_code,agent_balance_amount,
+            agent_balance_amount_withdraw,agent_balance_amount_freeze,agent_balance_remark)
+        values
+            (#{agent_id},#{agent_balance_currency_iso_code},#{agent_balance_amount},
+            #{agent_balance_amount_withdraw},#{agent_balance_amount_freeze},#{agent_balance_remark})
     </insert>
 
     <delete id="deleteAgentBalance">
-        
+        delete from agent_balance where agent_balance_id = #{agentBalanceId}
+    </delete>
+
+    <delete id="deleteAgentBalanceByAgentId">
+        delete from agent_balance where agent_id = #{agentId}
     </delete>
 
     <select id="getAllAgentBalance" resultType="com.pokerstar.api.domain.entity.agent.AgentBalance">
-
+        select * from agent_balance
     </select>
 
-    <update id="updateAgentBalance"></update>
+    <update id="updateAgentBalance">
+
+    </update>
+
 </mapper>

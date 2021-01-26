@@ -6,27 +6,42 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelWithdrawMapper">
 
 
-    <insert id="addChannelWithdraw">
-
+    <insert id="addChannelWithdraw" useGeneratedKeys="true" keyColumn="channel_withdraw_id"
+            keyProperty="channel_withdraw_id" parameterType="com.pokerstar.api.domain.entity.channel.ChannelWithdraw">
+        insert into channel_withdraw
+            (channel_id,channel_withdraw_type_id,channel_withdraw_code,channel_withdraw_code_extra,
+            channel_withdraw_min_amount,channel_withdraw_max_amount,channel_withdraw_type_status,
+            channel_deduct_withdraw_amount,channel_withdraw_rate,channel_withdraw_type_remark)
+        values
+            (#{channel_id},#{channel_withdraw_type_id},#{channel_withdraw_code},#{channel_withdraw_code_extra},
+            #{channel_withdraw_min_amount},#{channel_withdraw_max_amount},#{channel_withdraw_type_status},
+            #{channel_deduct_withdraw_amount},#{channel_withdraw_rate},#{channel_withdraw_type_remark})
     </insert>
 
     <delete id="deleteChannelWithdraw">
-
+        delete from channel_withdraw where channel_withdraw_id = #{channelWithdrawId}
     </delete>
 
     <delete id="deleteChannelWithdrawByChannelId">
-
+        delete from channel_withdraw where channel_id = #{channelId}
     </delete>
 
     <select id="getAllChannelWithdraw" resultType="com.pokerstar.api.domain.entity.channel.ChannelWithdraw">
+        select * from channel_withdraw
+    </select>
 
+    <select id="lstChannelWithdraw" resultType="com.pokerstar.api.domain.entity.channel.ChannelWithdraw">
+        select * from channel_withdraw where channel_id = #{channelId}
     </select>
 
     <update id="toggleChannelWithdrawStatus">
-
+        update channel_withdraw set
+            channel_withdraw_type_status = #{status}
+        where channel_withdraw_id = #{channelWithdrawId}
     </update>
 
     <update id="updateChannelWithdraw">
 
     </update>
+
 </mapper>

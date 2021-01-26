@@ -1,6 +1,7 @@
 package com.pokerstar.api.domain.mapper.agent;
 
 import com.pokerstar.api.domain.entity.agent.Agent;
+import com.pokerstar.api.domain.model.agent.AgentBank;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -19,4 +20,10 @@ public interface AgentMapper {
     int updateAgent(Agent param);
 
     int toggleAgentStatus(@Param("agentId") int agentId, @Param("status") int status);
+
+    int updateAgentBankInfo(AgentBank param);
+
+    int updateAgentPassword(@Param("agentId") int agentId, @Param("password") String password);
+
+    int updateAgentWithdrawPassword(@Param("agentId") int agentId, @Param("withdrawPassword") String withdrawPassword);
 }

@@ -18,6 +18,4 @@ public interface IAgentLogDao {
     List<AgentLoginLog> getAllAgentLoginLog();
 
     List<AgentBalanceLog> getAllAgentBalanceLog();
-
-    int updateAgentBalance(AgentBalance param);
 }

@@ -2,6 +2,7 @@ package com.pokerstar.api.domain.serviceimpl.agent;
 
 import com.pokerstar.api.domain.dao.agent.IAgentDao;
 import com.pokerstar.api.domain.entity.agent.Agent;
+import com.pokerstar.api.domain.model.agent.AgentBank;
 import com.pokerstar.api.domain.service.agent.IAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,20 @@ public class AgentServiceImpl implements IAgentService {
     @Override
     public int toggleAgentStatus(int agentId, int status) {
         return agentDao.toggleAgentStatus(agentId, status);
+    }
+
+    @Override
+    public int updateAgentBankInfo(AgentBank param) {
+        return agentDao.updateAgentBankInfo(param);
+    }
+
+    @Override
+    public int updateAgentPassword(int agentId, String password) {
+        return agentDao.updateAgentPassword(agentId, password);
+    }
+
+    @Override
+    public int updateAgentWithdrawPassword(int agentId, String withdrawPassword) {
+        return agentDao.updateAgentWithdrawPassword(agentId, withdrawPassword);
     }
 }

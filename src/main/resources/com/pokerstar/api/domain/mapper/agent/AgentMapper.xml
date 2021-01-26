@@ -7,15 +7,24 @@
 
 
     <insert id="addAgent">
-
+        insert into agent
+            (agent_real_name,agent_nick_name,agent_account,agent_phone,agent_password,
+            agent_withdraw_password,agent_bank_code,agent_bank_card,agent_bank_branch,
+            agent_status,agent_create_time,agent_white_ip,agent_belong,agent_contribution_ratio,
+            agent_daily_max_login_fail_count,agent_daily_login_fail_count,agent_remark)
+        values
+            (#{agent_real_name},#{agent_nick_name},#{agent_account},#{agent_phone},#{agent_password},
+            #{agent_withdraw_password},#{agent_bank_code},#{agent_bank_card},#{agent_bank_branch},
+            #{agent_status},#{agent_create_time},#{agent_white_ip},#{agent_belong},#{agent_contribution_ratio},
+            #{agent_daily_max_login_fail_count},#{agent_daily_login_fail_count},#{agent_remark})
     </insert>
 
     <delete id="deleteAgent">
-
+        delete from agent where agent_id = #{agentId}
     </delete>
 
     <select id="getAllAgent" resultType="com.pokerstar.api.domain.entity.agent.Agent">
-
+        select * from agent
     </select>
 
     <update id="updateAgent">
@@ -23,6 +32,23 @@
     </update>
 
     <update id="toggleAgentStatus">
-
+        update agent set agent_status = #{status} where agent_id = #{agentId}
     </update>
+
+    <update id="updateAgentBankInfo">
+        update agent set
+            agent_bank_code = #{agent_bank_code},
+            agent_bank_card = #{agent_bank_card},
+            agent_bank_branch = #{agent_bank_branch}
+        where admin_id = #{admin_id}
+    </update>
+
+    <update id="updateAgentPassword">
+        update agent set agent_password = #{password} where agent_id = #{agentId}
+    </update>
+
+    <update id="updateAgentWithdrawPassword">
+        update agent set agent_withdraw_password = #{withdrawPassword} where agent_id = #{agentId}
+    </update>
+
 </mapper>

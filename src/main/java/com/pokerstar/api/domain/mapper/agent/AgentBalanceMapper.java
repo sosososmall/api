@@ -13,6 +13,8 @@ public interface AgentBalanceMapper {
 
     int deleteAgentBalance(int agentBalanceId);
 
+    int deleteAgentBalanceByAgentId(int agentId);
+
     List<AgentBalance> getAllAgentBalance();
 
     int updateAgentBalance(AgentBalance param);

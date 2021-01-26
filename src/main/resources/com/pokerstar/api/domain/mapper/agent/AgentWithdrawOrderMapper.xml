@@ -6,23 +6,39 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.agent.AgentWithdrawOrderMapper">
 
     <insert id="addAgentWithdrawOrder">
-
+        insert into agent_withdraw_order
+            (agent_id,agent_real_name,agent_nick_name,agent_withdraw_order_balance,
+            agent_withdraw_order_balance_currency_iso_code,agent_withdraw_order_create_time,
+            agent_withdraw_order_status,admin_id,admin_nick_name,
+            agent_withdraw_order_operate_time,agent_withdraw_order_remark)
+        values
+            (#{agent_id},#{agent_real_name},#{agent_nick_name},#{agent_withdraw_order_balance},
+            #{agent_withdraw_order_balance_currency_iso_code},#{agent_withdraw_order_create_time},
+            #{agent_withdraw_order_status},#{admin_id},#{admin_nick_name},
+            #{agent_withdraw_order_operate_time},#{agent_withdraw_order_remark})
     </insert>
 
     <delete id="deleteAgentWithdrawOrder">
-
+        delete from agent_withdraw_order where agent_withdraw_order_id = #{agentWithdrawOrderId}
     </delete>
 
     <select id="getAllAgentWithdrawOrder"
             resultType="com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder">
-
+        select * from agent_withdraw_order
     </select>
 
     <update id="updateAgentWithdrawOrderStatus">
-
+        update agent_withdraw_order set agent_withdraw_order_status = #{status} where agent_withdraw_order_id = #{agentWithdrawOrderId}
     </update>
 
-    <update id="updateAgentWithdrawOrderOperation">
-
+    <update id="updateAgentWithdrawOrderOperation"
+            parameterType="com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation">
+        update agent_withdraw_order set
+            agent_withdraw_order_status = #{agent_withdraw_order_status},
+            admin_id = #{admin_id},
+            admin_nick_name = #{admin_nick_name},
+            agent_withdraw_order_operate_time = #{agent_withdraw_order_operate_time},
+            agent_withdraw_order_remark = #{agent_withdraw_order_remark}
+        where agent_withdraw_order_id = #{agent_withdraw_order_id}
     </update>
 </mapper>

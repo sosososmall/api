@@ -2,6 +2,7 @@ package com.pokerstar.api.domain.serviceimpl.agent;
 
 import com.pokerstar.api.domain.dao.agent.IAgentWithdrawOrderDao;
 import com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder;
+import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation;
 import com.pokerstar.api.domain.service.agent.IAgentWithdrawOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class AgentWithdrawOrderServiceImpl implements IAgentWithdrawOrderService
     }
 
     @Override
-    public int updateAgentWithdrawOrderOperation(AgentWithdrawOrder param) {
+    public int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperation param) {
         return agentWithdrawOrderDao.updateAgentWithdrawOrderOperation(param);
     }
 }

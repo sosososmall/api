@@ -45,9 +45,4 @@ public class AgentLogServiceImpl implements IAgentLogService {
     public List<AgentBalanceLog> getAllAgentBalanceLog() {
         return agentLogDao.getAllAgentBalanceLog();
     }
-
-    @Override
-    public int updateAgentBalance(AgentBalance param) {
-        return agentLogDao.updateAgentBalance(param);
-    }
 }

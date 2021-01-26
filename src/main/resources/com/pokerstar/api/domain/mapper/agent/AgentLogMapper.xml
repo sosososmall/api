@@ -5,32 +5,41 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.agent.AgentLogMapper">
     <insert id="addAgentLoginLog">
-
+        insert into agent_login_log
+            (agent_id,agent_account,agent_nick_name,agent_login_log_ip,
+            agent_login_log_time,agent_login_log_remark)
+        values
+            (#{agent_id},#{agent_account},#{agent_nick_name},#{agent_login_log_ip},
+            #{agent_login_log_time},#{agent_login_log_remark})
     </insert>
 
     <insert id="addAgentBalanceLog">
-
+        insert into agent_balance_log
+            (agent_id,agent_real_name,agent_nick_name,agent_balance_log_currency_iso_code,
+            agent_balance_log_balance_before,agent_balance_log_balance_after,
+            agent_balance_log_balance,agent_balance_log_balance_source,
+            agent_balance_log_create_time,balance_change_type_id,agent_balance_log_remark)
+        values
+            (#{agent_id},#{agent_real_name},#{agent_nick_name},#{agent_balance_log_currency_iso_code},
+            #{agent_balance_log_balance_before},#{agent_balance_log_balance_after},
+            #{agent_balance_log_balance},#{agent_balance_log_balance_source},
+            #{agent_balance_log_create_time},#{balance_change_type_id},#{agent_balance_log_remark})
     </insert>
 
 
     <delete id="deleteAgentBalanceLog">
-
+        delete from agent_balance_log where agent_balance_log_create_time &lt; #{endTimestamp}
     </delete>
 
     <delete id="deleteAgentLoginLog">
-
+        delete from agent_login_log where agent_login_log_time &lt; #{endTimestamp}
     </delete>
 
     <select id="getAllAgentLoginLog" resultType="com.pokerstar.api.domain.entity.agent.AgentLoginLog">
-
+        select * from agent_login_log
     </select>
 
     <select id="getAllAgentBalanceLog" resultType="com.pokerstar.api.domain.entity.agent.AgentBalanceLog">
-
+        select * from agent_balance_log
     </select>
-
-    <update id="updateAgentBalance" parameterType="com.pokerstar.api.domain.entity.agent.AgentBalance">
-
-    </update>
-
 </mapper>

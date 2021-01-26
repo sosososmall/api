@@ -5,21 +5,36 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelDepositTypeMapper">
 
-
-    <insert id="addChannelDepositType"></insert>
+    <insert id="addChannelDepositType" useGeneratedKeys="true"
+            keyProperty="channel_deposit_type_id" keyColumn="channel_deposit_type_id">
+        insert into channel_deposit_type
+            (channel_id,channel_deposit_type_cn_name,channel_deposit_type_eg_name,
+            channel_deposit_type_native_name,channel_deposit_type_remark)
+        values
+            (#{channel_id},#{channel_deposit_type_cn_name},#{channel_deposit_type_eg_name},
+            #{channel_deposit_type_native_name},#{channel_deposit_type_remark})
+    </insert>
 
     <delete id="deleteChannelDepositType">
-
+        delete from channel_deposit_type where channel_deposit_type_id = #{channelDepositTypeId}
     </delete>
+
     <select id="getAllChannelDepositType"
             resultType="com.pokerstar.api.domain.entity.channel.ChannelDepositType">
-
+        select * from channel_deposit_type
     </select>
 
     <select id="getChannelDepositType" resultType="com.pokerstar.api.domain.entity.channel.ChannelDepositType">
-    /select>
+        select * from channel_deposit_type where channel_deposit_type_id = #{channelDepositTypeId}
+    </select>
 
-    <update id="updateChannelDepositType">
-
+    <update id="updateChannelDepositType" parameterType="com.pokerstar.api.domain.entity.channel.ChannelDepositType">
+        update channel_deposit_type set
+            channel_deposit_type_cn_name = #{channel_deposit_type_cn_name},
+            channel_deposit_type_eg_name = #{channel_deposit_type_eg_name},
+            channel_deposit_type_native_name = #{channel_deposit_type_native_name},
+            channel_deposit_type_remark = #{channel_deposit_type_remark}
+        where channel_deposit_type_id = #{channel_deposit_type_id}
     </update>
+
 </mapper>

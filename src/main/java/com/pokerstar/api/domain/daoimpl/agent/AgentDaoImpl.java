@@ -3,6 +3,7 @@ package com.pokerstar.api.domain.daoimpl.agent;
 import com.pokerstar.api.domain.dao.agent.IAgentDao;
 import com.pokerstar.api.domain.entity.agent.Agent;
 import com.pokerstar.api.domain.mapper.agent.AgentMapper;
+import com.pokerstar.api.domain.model.agent.AgentBank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +39,20 @@ public class AgentDaoImpl implements IAgentDao {
     @Override
     public int toggleAgentStatus(int agentId, int status) {
         return agentMapper.toggleAgentStatus(agentId, status);
+    }
+
+    @Override
+    public int updateAgentBankInfo(AgentBank param) {
+        return agentMapper.updateAgentBankInfo(param);
+    }
+
+    @Override
+    public int updateAgentPassword(int agentId, String password) {
+        return agentMapper.updateAgentPassword(agentId, password);
+    }
+
+    @Override
+    public int updateAgentWithdrawPassword(int agentId, String withdrawPassword) {
+        return agentMapper.updateAgentWithdrawPassword(agentId, withdrawPassword);
     }
 }

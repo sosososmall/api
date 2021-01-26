@@ -18,6 +18,8 @@ public interface ChannelWithdrawMapper {
 
     List<ChannelWithdraw> getAllChannelWithdraw();
 
+    List<ChannelWithdraw> lstChannelWithdraw(int channelId);
+
     int toggleChannelWithdrawStatus(@Param("channelWithdrawId") int channelWithdrawId, @Param("status") int status);
 
     int updateChannelWithdraw(ChannelWithdraw param);

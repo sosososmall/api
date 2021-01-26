@@ -45,9 +45,4 @@ public class AgentLogDaoImpl implements IAgentLogDao {
     public List<AgentBalanceLog> getAllAgentBalanceLog() {
         return agentLogMapper.getAllAgentBalanceLog();
     }
-
-    @Override
-    public int updateAgentBalance(AgentBalance param) {
-        return agentLogMapper.updateAgentBalance(param);
-    }
 }

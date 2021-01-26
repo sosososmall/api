@@ -5,18 +5,28 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.admin.AdminLogMapper">
     <insert id="addAdminLog">
-
+        insert into admin_log
+            (admin_id,admin_nick_name,admin_type,admin_log_operate_method,
+            admin_log_operate_time,admin_log_operate,admin_log_remark)
+        values
+            (#{admin_id},#{admin_nick_name},#{admin_type},#{admin_log_operate_method},
+            #{admin_log_operate_time},#{admin_log_operate},#{admin_log_remark})
     </insert>
 
     <insert id="addAdminLoginLog">
-
+        insert into admin_login_log
+            (admin_id,admin_account,admin_nick_name,admin_type,admin_login_log_ip,
+            admin_login_log_tim,admin_login_log_status,admin_login_log_password)
+        values
+            (#{admin_id},#{admin_account},#{admin_nick_name},#{admin_type},#{admin_login_log_ip},
+            #{admin_login_log_tim},#{admin_login_log_status},#{admin_login_log_password})
     </insert>
 
     <select id="getAllAdminLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLog">
-
+        select * from admin_log
     </select>
 
     <select id="getAllAdminLoginLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLoginLog">
-
+        select * from admin_login_log
     </select>
 </mapper>

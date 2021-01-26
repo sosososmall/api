@@ -1,6 +1,7 @@
 package com.pokerstar.api.domain.service.agent;
 
 import com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder;
+import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface IAgentWithdrawOrderService {
 
     int updateAgentWithdrawOrderStatus(int agentWithdrawOrderId, int status);
 
-    int updateAgentWithdrawOrderOperation(AgentWithdrawOrder param);
+    int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperation param);
 }
