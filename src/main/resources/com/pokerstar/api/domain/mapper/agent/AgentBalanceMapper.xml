@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.agent.AgentBalanceMapper">
+
+    <insert id="addAgentBalance">
+
+    </insert>
+
+    <delete id="deleteAgentBalance">
+        
+    </delete>
+
+    <select id="getAllAgentBalance" resultType="com.pokerstar.api.domain.entity.agent.AgentBalance">
+
+    </select>
+
+    <update id="updateAgentBalance"></update>
+</mapper>

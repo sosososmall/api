@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantMapper">
+    <insert id="addMerchant">
+
+    </insert>
+
+    <delete id="deleteMerchant">
+        delete from merchant where merchant_id = #{merchantId}
+    </delete>
+
+    <select id="getAllMerchant" resultType="com.pokerstar.api.domain.entity.merchant.Merchant">
+
+    </select>
+
+    <update id="updateMerchant" parameterType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
+
+    </update>
+
+    <update id="toggleMerchantStatus">
+        update merchant set merchant_status = #{status} where merchant_id = #{merchantId}
+    </update>
+
+</mapper>

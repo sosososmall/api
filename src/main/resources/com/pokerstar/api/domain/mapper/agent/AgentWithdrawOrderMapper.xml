@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.agent.AgentWithdrawOrderMapper">
+
+    <insert id="addAgentWithdrawOrder">
+
+    </insert>
+
+    <delete id="deleteAgentWithdrawOrder">
+
+    </delete>
+
+    <select id="getAllAgentWithdrawOrder"
+            resultType="com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder">
+
+    </select>
+
+    <update id="updateAgentWithdrawOrderStatus">
+
+    </update>
+
+    <update id="updateAgentWithdrawOrderOperation">
+
+    </update>
+</mapper>

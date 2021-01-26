@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class ChannelUrlBO implements Serializable {
+public class ChannelUrl implements Serializable {
     private static final long serialVersionUID = -8047547545957510438L;
 
     private int channelId;

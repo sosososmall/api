@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantBalanceMapper">
+    <insert id="addMerchantBalance">
+
+    </insert>
+
+    <update id="updateMerchantBalance">
+
+    </update>
+
+    <delete id="deleteMerchantBalance">
+
+    </delete>
+
+    <select id="getAllMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+
+    </select>
+
+    <select id="getMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+
+    </select>
+
+    <select id="lstMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+
+    </select>
+
+</mapper>

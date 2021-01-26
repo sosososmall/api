@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelDepositTypeMapper">
+
+
+    <insert id="addChannelDepositType"></insert>
+
+    <delete id="deleteChannelDepositType">
+
+    </delete>
+    <select id="getAllChannelDepositType"
+            resultType="com.pokerstar.api.domain.entity.channel.ChannelDepositType">
+
+    </select>
+
+    <select id="getChannelDepositType" resultType="com.pokerstar.api.domain.entity.channel.ChannelDepositType">
+    /select>
+
+    <update id="updateChannelDepositType">
+
+    </update>
+</mapper>

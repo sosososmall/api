@@ -3,7 +3,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="">
+<mapper namespace="com.pokerstar.api.domain.mapper.merchant.ChannelMerchantMapper">
+    <insert id="addChannelMerchant">
+        insert into channel_merchant
+        (channel_id,merchant_id,channel_full_name,channel_short_name,channel_merchant_number,
+        channel_merchant_secret_key,channel_support_country_id,channel_merchant_deduct_deposit_amount,
+        channel_merchant_deduct_withdraw_amount,channel_merchant_deposit_rate,channel_merchant_withdraw_rate,
+        channel_status,channel_merchant_deposit_url,channel_merchant_withdraw_url,
+        channel_merchant_create_time,channel_merchant_remark)
+        values
+         (#{channel_id},#{merchant_id},#{channel_full_name},#{channel_short_name},#{channel_merchant_number},
+        #{channel_merchant_secret_key},#{channel_support_country_id},#{channel_merchant_deduct_deposit_amount},
+        #{channel_merchant_deduct_withdraw_amount},#{channel_merchant_deposit_rate},#{channel_merchant_withdraw_rate},
+        #{channel_status},#{channel_merchant_deposit_url},#{channel_merchant_withdraw_url},
+        #{channel_merchant_create_time},#{channel_merchant_remark})
+    </insert>
 
+    <delete id="deleteChannelMerchant">
+        delete from channel_merchant where channel_merchant_id = #{channelMerchantId}
+    </delete>
 
+    <select id="getAllChannelMerchant" resultType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
+        select * from channel_merchant
+    </select>
+
+    <update id="updateChannelMerchant">
+
+    </update>
+    <update id="toggleChannelMerchantStatus">
+        update channel_merchant set channel_merchant_status = #{status} where channel_merchant_id = #{channelMerchantId}
+    </update>
 </mapper>

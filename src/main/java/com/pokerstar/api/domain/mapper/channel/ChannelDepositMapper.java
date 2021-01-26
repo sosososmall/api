@@ -3,10 +3,12 @@ package com.pokerstar.api.domain.mapper.channel;
 import com.pokerstar.api.domain.entity.channel.ChannelDeposit;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component("channelDepositMapper")
 public interface ChannelDepositMapper {
     boolean addChannelDeposit(ChannelDeposit entity);
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.admin.AdminLogMapper">
+    <insert id="addAdminLog">
+
+    </insert>
+
+    <insert id="addAdminLoginLog">
+
+    </insert>
+
+    <select id="getAllAdminLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLog">
+
+    </select>
+
+    <select id="getAllAdminLoginLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLoginLog">
+
+    </select>
+</mapper>

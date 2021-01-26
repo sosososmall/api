@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelWithdrawMapper">
+
+
+    <insert id="addChannelWithdraw">
+
+    </insert>
+
+    <delete id="deleteChannelWithdraw">
+
+    </delete>
+
+    <delete id="deleteChannelWithdrawByChannelId">
+
+    </delete>
+
+    <select id="getAllChannelWithdraw" resultType="com.pokerstar.api.domain.entity.channel.ChannelWithdraw">
+
+    </select>
+
+    <update id="toggleChannelWithdrawStatus">
+
+    </update>
+
+    <update id="updateChannelWithdraw">
+
+    </update>
+</mapper>

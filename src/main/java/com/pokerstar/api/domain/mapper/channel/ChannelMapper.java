@@ -2,14 +2,16 @@ package com.pokerstar.api.domain.mapper.channel;
 
 import com.pokerstar.api.domain.dto.channel.ChannelDTO;
 import com.pokerstar.api.domain.entity.channel.Channel;
-import com.pokerstar.api.domain.model.channel.ChannelIpBO;
-import com.pokerstar.api.domain.model.channel.ChannelRateBO;
-import com.pokerstar.api.domain.model.channel.ChannelUrlBO;
+import com.pokerstar.api.domain.model.channel.ChannelIp;
+import com.pokerstar.api.domain.model.channel.ChannelRate;
+import com.pokerstar.api.domain.model.channel.ChannelUrl;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component("channelMapper")
 public interface ChannelMapper {
     boolean addChannel(Channel entity);
 
@@ -19,9 +21,9 @@ public interface ChannelMapper {
 
     int enableChannel(int channelId);
 
-    int updateChannelRateInfo(ChannelRateBO param);
+    int updateChannelRateInfo(ChannelRate param);
 
-    int updateChannelIp(ChannelIpBO param);
+    int updateChannelIp(ChannelIp param);
 
-    int updateChannelUrl(ChannelUrlBO param);
+    int updateChannelUrl(ChannelUrl param);
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantWithdrawOrderMapper">
+
+
+    <insert id="addMerchantWithdrawOrder">
+
+    </insert>
+
+    <delete id="deleteMerchantWithdrawOrder">
+
+    </delete>
+
+    <select id="lstMerchantWithdrawOrder"
+            resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
+
+    </select>
+
+    <select id="getMerchantWithdrawOrder"
+            resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
+
+    </select>
+
+    <select id="getMerchantWithdrawOrderByOrderNo"
+            resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
+
+    </select>
+
+    <select id="getMerchantWithdrawOrderByPlatOrderNo"
+            resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
+
+    </select>
+
+    <update id="updateMerchantWithdrawOrderChannelStatus">
+
+    </update>
+
+    <update id="updateMerchantWithdrawOrderMerchantStatus">
+
+    </update>
+
+</mapper>
