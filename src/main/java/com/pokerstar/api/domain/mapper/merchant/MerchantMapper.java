@@ -18,5 +18,9 @@ public interface MerchantMapper {
 
     int updateMerchant(Merchant param);
 
-    int toggleMerchantStatus(@Param("merchantId") int merchantId,@Param("status") int status);
+    int toggleMerchantStatus(@Param("merchantId") int merchantId, @Param("status") int status);
+
+    int updateMerchantPassword(@Param("merchantId") int merchantId, @Param("password") String password);
+
+    int updateMerchantWhiteIp(@Param("merchantId") int merchantId, @Param("ip") String ip);
 }

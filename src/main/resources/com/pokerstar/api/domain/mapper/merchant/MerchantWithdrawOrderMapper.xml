@@ -6,32 +6,55 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantWithdrawOrderMapper">
 
 
-    <insert id="addMerchantWithdrawOrder">
-
+    <insert id="addMerchantWithdrawOrder" useGeneratedKeys="true" keyColumn="merchant_withdraw_order_id"
+            keyProperty="merchant_withdraw_order_id"
+            parameterType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
+        insert into merchant_withdraw_order
+            (channel_merchant_id,channel_id,channel_short_name,merchant_id,channel_withdraw_merchant_id,
+            channel_withdraw_type_id,channel_merchant_number,merchant_withdraw_order_merchant_no,
+            merchant_withdraw_order_plat_no,merchant_withdraw_order_channel_no,
+            merchant_withdraw_order_amount,merchant_withdraw_order_fee,
+            merchant_withdraw_order_real_name,merchant_withdraw_order_bank_code,
+            merchant_withdraw_order_bank_card,merchant_withdraw_order_bank_branch,
+            merchant_withdraw_order_notify_url,merchant_withdraw_order_request_url,
+            merchant_withdraw_order_currency_iso_code,merchant_withdraw_order_merchant_sign,
+            merchant_withdraw_order_create_time,merchant_withdraw_order_notify_merchant_status,
+            merchant_withdraw_order_notify_channel_status,merchant_withdraw_order_remark)
+        values
+            (#{channel_merchant_id},#{channel_id},#{channel_short_name},#{merchant_id},#{channel_withdraw_merchant_id},
+            #{channel_withdraw_type_id},#{channel_merchant_number},#{merchant_withdraw_order_merchant_no},
+            #{merchant_withdraw_order_plat_no},#{merchant_withdraw_order_channel_no},
+            #{merchant_withdraw_order_amount},#{merchant_withdraw_order_fee},
+            #{merchant_withdraw_order_real_name},#{merchant_withdraw_order_bank_code},
+            #{merchant_withdraw_order_bank_card},#{merchant_withdraw_order_bank_branch},
+            #{merchant_withdraw_order_notify_url},#{merchant_withdraw_order_request_url},
+            #{merchant_withdraw_order_currency_iso_code},#{merchant_withdraw_order_merchant_sign},
+            #{merchant_withdraw_order_create_time},#{merchant_withdraw_order_notify_merchant_status},
+            #{merchant_withdraw_order_notify_channel_status},#{merchant_withdraw_order_remark})
     </insert>
 
     <delete id="deleteMerchantWithdrawOrder">
-
+        delete from merchant_withdraw_order where merchant_withdraw_order_id = #{merchantWithdrawOrderId}
     </delete>
 
     <select id="lstMerchantWithdrawOrder"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
-
+        select * from merchant_withdraw_order
     </select>
 
     <select id="getMerchantWithdrawOrder"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
-
+        select * from merchant_withdraw_order where merchant_withdraw_order_id = #{orderId}
     </select>
 
     <select id="getMerchantWithdrawOrderByOrderNo"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
-
+        select * from merchant_withdraw_order where merchant_withdraw_order_merchant_no = #{orderNo}
     </select>
 
     <select id="getMerchantWithdrawOrderByPlatOrderNo"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder">
-
+        select * from merchant_withdraw_order where merchant_withdraw_order_plat_no = #{orderNo}
     </select>
 
     <update id="updateMerchantWithdrawOrderChannelStatus">

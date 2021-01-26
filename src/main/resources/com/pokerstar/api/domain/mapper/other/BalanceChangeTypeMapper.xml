@@ -7,18 +7,26 @@
 
 
     <insert id="addBalanceChangeType">
-
+        insert into balance_change_type
+            (balance_change_type_cn_name,balance_change_type_eg_name,balance_change_type_remark)
+        values
+            (#{balance_change_type_cn_name},#{balance_change_type_eg_name},#{balance_change_type_remark})
     </insert>
 
     <delete id="deleteBalanceChangeType">
-
+        delete from balance_change_type where balance_change_type_id = #{balanceChangeTypeId}
     </delete>
 
     <select id="getAllBalanceChangeType" resultType="com.pokerstar.api.domain.entity.other.BalanceChangeType">
-
+        select * from balance_change_type
     </select>
 
-    <update id="updateBalanceChangeType">
-
+    <update id="updateBalanceChangeType" parameterType="com.pokerstar.api.domain.entity.other.BalanceChangeType">
+        update balance_change_type set
+            balance_change_type_cn_name = #{balance_change_type_cn_name},
+            balance_change_type_eg_name = #{balance_change_type_eg_name},
+            balance_change_type_remark = #{balance_change_type_remark}
+        where balance_change_type_id = #{balance_change_type_id}
     </update>
+
 </mapper>

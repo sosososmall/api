@@ -5,7 +5,14 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantMapper">
     <insert id="addMerchant">
-
+        insert into merchant
+            (agent_id,agent_nick_name,merchant_real_name,merchant_nick_name,
+            merchant_account,merchant_password,merchant_phone,merchant_email,
+            merchant_ip,merchant_status,merchant_remark)
+        values
+            (#{agent_id},#{agent_nick_name},#{merchant_real_name},#{merchant_nick_name},
+            #{merchant_account},#{merchant_password},#{merchant_phone},#{merchant_email},
+            #{merchant_ip},#{merchant_status},#{merchant_remark})
     </insert>
 
     <delete id="deleteMerchant">
@@ -13,7 +20,7 @@
     </delete>
 
     <select id="getAllMerchant" resultType="com.pokerstar.api.domain.entity.merchant.Merchant">
-
+        select * from merchant
     </select>
 
     <update id="updateMerchant" parameterType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
@@ -22,6 +29,14 @@
 
     <update id="toggleMerchantStatus">
         update merchant set merchant_status = #{status} where merchant_id = #{merchantId}
+    </update>
+
+    <update id="updateMerchantPassword">
+        update merchant set merchant_password = #{password} where merchant_id = #{merchantId}
+    </update>
+
+    <update id="updateMerchantWhiteIp">
+        update merchant set merchant_ip = #{ip} where merchant_id = #{merchantId}
     </update>
 
 </mapper>
