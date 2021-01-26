@@ -5,6 +5,7 @@ import com.pokerstar.api.domain.model.channel.ChannelRateBO;
 import com.pokerstar.api.domain.service.channel.IChannelService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
+import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ChannelController {
     @RequestMapping("/addChannel")
     public Result addChannel(@RequestBody Channel channel) {
         try {
+            channel.setChannel_create_time(DateTimeUtil.getCurrentSecondTimestamp());
+            channel.setChannel_last_update_time(DateTimeUtil.getCurrentSecondTimestamp());
             return Result.success(channelService.addChannel(channel));
         } catch (Exception ex) {
             Log.error("ChannelController add channel error:", ex);

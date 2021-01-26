@@ -18,7 +18,7 @@ public class AdminLog implements Serializable {
 
     private String admin_log_operate_method;
 
-    private int admin_log_operate_time;
+    private long admin_log_operate_time;
 
     private String admin_log_operate;
 

@@ -30,4 +30,8 @@
             country_currency_iso_code = #{country_currency_iso_code}
     </update>
 
+    <select id="getAllCountry" resultType="com.pokerstar.api.domain.entity.other.Country">
+        select * from country
+    </select>
+
 </mapper>

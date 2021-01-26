@@ -21,17 +21,15 @@ public class ChannelDTO implements Serializable {
 
     private int sort;
 
-    private String deductDepositAmount;
-
-    private String deductWithdrawAmount;
-
-    private BigDecimal depositRate;
-
-    private BigDecimal withdrawRate;
-
     private boolean status;
 
-    private  String supportCountry;
+    private  String supportCountryCnName;
+
+    private String supportCountryEgName;
+
+    private String supportCountryIsoCode;
+
+    private int supportCountryId;
 
     private String ip;
 

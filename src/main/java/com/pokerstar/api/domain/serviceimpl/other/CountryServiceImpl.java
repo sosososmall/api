@@ -6,6 +6,8 @@ import com.pokerstar.api.domain.service.other.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CountryServiceImpl implements ICountryService {
 
@@ -25,5 +27,10 @@ public class CountryServiceImpl implements ICountryService {
     @Override
     public boolean updateCountryCurrencyRate(Country entity) {
         return countryDao.updateCountryCurrencyRate(entity) > 0;
+    }
+
+    @Override
+    public List<Country> getAllCountry() {
+        return countryDao.getAllCountry();
     }
 }

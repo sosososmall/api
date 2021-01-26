@@ -6,37 +6,34 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelMapper">
     <resultMap id="channelMap" type="com.pokerstar.api.domain.dto.channel.ChannelDTO">
         <id property="id" column="channel_id"/>
-        <result property="depositUrl" column="channel_deposit_url"/>
-        <result property="withdrawUrl" column="channel_withdraw_url"/>
         <result property="fullName" column="channel_full_name"/>
         <result property="shortName" column="channel_short_name"/>
-        <result property="deductDepositAmount" column="channel_deduct_deposit_amount"/>
-        <result property="deductWithdrawAmount" column="channel_deduct_withdraw_amount"/>
-        <result property="depositRate" column="channel_deposit_rate"/>
-        <result property="withdrawRate" column="channel_withdraw_rate"/>
-        <result property="remark" column="channel_remark"/>
+        <result property="depositUrl" column="channel_deposit_url"/>
+        <result property="withdrawUrl" column="channel_withdraw_url"/>
         <result property="sort" column="channel_sort"/>
         <result property="status" column="channel_status"/>
-        <result property="supportCountry" column="channel_support_country"/>
+        <result property="supportCountryCnName" column="channel_support_country_cn_name"/>
+        <result property="supportCountryEgName" column="channel_support_country_eg_name"/>
+        <result property="supportCountryIsoCode" column="channel_support_country_iso_code"/>
+        <result property="supportCountryId" column="channel_support_country_id"/>
+        <result property="ip" column="channel_ip"/>
         <result property="createTime" column="channel_create_time"/>
         <result property="lastUpdateTime" column="channel_last_update_time"/>
-        <result property="ip" column="channel_ip"/>
+        <result property="remark" column="channel_remark"/>
     </resultMap>
 
     <insert id="addChannel" parameterType="com.pokerstar.api.domain.entity.channel.Channel"
         useGeneratedKeys="true" keyProperty="channel_id" keyColumn="channel_id">
         insert into channel
         (channel_full_name,channel_short_name,channel_deposit_url,channel_withdraw_url,
-        channel_sort,channel_status,channel_support_country,channel_remark,
-        channel_deduct_deposit_amount,channel_deduct_withdraw_amount,
-        channel_deposit_rate,channel_withdraw_rate,ip,
-        channel_create_time,channel_last_update_time)
+        channel_sort,channel_status,channel_support_country_cn_name,channel_support_country_eg_name,
+        channel_support_country_iso_code,channel_support_country_id,channel_ip,
+        channel_create_time,channel_last_update_time,channel_remark)
         values
         (#{channel_full_name},#{channel_short_name},#{channel_deposit_url},#{channel_withdraw_url},
-        #{channel_sort},#{channel_status},#{channel_support_country},#{channel_remark},
-        #{channel_deduct_deposit_amount},#{channel_deduct_withdraw_amount},
-        #{channel_deposit_rate},#{channel_withdraw_rate},#{channel_ip},
-        unix_timestamp(now()),unix_timestamp(now()))
+        #{channel_sort},#{channel_status},#{channel_support_country_cn_name},#{channel_support_country_eg_name},
+        #{channel_support_country_iso_code},#{channel_support_country_id},#{channel_ip},
+        #{channel_create_time},#{channel_last_update_time},#{channel_remark})
     </insert>
 
     <delete id="deleteChannel" parameterType="int">

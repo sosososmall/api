@@ -16,7 +16,7 @@ public class MerchantLoginLog implements Serializable {
 
     private String merchant_login_log_ip;
 
-    private int merchant_login_log_time;
+    private long merchant_login_log_time;
 
     private boolean merchant_login_log_status;
 

@@ -33,7 +33,7 @@ public class Admin implements Serializable {
 
     private BigDecimal admin_max_confirm_withdraw_amount;
 
-    private int admin_create_time;
+    private long admin_create_time;
 
     private String admin_remark;
 }

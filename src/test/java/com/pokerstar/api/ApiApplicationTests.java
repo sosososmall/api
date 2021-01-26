@@ -2,9 +2,11 @@ package com.pokerstar.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokerstar.api.domain.entity.other.Country;
+import com.pokerstar.api.infrastructure.config.RedisConfig;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import com.pokerstar.api.infrastructure.util.HttpUtil;
 import com.pokerstar.api.infrastructure.util.PropertyUtil;
+import com.pokerstar.api.infrastructure.util.RedisUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -28,6 +31,9 @@ class ApiApplicationTests {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Test
     void contextLoads() {
     }
@@ -37,7 +43,7 @@ class ApiApplicationTests {
         String port = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.port");
         String apiHost = "http://" + host + ":" + port;
 
-        updateCurrencyExchangeRate(apiHost);
+        // updateCurrencyExchangeRate(apiHost);
         //initCurrency(domain);
         //initCountry(domain);
     }

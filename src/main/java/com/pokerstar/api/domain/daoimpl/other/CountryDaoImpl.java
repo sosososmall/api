@@ -6,6 +6,8 @@ import com.pokerstar.api.domain.mapper.other.CountryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CountryDaoImpl implements ICountryDao {
 
@@ -26,5 +28,10 @@ public class CountryDaoImpl implements ICountryDao {
     @Override
     public int updateCountryCurrencyRate(Country entity) {
         return countryMapper.updateCountryCurrencyRate(entity);
+    }
+
+    @Override
+    public List<Country> getAllCountry() {
+        return countryMapper.getAllCountry();
     }
 }

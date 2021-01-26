@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelDepositMapper">
+    <insert id="addChannelDeposit" parameterType="com.pokerstar.api.domain.entity.channel.ChannelDeposit">
+
+    </insert>
+
+    <delete id="deleteChannelDeposit" parameterType="int">
+        delete from channel_deposit where channel_deposit_id = #{channelDepositId}
+    </delete>
+
+    <select id="getAllChannelDeposit" resultType="com.pokerstar.api.domain.entity.channel.ChannelDeposit">
+        select * from channel_deposit
+    </select>
+
+    <update id="toggleChannelDepositStatus">
+        update channel_deposit set channel_deposit_status = #{status} where channel_deposit_id = #{channelDepositId}
+    </update>
+
+</mapper>
