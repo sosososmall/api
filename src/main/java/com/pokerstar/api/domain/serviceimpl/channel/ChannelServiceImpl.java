@@ -36,6 +36,11 @@ public class ChannelServiceImpl implements IChannelService {
     }
 
     @Override
+    public List<Channel> getAllChannel() {
+        return channelDao.getAllChannel();
+    }
+
+    @Override
     public boolean enableChannel(int channelId) {
         return channelDao.enableChannel(channelId) > 0;
     }

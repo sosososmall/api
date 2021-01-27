@@ -44,6 +44,10 @@
         select * from channel
     </select>
 
+    <select id="getAllChannel" resultType="com.pokerstar.api.domain.entity.channel.Channel">
+        select * from channel
+    </select>
+
     <update id="enableChannel" parameterType="int">
         update channel set channel_status = 0 where channel_id = #{channelId}
     </update>

@@ -35,6 +35,11 @@ public class ChannelDaoImpl implements IChannelDao {
     }
 
     @Override
+    public List<Channel> getAllChannel() {
+        return channelMapper.getAllChannel();
+    }
+
+    @Override
     public int enableChannel(int channelId) {
         return channelMapper.enableChannel(channelId);
     }

@@ -19,6 +19,8 @@ public interface ChannelMapper {
 
     List<ChannelDTO> getChannels();
 
+    List<Channel> getAllChannel();
+
     int enableChannel(int channelId);
 
     int updateChannelRateInfo(ChannelRate param);

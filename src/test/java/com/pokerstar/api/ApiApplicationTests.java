@@ -2,11 +2,10 @@ package com.pokerstar.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokerstar.api.domain.entity.other.Country;
-import com.pokerstar.api.infrastructure.config.RedisConfig;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import com.pokerstar.api.infrastructure.util.HttpUtil;
 import com.pokerstar.api.infrastructure.util.PropertyUtil;
-import com.pokerstar.api.infrastructure.util.RedisUtil;
+import com.pokerstar.api.infrastructure.util.RedisBaseUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,7 +31,7 @@ class ApiApplicationTests {
     private static ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisBaseUtil redisBaseUtil;
 
     @Test
     void contextLoads() {

@@ -15,6 +15,8 @@ public interface IChannelService {
 
     List<ChannelDTO> getChannels(int index, int pageSize);
 
+    List<Channel> getAllChannel();
+
     boolean enableChannel(int channelId);
 
     boolean updateChannelRateInfo(ChannelRate param);

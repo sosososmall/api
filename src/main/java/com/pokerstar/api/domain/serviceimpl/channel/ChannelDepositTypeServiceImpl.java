@@ -1,35 +1,40 @@
 package com.pokerstar.api.domain.serviceimpl.channel;
 
-import com.pokerstar.api.domain.dao.channel.IChannelDepositDao;
-import com.pokerstar.api.domain.entity.channel.ChannelDeposit;
-import com.pokerstar.api.domain.service.channel.IChannelDepositService;
+import com.pokerstar.api.domain.dao.channel.IChannelDepositTypeDao;
+import com.pokerstar.api.domain.entity.channel.ChannelDepositType;
+import com.pokerstar.api.domain.service.channel.IChannelDepositTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ChannelDepositTypeServiceImpl implements IChannelDepositService {
+public class ChannelDepositTypeServiceImpl implements IChannelDepositTypeService {
     @Autowired
-    private IChannelDepositDao channelDepositDao;
+    private IChannelDepositTypeDao channelDepositTypeDao;
 
     @Override
-    public boolean addChannelDeposit(ChannelDeposit entity) {
-        return channelDepositDao.addChannelDeposit(entity);
+    public boolean addChannelDepositType(ChannelDepositType entity) {
+        return channelDepositTypeDao.addChannelDepositType(entity);
     }
 
     @Override
-    public int deleteChannelDeposit(int channelDepositId) {
-        return channelDepositDao.deleteChannelDeposit(channelDepositId);
+    public int deleteChannelDepositType(int channelDepositTypeId) {
+        return channelDepositTypeDao.deleteChannelDepositType(channelDepositTypeId);
     }
 
     @Override
-    public List<ChannelDeposit> getAllChannelDeposit() {
-        return channelDepositDao.getAllChannelDeposit();
+    public List<ChannelDepositType> getAllChannelDepositType() {
+        return channelDepositTypeDao.getAllChannelDepositType();
     }
 
     @Override
-    public int toggleChannelDepositStatus(int channelDepositId, int status) {
-        return channelDepositDao.toggleChannelDepositStatus(channelDepositId, status);
+    public ChannelDepositType getChannelDepositType(int channelDepositTypeId) {
+        return channelDepositTypeDao.getChannelDepositType(channelDepositTypeId);
+    }
+
+    @Override
+    public int updateChannelDepositType(ChannelDepositType param) {
+        return channelDepositTypeDao.updateChannelDepositType(param);
     }
 }

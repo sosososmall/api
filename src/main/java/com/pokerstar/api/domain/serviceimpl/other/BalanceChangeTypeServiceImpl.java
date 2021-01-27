@@ -4,9 +4,11 @@ import com.pokerstar.api.domain.dao.other.IBalanceChangeTypeDao;
 import com.pokerstar.api.domain.entity.other.BalanceChangeType;
 import com.pokerstar.api.domain.service.other.IBalanceChangeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BalanceChangeTypeServiceImpl implements IBalanceChangeTypeService {
     @Autowired
     private IBalanceChangeTypeDao balanceChangeTypeDao;
