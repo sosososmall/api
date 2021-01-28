@@ -1,5 +1,7 @@
 package com.pokerstar.api.domain.controller.pay;
 
+import com.pokerstar.api.domain.model.pay.DepositRequest;
+import com.pokerstar.api.domain.model.pay.WithdrawRequest;
 import com.pokerstar.api.domain.service.merchant.IChannelDepositMerchantService;
 import com.pokerstar.api.domain.service.merchant.IChannelWithdrawMerchantService;
 import com.pokerstar.api.domain.service.merchant.IMerchantDepositOrderService;
@@ -8,10 +10,7 @@ import com.pokerstar.api.infrastructure.entity.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pay")
@@ -33,7 +32,7 @@ public class PayController {
     @PostMapping
     @ResponseBody
     @RequestMapping("/deposit")
-    public Result deposit() {
+    public Result deposit(@RequestBody DepositRequest pay) {
         try {
 
             return Result.success();
@@ -45,7 +44,7 @@ public class PayController {
     @PostMapping
     @ResponseBody
     @RequestMapping("/withdraw")
-    public Result withdraw() {
+    public Result withdraw(@RequestBody WithdrawRequest pay) {
         try {
 
             return Result.success();

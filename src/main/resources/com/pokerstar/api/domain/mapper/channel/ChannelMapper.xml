@@ -61,7 +61,7 @@
         where channel_id = #{channelId}
     </update>
 
-    <update id="updateChannelIp" parameterType="com.pokerstar.api.domain.model.channel.ChannelIp">
+    <update id="updateChannelIp">
         update channel set
             channel_ip = #{ip}
         where channel_id = #{channelId}

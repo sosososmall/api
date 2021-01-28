@@ -19,7 +19,12 @@ public class RedisDataInit implements CommandLineRunner {
         if (isInitRedis) {
             Log.info("redis data initial start ................");
 
-            RedisUtil.initCountryInfo();
+            RedisUtil.initCountry();
+            RedisUtil.initChannel();
+            RedisUtil.initChannelDepositMerchant();
+            RedisUtil.initChannelMerchant();
+            RedisUtil.initChannelWithdrawMerchant();
+            RedisUtil.initMerchant();
 
             Log.info("redis data initial end .................");
         }
