@@ -36,10 +36,10 @@
     </delete>
 
     <select id="getAllAgentLoginLog" resultType="com.pokerstar.api.domain.entity.agent.AgentLoginLog">
-        select * from agent_login_log
+        select * from agent_login_log order by agent_login_log_time desc
     </select>
 
     <select id="getAllAgentBalanceLog" resultType="com.pokerstar.api.domain.entity.agent.AgentBalanceLog">
-        select * from agent_balance_log
+        select * from agent_balance_log order by agent_balance_log_create_time desc
     </select>
 </mapper>

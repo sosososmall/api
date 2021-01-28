@@ -1,7 +1,7 @@
 package com.pokerstar.api.domain.controller.channel;
 
 import com.pokerstar.api.domain.entity.channel.Channel;
-import com.pokerstar.api.domain.model.channel.ChannelRate;
+import com.pokerstar.api.domain.model.channel.ChannelRateBO;
 import com.pokerstar.api.domain.service.channel.IChannelService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
@@ -75,7 +75,7 @@ public class ChannelController {
     @PostMapping
     @ResponseBody
     @RequestMapping("/updateChannelRate")
-    public Result updateChannelRateInfo(@RequestBody ChannelRate param) {
+    public Result updateChannelRateInfo(@RequestBody ChannelRateBO param) {
         try {
             return Result.success(channelService.updateChannelRateInfo(param));
         } catch (Exception ex) {

@@ -44,12 +44,12 @@ public class MerchantWithdrawOrderDaoImpl implements IMerchantWithdrawOrderDao {
     }
 
     @Override
-    public int updateMerchantWithdrawOrderChannelStatus() {
-        return merchantWithdrawOrderMapper.updateMerchantWithdrawOrderChannelStatus();
+    public int updateMerchantWithdrawOrderChannelStatus(long merDepositOrderId, int status) {
+        return merchantWithdrawOrderMapper.updateMerchantWithdrawOrderChannelStatus(merDepositOrderId, status);
     }
 
     @Override
-    public int updateMerchantWithdrawOrderMerchantStatus() {
-        return merchantWithdrawOrderMapper.updateMerchantWithdrawOrderMerchantStatus();
+    public int updateMerchantWithdrawOrderMerchantStatus(long merDepositOrderId, int status) {
+        return merchantWithdrawOrderMapper.updateMerchantWithdrawOrderMerchantStatus(merDepositOrderId, status);
     }
 }

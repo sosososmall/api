@@ -18,6 +18,12 @@ public interface ChannelWithdrawMerchantMapper {
 
     List<ChannelWithdrawMerchant> getAllChannelWithdrawMerchant();
 
+    List<ChannelWithdrawMerchant> lstChannelWithdrawMerchantByChannelId(int channelId);
+
+    List<ChannelWithdrawMerchant> lstChannelWithdrawMerchantByMerchantId(int merchantId);
+
+    ChannelWithdrawMerchant getChannelWithdrawMerchantById(int channelWithdrawMerchantId);
+
     int updateChannelWithdrawMerchant(ChannelWithdrawMerchant param);
 
     int toggleChannelWithdrawMerchantStatus(@Param("channelWithdrawMerchantId") int channelWithdrawMerchantId, @Param("status")int status);

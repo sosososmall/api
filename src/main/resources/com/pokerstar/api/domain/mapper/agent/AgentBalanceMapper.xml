@@ -26,6 +26,14 @@
         select * from agent_balance
     </select>
 
+    <select id="getAgentBalanceById" resultType="com.pokerstar.api.domain.entity.agent.AgentBalance">
+        select * from agent_balance where agent_balance_id = #{agentBalanceId}
+    </select>
+
+    <select id="lstAgentBalance" resultType="com.pokerstar.api.domain.entity.agent.AgentBalance">
+        select * from agent_balance where agent_id = #{agentId} order by agent_balance_amount desc
+    </select>
+
     <update id="updateAgentBalance">
 
     </update>

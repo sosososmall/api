@@ -2,6 +2,7 @@ package com.pokerstar.api.domain.mapper.merchant;
 
 import com.pokerstar.api.domain.entity.merchant.MerchantWithdrawOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface MerchantWithdrawOrderMapper {
 
     MerchantWithdrawOrder getMerchantWithdrawOrderByPlatOrderNo(String orderNo);
 
-    int updateMerchantWithdrawOrderChannelStatus();
+    int updateMerchantWithdrawOrderChannelStatus(@Param("orderID") long orderId, @Param("status") int status);
 
-    int updateMerchantWithdrawOrderMerchantStatus();
+    int updateMerchantWithdrawOrderMerchantStatus(@Param("orderID") long orderId, @Param("status") int status);
 }

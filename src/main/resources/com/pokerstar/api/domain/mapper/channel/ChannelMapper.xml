@@ -52,7 +52,7 @@
         update channel set channel_status = 0 where channel_id = #{channelId}
     </update>
 
-    <update id="updateChannelRateInfo" parameterType="com.pokerstar.api.domain.model.channel.ChannelRate">
+    <update id="updateChannelRateInfo" parameterType="com.pokerstar.api.domain.model.channel.ChannelRateBO">
         update channel set
             channel_deduct_deposit_amount = #{deductDepositAmount},
             channel_deduct_withdraw_amount = #{deductWithdrawAmount},
@@ -67,7 +67,7 @@
         where channel_id = #{channelId}
     </update>
 
-    <update id="updateChannelUrl" parameterType="com.pokerstar.api.domain.model.channel.ChannelUrl">
+    <update id="updateChannelUrl" parameterType="com.pokerstar.api.domain.model.channel.ChannelUrlBO">
         update channel set
             channel_deposit_url = #{depositUrl},
             channel_withdraw_url = #{withdrawUrl}

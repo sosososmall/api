@@ -1,7 +1,7 @@
 package com.pokerstar.api.domain.dao.agent;
 
 import com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder;
-import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation;
+import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperationBO;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface IAgentWithdrawOrderDao {
 
     int updateAgentWithdrawOrderStatus(int agentWithdrawOrderId, int status);
 
-    int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperation param);
+    int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperationBO param);
 }

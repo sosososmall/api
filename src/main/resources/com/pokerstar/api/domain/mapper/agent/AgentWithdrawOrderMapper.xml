@@ -24,7 +24,7 @@
 
     <select id="getAllAgentWithdrawOrder"
             resultType="com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder">
-        select * from agent_withdraw_order
+        select * from agent_withdraw_order order by agent_withdraw_order_create_time desc
     </select>
 
     <update id="updateAgentWithdrawOrderStatus">
@@ -32,7 +32,7 @@
     </update>
 
     <update id="updateAgentWithdrawOrderOperation"
-            parameterType="com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation">
+            parameterType="com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperationBO">
         update agent_withdraw_order set
             agent_withdraw_order_status = #{agent_withdraw_order_status},
             admin_id = #{admin_id},

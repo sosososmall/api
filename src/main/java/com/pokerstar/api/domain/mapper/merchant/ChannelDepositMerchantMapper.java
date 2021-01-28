@@ -16,6 +16,10 @@ public interface ChannelDepositMerchantMapper {
 
     List<ChannelDepositMerchant> getAllChannelDepositMerchant();
 
+    List<ChannelDepositMerchant> lstChannelDepositMerchantByChannelId(int channelId);
+
+    List<ChannelDepositMerchant> lstChannelDepositMerchantByMerchantId(int merchantId);
+
     int toggleChannelDepositMerchantStatus(@Param("channelDepositMerchantId") int channelDepositMerchantId, @Param("status") int status);
 
     int updateChannelDepositMerchant(ChannelDepositMerchant param);

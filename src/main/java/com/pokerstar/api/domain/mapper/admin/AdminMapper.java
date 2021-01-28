@@ -16,6 +16,8 @@ public interface AdminMapper {
 
     List<Admin> getAllAdmin();
 
+    Admin getAdminById(int adminId);
+
     int updateAdmin(Admin param);
 
     int toggleAdminStatus(@Param("adminId") int adminId, @Param("status") int status);

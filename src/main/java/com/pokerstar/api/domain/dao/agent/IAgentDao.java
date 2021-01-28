@@ -1,7 +1,7 @@
 package com.pokerstar.api.domain.dao.agent;
 
 import com.pokerstar.api.domain.entity.agent.Agent;
-import com.pokerstar.api.domain.model.agent.AgentBank;
+import com.pokerstar.api.domain.model.agent.AgentBankBO;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface IAgentDao {
 
     int toggleAgentStatus(int agentId, int status);
 
-    int updateAgentBankInfo(AgentBank param);
+    int updateAgentBankInfo(AgentBankBO param);
 
     int updateAgentPassword(int agentId, String password);
 

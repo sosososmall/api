@@ -6,39 +6,71 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantDepositOrderMapper">
 
     <insert id="addMerchantDepositOrder">
-
+        insert into merchant_deposit_order
+            (channel_merchant_id,channel_id,channel_short_name,merchant_id,channel_deposit_merchant_id,
+            channel_merchant_number,channel_deposit_type_id,merchant_deposit_order_plat_no,
+            merchant_deposit_order_channel_no,merchant_deposit_order_merchant_no,
+            merchant_deposit_order_amount,merchant_deposit_order_fee,merchant_deposit_order_notify_url,
+            merchant_deposit_order_request_url,merchant_deposit_order_currency_iso_code,
+            merchant_deposit_order_merchant_sign,merchant_deposit_order_create_time,
+            merchant_deposit_order_notify_merchant_status,merchant_deposit_order_notify_channel_status,
+            merchant_deposit_order_extra,merchant_deposit_order_remark)
+        values
+            (#{channel_merchant_id},#{channel_id},#{channel_short_name},#{merchant_id},#{channel_deposit_merchant_id},
+            #{channel_merchant_number},#{channel_deposit_type_id},#{merchant_deposit_order_plat_no},
+            #{merchant_deposit_order_channel_no},#{merchant_deposit_order_merchant_no},
+            #{merchant_deposit_order_amount},#{merchant_deposit_order_fee},#{merchant_deposit_order_notify_url},
+            #{merchant_deposit_order_request_url},#{merchant_deposit_order_currency_iso_code},
+            #{merchant_deposit_order_merchant_sign},#{merchant_deposit_order_create_time},
+            #{merchant_deposit_order_notify_merchant_status},#{merchant_deposit_order_notify_channel_status},
+            #{merchant_deposit_order_extra},#{merchant_deposit_order_remark})
     </insert>
 
     <delete id="deleteMerchantDepositOrder">
-
+        delete from merchant_deposit_order where merchant_deposit_order_id = #{merchantDepositOrderId}
     </delete>
 
     <select id="lstMerchantDepositOrder"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
-
+        select * from merchant_deposit_order order by merchant_deposit_order_id desc
     </select>
 
     <select id="getMerchantDepositOrder"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
-
+        select * from merchant_deposit_order
+        where merchant_deposit_order_id = #{orderId}
+        order by merchant_deposit_order_id desc
     </select>
 
     <select id="getMerchantDepositOrderByOrderNo"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
-
+        select * from merchant_deposit_order
+        where merchant_deposit_order_merchant_no = #{merOrderNo}
     </select>
 
     <select id="getMerchantDepositOrderByPlatOrderNo"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
+        select * from merchant_deposit_order
+        where merchant_deposit_order_plat_no = #{platOrderNo}
+    </select>
 
+    <select id="lstMerchantDepositOrderByMerchantId"
+            resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
+        select * from merchant_deposit_order
+        where merchant_id = #{merchantId}
+        order by merchant_deposit_order_id desc
     </select>
 
     <update id="updateMerchantDepositOrderChannelStatus">
-
+        update merchant_deposit_order set
+            merchant_deposit_order_notify_channel_status = #{status}
+        where merchant_deposit_order_id = #{orderID}
     </update>
 
     <update id="updateMerchantDepositOrderMerchantStatus">
-
+         update merchant_deposit_order set
+            merchant_deposit_order_notify_merchant_status = #{status}
+        where merchant_deposit_order_id = #{orderID}
     </update>
 
 </mapper>

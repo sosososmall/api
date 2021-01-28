@@ -3,7 +3,7 @@ package com.pokerstar.api.domain.daoimpl.agent;
 import com.pokerstar.api.domain.dao.agent.IAgentDao;
 import com.pokerstar.api.domain.entity.agent.Agent;
 import com.pokerstar.api.domain.mapper.agent.AgentMapper;
-import com.pokerstar.api.domain.model.agent.AgentBank;
+import com.pokerstar.api.domain.model.agent.AgentBankBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +42,7 @@ public class AgentDaoImpl implements IAgentDao {
     }
 
     @Override
-    public int updateAgentBankInfo(AgentBank param) {
+    public int updateAgentBankInfo(AgentBankBO param) {
         return agentMapper.updateAgentBankInfo(param);
     }
 

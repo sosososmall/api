@@ -7,20 +7,47 @@
 
 
     <insert id="addChannelWithdrawMerchant">
-
+        insert into channel_withdraw_merchant
+            (channel_id,merchant_id,channel_merchant_id,channel_withdraw_id,channel_support_country_id,
+            channel_withdraw_type_id,channel_withdraw_code,channel_withdraw_extra_code,
+            channel_withdraw_min_amount,channel_withdraw_max_amount,channel_withdraw_merchant_min_amount,
+            channel_withdraw_merchant_max_amount,channel_withdraw_merchant_status,
+            channel_withdraw_merchant_deduct_amount,channel_withdraw_merchant_rate,
+            channel_withdraw_merchant_remark)
+        values
+            (#{channel_id},#{merchant_id},#{channel_merchant_id},#{channel_withdraw_id},#{channel_support_country_id},
+            #{channel_withdraw_type_id},#{channel_withdraw_code},#{channel_withdraw_extra_code},
+            #{channel_withdraw_min_amount},#{channel_withdraw_max_amount},#{channel_withdraw_merchant_min_amount},
+            #{channel_withdraw_merchant_max_amount},#{channel_withdraw_merchant_status},
+            #{channel_withdraw_merchant_deduct_amount},#{channel_withdraw_merchant_rate},
+            #{channel_withdraw_merchant_remark})
     </insert>
 
     <delete id="deleteChannelWithdrawMerchant">
-
+        delete from channel_withdraw_merchant where channel_withdraw_merchant_id = #{channelWithdrawMerchantId}
     </delete>
 
     <delete id="deleteChannelWithdrawByChannelId">
-
+        delete from channel_withdraw_merchant where channel_id = #{channelId}
     </delete>
 
     <select id="getAllChannelWithdrawMerchant"
             resultType="com.pokerstar.api.domain.entity.merchant.ChannelWithdrawMerchant">
+        select * from channel_withdraw_merchant
+    </select>
+    <select id="lstChannelWithdrawMerchantByChannelId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelWithdrawMerchant">
+        select * from channel_withdraw_merchant where channel_id = #{channelId}
+    </select>
 
+    <select id="lstChannelWithdrawMerchantByMerchantId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelWithdrawMerchant">
+        select * from channel_withdraw_merchant where merchant_id = #{merchantId}
+    </select>
+
+    <select id="getChannelWithdrawMerchantById"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelWithdrawMerchant">
+        select * from channel_withdraw_merchant where channel_withdraw_merchant_id = #{channelWithdrawMerchantId}
     </select>
 
     <update id="updateChannelWithdrawMerchant">
@@ -28,7 +55,9 @@
     </update>
 
     <update id="toggleChannelWithdrawMerchantStatus">
-
+        update channel_withdraw_merchant set
+            channel_withdraw_merchant_status = #{status}
+        where channel_withdraw_merchant_id = #{channelWithdrawMerchantId}
     </update>
 
 </mapper>

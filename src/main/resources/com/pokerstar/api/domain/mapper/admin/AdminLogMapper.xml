@@ -16,17 +16,17 @@
     <insert id="addAdminLoginLog">
         insert into admin_login_log
             (admin_id,admin_account,admin_nick_name,admin_type,admin_login_log_ip,
-            admin_login_log_tim,admin_login_log_status,admin_login_log_password)
+            admin_login_log_time,admin_login_log_status,admin_login_log_password)
         values
             (#{admin_id},#{admin_account},#{admin_nick_name},#{admin_type},#{admin_login_log_ip},
-            #{admin_login_log_tim},#{admin_login_log_status},#{admin_login_log_password})
+            #{admin_login_log_time},#{admin_login_log_status},#{admin_login_log_password})
     </insert>
 
     <select id="getAllAdminLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLog">
-        select * from admin_log
+        select * from admin_log order by order by admin_log_operate_time desc
     </select>
 
     <select id="getAllAdminLoginLog" resultType="com.pokerstar.api.domain.entity.admin.AdminLoginLog">
-        select * from admin_login_log
+        select * from admin_login_log order by admin_login_log_time desc
     </select>
 </mapper>

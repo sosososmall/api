@@ -23,6 +23,10 @@
         select * from channel_deposit
     </select>
 
+    <select id="lstChannelDeposit" resultType="com.pokerstar.api.domain.entity.channel.ChannelDeposit">
+        select * from channel_deposit where channel_id = #{channelId}
+    </select>
+
     <update id="toggleChannelDepositStatus">
         update channel_deposit set channel_deposit_status = #{status} where channel_deposit_id = #{channelDepositId}
     </update>

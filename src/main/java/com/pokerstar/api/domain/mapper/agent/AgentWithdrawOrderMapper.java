@@ -1,7 +1,7 @@
 package com.pokerstar.api.domain.mapper.agent;
 
 import com.pokerstar.api.domain.entity.agent.AgentWithdrawOrder;
-import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperation;
+import com.pokerstar.api.domain.model.agent.AgentWithdrawOrderOperationBO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -19,5 +19,5 @@ public interface AgentWithdrawOrderMapper {
 
     int updateAgentWithdrawOrderStatus(@Param("agentWithdrawOrderId") int agentWithdrawOrderId, @Param("status") int status);
 
-    int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperation param);
+    int updateAgentWithdrawOrderOperation(AgentWithdrawOrderOperationBO param);
 }

@@ -16,6 +16,12 @@ public interface ChannelMerchantMapper {
 
     List<ChannelMerchant> getAllChannelMerchant();
 
+    List<ChannelMerchant> lstChannelMerchantByChannelId(int channelId);
+
+    List<ChannelMerchant> lstChannelMerchantByMerchantId(int merchantId);
+
+    ChannelMerchant getChannelMerchantById(int channelMerchantId);
+
     int updateChannelMerchant(ChannelMerchant param);
 
     int toggleChannelMerchantStatus(@Param("channelMerchantId") int channelMerchantId,@Param("status") int status);

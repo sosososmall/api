@@ -2,6 +2,7 @@ package com.pokerstar.api.domain.mapper.merchant;
 
 import com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,13 +16,15 @@ public interface MerchantDepositOrderMapper {
 
     List<MerchantDepositOrder> lstMerchantDepositOrder();
 
+    List<MerchantDepositOrder> lstMerchantDepositOrderByMerchantId(int merchantId);
+
     MerchantDepositOrder getMerchantDepositOrder(long orderId);
 
-    MerchantDepositOrder getMerchantDepositOrderByOrderNo(String orderNo);
+    MerchantDepositOrder getMerchantDepositOrderByOrderNo(String merOrderNo);
 
-    MerchantDepositOrder getMerchantDepositOrderByPlatOrderNo(String orderNo);
+    MerchantDepositOrder getMerchantDepositOrderByPlatOrderNo(String platOrderNo);
 
-    int updateMerchantDepositOrderChannelStatus();
+    int updateMerchantDepositOrderChannelStatus(@Param("orderID") long orderId, @Param("status") int status);
 
-    int updateMerchantDepositOrderMerchantStatus();
+    int updateMerchantDepositOrderMerchantStatus(@Param("orderID") long orderId, @Param("status") int status);
 }

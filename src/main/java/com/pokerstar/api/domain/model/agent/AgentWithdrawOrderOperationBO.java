@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class AgentWithdrawOrderOperation implements Serializable {
+public class AgentWithdrawOrderOperationBO implements Serializable {
     private static final long serialVersionUID = -3249543307627752974L;
 
     private long agent_withdraw_order_id;

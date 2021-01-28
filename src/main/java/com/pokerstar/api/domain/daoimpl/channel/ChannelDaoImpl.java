@@ -4,9 +4,8 @@ import com.pokerstar.api.domain.dao.channel.IChannelDao;
 import com.pokerstar.api.domain.dto.channel.ChannelDTO;
 import com.pokerstar.api.domain.mapper.channel.ChannelMapper;
 import com.pokerstar.api.domain.entity.channel.Channel;
-import com.pokerstar.api.domain.model.channel.ChannelIp;
-import com.pokerstar.api.domain.model.channel.ChannelRate;
-import com.pokerstar.api.domain.model.channel.ChannelUrl;
+import com.pokerstar.api.domain.model.channel.ChannelRateBO;
+import com.pokerstar.api.domain.model.channel.ChannelUrlBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -45,17 +44,17 @@ public class ChannelDaoImpl implements IChannelDao {
     }
 
     @Override
-    public int updateChannelRateInfo(ChannelRate param) {
+    public int updateChannelRateInfo(ChannelRateBO param) {
         return channelMapper.updateChannelRateInfo(param);
     }
 
     @Override
-    public int updateChannelIp(ChannelIp param) {
-        return channelMapper.updateChannelIp(param);
+    public int updateChannelIp(int channelId, String ip) {
+        return channelMapper.updateChannelIp(channelId, ip);
     }
 
     @Override
-    public int updateChannelUrl(ChannelUrl param) {
+    public int updateChannelUrl(ChannelUrlBO param) {
         return channelMapper.updateChannelUrl(param);
     }
 }

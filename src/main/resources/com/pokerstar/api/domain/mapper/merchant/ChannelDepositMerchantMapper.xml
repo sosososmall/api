@@ -7,23 +7,47 @@
 
 
     <insert id="addChannelDepositMerchant">
-
+        insert into channel_deposit_merchant
+            (channel_id,merchant_id,channel_merchant_id,channel_deposit_id,channel_support_country_id,
+            channel_deposit_type_id,channel_deposit_code,channel_deposit_extra_code,
+            channel_deposit_min_amount,channel_deposit_max_amount,channel_deposit_merchant_min_amount,
+            channel_deposit_merchant_max_amount,channel_deposit_merchant_status,
+            channel_deposit_merchant_deduct_amount,channel_deposit_merchant_rate,
+            channel_deposit_merchant_remark)
+        values
+            (#{channel_id},#{merchant_id},#{channel_merchant_id},#{channel_deposit_id},#{channel_support_country_id},
+            #{channel_deposit_type_id},#{channel_deposit_code},#{channel_deposit_extra_code},
+            #{channel_deposit_min_amount},#{channel_deposit_max_amount},#{channel_deposit_merchant_min_amount},
+            #{channel_deposit_merchant_max_amount},#{channel_deposit_merchant_status},
+            #{channel_deposit_merchant_deduct_amount},#{channel_deposit_merchant_rate},
+            #{channel_deposit_merchant_remark})
     </insert>
 
     <delete id="deleteChannelDepositMerchant">
-
+        delete from channel_deposit_merchant where channel_deposit_merchant_id = #{channelDepositMerchantId}
     </delete>
 
     <select id="getAllChannelDepositMerchant"
             resultType="com.pokerstar.api.domain.entity.merchant.ChannelDepositMerchant">
+        select * from channel_deposit_merchant
+    </select>
 
+    <select id="lstChannelDepositMerchantByChannelId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelDepositMerchant">
+        select * from channel_deposit_merchant where channel_id = #{channelId}
+    </select>
+
+    <select id="lstChannelDepositMerchantByMerchantId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelDepositMerchant">
+        select * from channel_deposit_merchant where merchant_id = #{merchant_id}
     </select>
 
     <update id="toggleChannelDepositMerchantStatus">
-
+        update channel_deposit_merchant_status = #{status} where channel_deposit_merchant_id = #{channelDepositMerchantId}
     </update>
 
     <update id="updateChannelDepositMerchant">
 
     </update>
+
 </mapper>

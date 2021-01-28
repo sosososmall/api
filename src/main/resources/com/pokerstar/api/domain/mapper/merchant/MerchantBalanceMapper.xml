@@ -5,27 +5,40 @@
 
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantBalanceMapper">
     <insert id="addMerchantBalance">
-
+        insert into merchant_balance
+            (merchant_id,merchant_balance_currency_iso_code,merchant_balance_amount,merchant_balance_freeze_amount,
+            merchant_balance_transaction_deposit_amount,merchant_balance_transaction_withdraw_amount,
+            merchant_balance_total_deposit_fee,merchant_balance_total_withdraw_fee,
+            merchant_balance_freeze_balance,merchant_balance_remark)
+        values
+            (#{merchant_id},#{merchant_balance_currency_iso_code},#{merchant_balance_amount},#{merchant_balance_freeze_amount},
+            #{merchant_balance_transaction_deposit_amount},#{merchant_balance_transaction_withdraw_amount},
+            #{merchant_balance_total_deposit_fee},#{merchant_balance_total_withdraw_fee},
+            #{merchant_balance_freeze_balance},#{merchant_balance_remark})
     </insert>
+
+    <delete id="deleteMerchantBalanceById">
+        delete from merchant_balance where merchant_balance_id = #{merchantBalanceId}
+    </delete>
+
+    <delete id="deleteMerchantBalance">
+        delete from merchant_balance where merchant_id = #{merchantId}
+    </delete>
+
+    <select id="getAllMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+        select * from merchant_balance
+    </select>
+
+    <select id="getMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+        select * from merchant_balance where merchant_balance_id = #{merchantBalanceId}
+    </select>
+
+    <select id="lstMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
+        select * from merchant_balance where merchant_id = #{merchantId}
+    </select>
 
     <update id="updateMerchantBalance">
 
     </update>
-
-    <delete id="deleteMerchantBalance">
-
-    </delete>
-
-    <select id="getAllMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
-
-    </select>
-
-    <select id="getMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
-
-    </select>
-
-    <select id="lstMerchantBalance" resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalance">
-
-    </select>
 
 </mapper>

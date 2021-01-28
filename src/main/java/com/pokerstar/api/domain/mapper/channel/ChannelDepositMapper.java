@@ -16,5 +16,8 @@ public interface ChannelDepositMapper {
 
     List<ChannelDeposit> getAllChannelDeposit();
 
+    List<ChannelDeposit> lstChannelDeposit(int channelId);
+
     int toggleChannelDepositStatus(@Param("channelDepositId") int channelDepositId, @Param("status") int status);
+
 }

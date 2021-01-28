@@ -2,9 +2,8 @@ package com.pokerstar.api.domain.dao.channel;
 
 import com.pokerstar.api.domain.dto.channel.ChannelDTO;
 import com.pokerstar.api.domain.entity.channel.Channel;
-import com.pokerstar.api.domain.model.channel.ChannelIp;
-import com.pokerstar.api.domain.model.channel.ChannelRate;
-import com.pokerstar.api.domain.model.channel.ChannelUrl;
+import com.pokerstar.api.domain.model.channel.ChannelRateBO;
+import com.pokerstar.api.domain.model.channel.ChannelUrlBO;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ public interface IChannelDao {
 
     int enableChannel(int channelId);
 
-    int updateChannelRateInfo(ChannelRate param);
+    int updateChannelRateInfo(ChannelRateBO param);
 
-    int updateChannelIp(ChannelIp param);
+    int updateChannelIp(int channelId, String ip);
 
-    int updateChannelUrl(ChannelUrl param);
+    int updateChannelUrl(ChannelUrlBO param);
 }

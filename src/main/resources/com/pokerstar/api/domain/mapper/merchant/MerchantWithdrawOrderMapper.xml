@@ -58,11 +58,15 @@
     </select>
 
     <update id="updateMerchantWithdrawOrderChannelStatus">
-
+        update merchant_withdraw_order set
+            merchant_withdraw_order_notify_channel_status = #{status}
+        where merchant_withdraw_order_id = #{orderID}
     </update>
 
     <update id="updateMerchantWithdrawOrderMerchantStatus">
-
+        update merchant_withdraw_order set
+            merchant_withdraw_order_notify_merchant_status = #{status}
+        where merchant_withdraw_order_id = #{orderID}
     </update>
 
 </mapper>

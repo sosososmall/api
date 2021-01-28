@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class AgentBank implements Serializable {
+public class AgentBankBO implements Serializable {
     private static final long serialVersionUID = 7765377632988100655L;
 
     private int admin_id;

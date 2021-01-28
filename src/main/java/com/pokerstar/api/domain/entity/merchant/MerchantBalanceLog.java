@@ -26,4 +26,6 @@ public class MerchantBalanceLog implements Serializable {
     private long merchant_balance_log_create_time;
 
     private int merchant_balance_type_id;
+
+    private String merchant_balance_log_remark;
 }

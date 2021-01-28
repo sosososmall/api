@@ -26,11 +26,26 @@
     <select id="getAllChannelMerchant" resultType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
         select * from channel_merchant
     </select>
+    <select id="lstChannelMerchantByChannelId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
+        select * from channel_merchant where channel_id = #{channelId}
+    </select>
+
+    <select id="lstChannelMerchantByMerchantId"
+            resultType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
+        select * from channel_merchant where merchant_id = #{merchantId}
+    </select>
+
+    <select id="getChannelMerchantById" resultType="com.pokerstar.api.domain.entity.merchant.ChannelMerchant">
+        select * from channel_merchant where channel_merchant_id = #{channelMerchantId}
+    </select>
 
     <update id="updateChannelMerchant">
 
     </update>
+
     <update id="toggleChannelMerchantStatus">
         update channel_merchant set channel_merchant_status = #{status} where channel_merchant_id = #{channelMerchantId}
     </update>
+
 </mapper>

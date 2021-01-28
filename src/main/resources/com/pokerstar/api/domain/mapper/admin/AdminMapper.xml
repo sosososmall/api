@@ -22,7 +22,11 @@
     </delete>
 
     <select id="getAllAdmin" resultType="com.pokerstar.api.domain.entity.admin.Admin">
-        select * from admin
+        select * from admin order by admin_type asc
+    </select>
+
+    <select id="getAdminById" resultType="com.pokerstar.api.domain.entity.admin.Admin">
+        select * from admin where admin_id = #{adminId}
     </select>
 
     <update id="updateAdmin">

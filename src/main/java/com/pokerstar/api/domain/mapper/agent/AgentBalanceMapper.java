@@ -17,5 +17,9 @@ public interface AgentBalanceMapper {
 
     List<AgentBalance> getAllAgentBalance();
 
+    AgentBalance getAgentBalanceById(int agentBalanceId);
+
+    List<AgentBalance> lstAgentBalance(int agentId);
+
     int updateAgentBalance(AgentBalance param);
 }

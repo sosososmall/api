@@ -6,28 +6,40 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.MerchantLogMapper">
 
     <insert id="addMerchantBalanceLog">
-
+        insert into merchant_balance_log
+            (merchant_id,merchant_balance_log_currency_iso_code,merchant_balance_log_before,
+            merchant_balance_log_after,merchant_balance_log_balance,merchant_balance_log_source,
+            merchant_balance_log_create_time,merchant_balance_type_id,merchant_balance_log_remark)
+        values
+            (#{merchant_id},#{merchant_balance_log_currency_iso_code},#{merchant_balance_log_before},
+            #{merchant_balance_log_after},#{merchant_balance_log_balance},#{merchant_balance_log_source},
+            #{merchant_balance_log_create_time},#{merchant_balance_type_id},#{merchant_balance_log_remark})
     </insert>
 
     <insert id="addMerchantLoginLog">
-
+        insert into merchant_login_log
+            (merchant_id,merchant_account,merchant_login_log_ip,
+            merchant_login_log_time,merchant_login_log_status,merchant_login_log_password)
+        values
+            (#{merchant_id},#{merchant_account},#{merchant_login_log_ip},
+            #{merchant_login_log_time},#{merchant_login_log_status},#{merchant_login_log_password})
     </insert>
 
     <delete id="deleteMerchantBalanceLog">
-
+        delete from merchant_balance_log where merchant_balance_log_create_time &lt; #{endTimestamp}
     </delete>
 
     <delete id="deleteMerchantLoginLog">
-
+        delete from merchant_login_log where merchant_login_log_time &lt; #{endTimestamp}
     </delete>
 
     <select id="lstMerchantBalanceLog"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantBalanceLog">
-
+        select * from merchant_balance_log order by merchant_balance_log_create_time desc
     </select>
 
     <select id="lstMerchantLoginLog" resultType="com.pokerstar.api.domain.entity.merchant.MerchantLoginLog">
-
+        select * from merchant_login_log order by merchant_login_log_time desc
     </select>
 
 </mapper>

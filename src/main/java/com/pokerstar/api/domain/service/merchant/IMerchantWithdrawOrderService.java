@@ -17,7 +17,7 @@ public interface IMerchantWithdrawOrderService {
 
     MerchantWithdrawOrder getMerchantWithdrawOrderByPlatOrderNo(String orderNo);
 
-    int updateMerchantWithdrawOrderChannelStatus();
+    int updateMerchantWithdrawOrderChannelStatus(long merDepositOrderId, int status);
 
-    int updateMerchantWithdrawOrderMerchantStatus();
+    int updateMerchantWithdrawOrderMerchantStatus(long merDepositOrderId, int status);
 }

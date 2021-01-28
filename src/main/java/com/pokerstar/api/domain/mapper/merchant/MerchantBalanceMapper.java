@@ -11,7 +11,9 @@ import java.util.List;
 public interface MerchantBalanceMapper {
     boolean addMerchantBalance(MerchantBalance entity);
 
-    int deleteMerchantBalance(int merchantBalanceId);
+    int deleteMerchantBalanceById(int merchantBalanceId);
+
+    int deleteMerchantBalance(int merchantId);
 
     List<MerchantBalance> getAllMerchantBalance();
 

@@ -27,6 +27,10 @@
         select * from agent
     </select>
 
+    <select id="getAgentById" resultType="com.pokerstar.api.domain.entity.agent.Agent">
+        select * from agent where agent_id = #{agentId}
+    </select>
+
     <update id="updateAgent">
 
     </update>

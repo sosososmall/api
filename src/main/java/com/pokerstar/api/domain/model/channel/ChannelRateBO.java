@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-public class ChannelRate implements Serializable {
+public class ChannelRateBO implements Serializable {
 
     private static final long serialVersionUID = -3435270576394091322L;
 
