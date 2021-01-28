@@ -258,7 +258,7 @@ public class RedisBaseUtil {
      * @param value 值
      * @return true 成功 false失败
      */
-    public boolean hSet(String key, String item, Object value) {
+    public boolean hSet(String key, Object item, Object value) {
         try {
             redisTemplate.opsForHash().put(key, item, value);
             return true;

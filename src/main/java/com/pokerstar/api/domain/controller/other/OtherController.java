@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/country")
-public class CountryController {
-    private static final Logger Log = LoggerFactory.getLogger(CountryController.class);
+@RequestMapping("/other")
+public class OtherController {
+    private static final Logger Log = LoggerFactory.getLogger(OtherController.class);
 
     @Autowired
     private ICountryService countryService;

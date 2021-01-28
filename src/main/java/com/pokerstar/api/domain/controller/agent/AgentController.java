@@ -6,6 +6,7 @@ import com.pokerstar.api.domain.service.agent.IAgentLogService;
 import com.pokerstar.api.domain.service.agent.IAgentService;
 import com.pokerstar.api.domain.service.agent.IAgentWithdrawOrderService;
 import com.pokerstar.api.infrastructure.entity.Result;
+import com.pokerstar.api.infrastructure.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class AgentController {
     @RequestMapping("/add")
     public Result addAgent(@RequestBody Agent agent) {
         try {
-
-            return Result.success();
+            agent.setAgent_create_time(DateTimeUtil.getCurrentSecondTimestamp());
+            return Result.success(agentService.addAgent(agent));
         } catch (Exception ex) {
             return Result.fail(0);
         }
@@ -45,6 +46,18 @@ public class AgentController {
     @RequestMapping("/login")
     public Result agentLogIn(@RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password) {
+        try {
+
+            return Result.success();
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/withdraw")
+    public Result withdrawApply() {
         try {
 
             return Result.success();

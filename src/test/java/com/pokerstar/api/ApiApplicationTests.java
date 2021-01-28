@@ -60,7 +60,7 @@ class ApiApplicationTests {
             String[] str;
             ObjectMapper mapper = new ObjectMapper();
 
-            String url = domain + "/country/addCountry";
+            String url = domain + "/other/addCountry";
 
             while (iterator.hasNext()) {
                 Element el = iterator.next();
@@ -115,7 +115,7 @@ class ApiApplicationTests {
 
             String[] str;
 
-            String url = domain + "/country/initCurrency";
+            String url = domain + "/other/initCurrency";
 
             Set<String> s = new HashSet<>(280);
             while (iterator.hasNext()) {
@@ -160,7 +160,7 @@ class ApiApplicationTests {
 
             String[] str;
 
-            String url = domain + "/country/updateCurrencyRate";
+            String url = domain + "/other/updateCurrencyRate";
 
             while (iterator.hasNext()) {
                 Element el = iterator.next();

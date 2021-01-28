@@ -4,6 +4,9 @@ import com.pokerstar.api.domain.dao.agent.IAgentDao;
 import com.pokerstar.api.domain.entity.agent.Agent;
 import com.pokerstar.api.domain.model.agent.AgentBankBO;
 import com.pokerstar.api.domain.service.agent.IAgentService;
+import com.pokerstar.api.infrastructure.util.RedisUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +14,21 @@ import java.util.List;
 
 @Service
 public class AgentServiceImpl implements IAgentService {
+    private static Logger Log = LoggerFactory.getLogger(AgentServiceImpl.class);
+
     @Autowired
     private IAgentDao agentDao;
 
     @Override
     public boolean addAgent(Agent entity) {
-        return agentDao.addAgent(entity);
+        try {
+            agentDao.addAgent(entity);
+
+            return true;
+        } catch (Exception ex) {
+            Log.error("add agent error:", ex);
+            return false;
+        }
     }
 
     @Override

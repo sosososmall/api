@@ -2,6 +2,16 @@ package com.pokerstar.api.infrastructure.enums;
 
 public enum RedisDirKeyEnum {
     /**
+     * dir = ADMIN,
+     * key = admin_id, value = admin
+     */
+    ADMIN("ADMIN"),
+    /**
+     * dir = AGENT,
+     * key = agent_id, value = agent
+     */
+    AGENT("AGENT"),
+    /**
      * dir = CN,
      * key = country_id, value = country
      */
