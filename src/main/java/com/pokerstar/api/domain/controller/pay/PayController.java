@@ -1,9 +1,9 @@
 package com.pokerstar.api.domain.controller.pay;
 
 import com.pokerstar.api.domain.channel.channelbase.AbsPay;
+import com.pokerstar.api.domain.entity.channel.Channel;
 import com.pokerstar.api.domain.entity.merchant.ChannelDepositMerchant;
 import com.pokerstar.api.domain.entity.merchant.ChannelMerchant;
-import com.pokerstar.api.domain.entity.merchant.Merchant;
 import com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder;
 import com.pokerstar.api.domain.model.pay.DepositRequest;
 import com.pokerstar.api.domain.model.pay.PayData;
@@ -77,9 +77,13 @@ public class PayController {
                 return Result.fail(ResultCode.ORDER_ALREADY_EXIST);
             }
 
+            Channel channel = RedisUtil.getChannelById(channelMerchant.getChannel_id());
+
             PayData payData = new PayData();
             payData.setRequest(request);
 
+            payData.setMerchant_no(channel.getChannel_number());
+            payData.setSecret_key(channel.getChannel_secret_key());
             payData.setRequest_url(channelMerchant.getChannel_merchant_deposit_url());
             payData.setPay_code(channelDepositMerchant.getChannel_deposit_code());
             payData.setPay_code_extra(channelDepositMerchant.getChannel_deposit_extra_code());

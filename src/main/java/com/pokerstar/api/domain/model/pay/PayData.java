@@ -15,8 +15,6 @@ public class PayData implements Serializable {
 
     private String secret_key;
 
-    private String short_name;
-
     private String request_url;
 
     private String plat_notify_url;
