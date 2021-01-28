@@ -193,7 +193,7 @@ public class RedisBaseUtil {
         return redisTemplate.opsForHash().get(key, item);
     }
 
-    public <T> T hGetT(String key, String item) {
+    public <T> T hGetT(String key, Object item) {
         try {
             return (T) redisTemplate.opsForHash().get(key, item);
         } catch (Exception ex) {

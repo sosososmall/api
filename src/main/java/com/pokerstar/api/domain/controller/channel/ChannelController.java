@@ -6,11 +6,14 @@ import com.pokerstar.api.domain.service.channel.IChannelService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "渠道信息管理")
 @RestController
 @RequestMapping("/channel")
 public class ChannelController {
@@ -20,9 +23,10 @@ public class ChannelController {
     @Autowired
     private IChannelService channelService;
 
+    @ApiOperation(value = "新增渠道", httpMethod = "POST")
     @PostMapping
     @ResponseBody
-    @RequestMapping("/addChannel")
+    @RequestMapping("/add")
     public Result addChannel(@RequestBody Channel channel) {
         try {
             channel.setChannel_create_time(DateTimeUtil.getCurrentSecondTimestamp());
@@ -34,9 +38,10 @@ public class ChannelController {
         }
     }
 
+    @ApiOperation(value = "删除渠道", httpMethod = "POST")
     @PostMapping
     @ResponseBody
-    @RequestMapping("/deleteChannel")
+    @RequestMapping("/delete")
     public Result deleteChannel(@RequestParam(value = "channelId") int channelId) {
         try {
             return Result.success(channelService.deleteChannel(channelId));
@@ -46,6 +51,7 @@ public class ChannelController {
         }
     }
 
+    @ApiOperation(value = "获取渠道", httpMethod = "GET")
     @GetMapping
     @ResponseBody
     @RequestMapping("/getChannels")
@@ -60,6 +66,7 @@ public class ChannelController {
     }
 
 
+    @ApiOperation(value = "切换渠道状态", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/enableChannel")
@@ -72,6 +79,7 @@ public class ChannelController {
         }
     }
 
+    @ApiOperation(value = "修改渠道手续费", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/updateChannelRate")

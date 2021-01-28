@@ -5,11 +5,14 @@ import com.pokerstar.api.domain.service.other.ICountryService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "杂项信息管理")
 @RestController
 @RequestMapping("/other")
 public class OtherController {
@@ -18,6 +21,7 @@ public class OtherController {
     @Autowired
     private ICountryService countryService;
 
+    @ApiOperation(value = "新增国家", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/addCountry")
@@ -30,6 +34,20 @@ public class OtherController {
         }
     }
 
+    @ApiOperation(value = "获取国家信息", httpMethod = "GET")
+    @GetMapping
+    @ResponseBody
+    @RequestMapping("/getCountry")
+    public Result getCountry() {
+        try {
+            return Result.success(countryService.getAllCountry());
+        } catch (Exception ex) {
+            Log.error("get country error:", ex);
+            return Result.fail(0);
+        }
+    }
+
+    @ApiOperation(value = "初始化国家汇率信息", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/initCurrency")
@@ -42,6 +60,7 @@ public class OtherController {
         }
     }
 
+    @ApiOperation(value = "修改国家汇率信息", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/updateCurrencyRate")

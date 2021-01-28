@@ -5,11 +5,14 @@ import com.pokerstar.api.domain.service.admin.IAdminLogService;
 import com.pokerstar.api.domain.service.admin.IAdminService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "管理员信息管理")
 @RestController
 @RequestMapping("admin")
 public class AdminController {
@@ -21,6 +24,7 @@ public class AdminController {
     @Autowired
     private IAdminLogService adminLogService;
 
+    @ApiOperation(value = "新增管理员", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/add")
@@ -33,6 +37,7 @@ public class AdminController {
         }
     }
 
+    @ApiOperation(value = "管理员登录", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/login")

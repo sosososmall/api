@@ -7,11 +7,14 @@ import com.pokerstar.api.domain.service.agent.IAgentService;
 import com.pokerstar.api.domain.service.agent.IAgentWithdrawOrderService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "代理信息管理")
 @RestController
 @RequestMapping("/agent")
 public class AgentController {
@@ -29,6 +32,7 @@ public class AgentController {
     @Autowired
     private IAgentBalanceService agentBalanceService;
 
+    @ApiOperation(value = "新增代理", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/add")
@@ -41,6 +45,7 @@ public class AgentController {
         }
     }
 
+    @ApiOperation(value = "代理登录", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/login")
@@ -54,6 +59,7 @@ public class AgentController {
         }
     }
 
+    @ApiOperation(value = "代理提现", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/withdraw")

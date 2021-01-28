@@ -30,5 +30,7 @@ public class Merchant implements Serializable {
 
     private boolean merchant_status;
 
+    private long merchant_create_time;
+
     private String merchant_remark;
 }

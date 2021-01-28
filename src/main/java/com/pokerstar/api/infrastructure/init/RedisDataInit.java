@@ -25,6 +25,8 @@ public class RedisDataInit implements CommandLineRunner {
             RedisUtil.initChannelMerchant();
             RedisUtil.initChannelWithdrawMerchant();
             RedisUtil.initMerchant();
+            RedisUtil.initAdmin();
+            RedisUtil.initAgent();
 
             Log.info("redis data initial end .................");
         }

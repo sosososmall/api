@@ -8,11 +8,11 @@
         insert into merchant
             (agent_id,agent_nick_name,merchant_real_name,merchant_nick_name,
             merchant_account,merchant_password,merchant_phone,merchant_email,
-            merchant_ip,merchant_status,merchant_remark)
+            merchant_ip,merchant_status,merchant_create_time,merchant_remark)
         values
             (#{agent_id},#{agent_nick_name},#{merchant_real_name},#{merchant_nick_name},
             #{merchant_account},#{merchant_password},#{merchant_phone},#{merchant_email},
-            #{merchant_ip},#{merchant_status},#{merchant_remark})
+            #{merchant_ip},#{merchant_status},#{merchant_create_time},#{merchant_remark})
     </insert>
 
     <delete id="deleteMerchant">
