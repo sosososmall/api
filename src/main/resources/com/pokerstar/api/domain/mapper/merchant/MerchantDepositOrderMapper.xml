@@ -9,8 +9,8 @@
         insert into merchant_deposit_order
             (channel_merchant_id,channel_id,channel_short_name,merchant_id,channel_deposit_merchant_id,
             channel_merchant_number,channel_deposit_type_id,merchant_deposit_order_plat_no,
-            merchant_deposit_order_channel_no,merchant_deposit_order_merchant_no,
-            merchant_deposit_order_amount,merchant_deposit_order_fee,merchant_deposit_order_notify_url,
+            merchant_deposit_order_channel_no,merchant_deposit_order_merchant_no,merchant_deposit_order_amount,
+            merchant_deposit_order_fee,merchant_deposit_order_fee_type,merchant_deposit_order_notify_url,
             merchant_deposit_order_request_url,merchant_deposit_order_currency_iso_code,
             merchant_deposit_order_merchant_sign,merchant_deposit_order_create_time,
             merchant_deposit_order_notify_merchant_status,merchant_deposit_order_notify_channel_status,
@@ -18,8 +18,8 @@
         values
             (#{channel_merchant_id},#{channel_id},#{channel_short_name},#{merchant_id},#{channel_deposit_merchant_id},
             #{channel_merchant_number},#{channel_deposit_type_id},#{merchant_deposit_order_plat_no},
-            #{merchant_deposit_order_channel_no},#{merchant_deposit_order_merchant_no},
-            #{merchant_deposit_order_amount},#{merchant_deposit_order_fee},#{merchant_deposit_order_notify_url},
+            #{merchant_deposit_order_channel_no},#{merchant_deposit_order_merchant_no},#{merchant_deposit_order_amount},
+            #{merchant_deposit_order_fee},#{merchant_deposit_order_fee_type},#{merchant_deposit_order_notify_url},
             #{merchant_deposit_order_request_url},#{merchant_deposit_order_currency_iso_code},
             #{merchant_deposit_order_merchant_sign},#{merchant_deposit_order_create_time},
             #{merchant_deposit_order_notify_merchant_status},#{merchant_deposit_order_notify_channel_status},

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Data
 public abstract class AbsPay {
-    private Logger Log = LoggerFactory.getLogger(AbsPay.class);
+    private static Logger Log = LoggerFactory.getLogger(AbsPay.class);
 
     protected ChannelMerchant _channelMerchant;
 
@@ -32,8 +33,6 @@ public abstract class AbsPay {
     public AbsPay(ChannelMerchant channelMerchant) {
         _channelMerchant = channelMerchant;
     }
-
-    private Object object = new Object();
 
     /**
      * 获取支付通道实例
@@ -109,12 +108,19 @@ public abstract class AbsPay {
 
     protected abstract boolean verifySign(Map<String, Object> source, String signKey);
 
+    protected abstract String payCallBack();
+
+    protected abstract String withdrawCallBack();
+
+    protected abstract Set<String> paySignKeySet();
+
+    protected abstract Set<String> withdrawSignKeySet();
+
     protected String payResponse() {
         return paySuccessMsg;
     }
 
-    protected String defrayResponse() {
+    protected String withdrawResponse() {
         return withdrawSuccessMsg;
     }
-
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 25/01/2021 18:18:14
+ Date: 28/01/2021 13:32:46
 */
 
 SET NAMES utf8mb4;
@@ -235,9 +235,9 @@ CREATE TABLE `channel`  (
   `channel_ip` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '渠道IP   如果该值不为空 每次该渠道回调不为该IP的请求都拒绝',
   `channel_create_time` int(11) NOT NULL COMMENT '创建时间',
   `channel_last_update_time` int(11) NULL DEFAULT NULL COMMENT '最后更新时间',
-  `channel_remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `channel_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`channel_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n渠道信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n渠道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of channel
@@ -256,6 +256,7 @@ DROP TABLE IF EXISTS `channel_deposit`;
 CREATE TABLE `channel_deposit`  (
   `channel_deposit_id` int(11) NOT NULL AUTO_INCREMENT,
   `channel_id` int(11) NOT NULL COMMENT '渠道ID',
+  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
   `channel_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
   `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
   `channel_deposit_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
@@ -282,6 +283,7 @@ CREATE TABLE `channel_deposit_merchant`  (
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
   `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
   `channel_deposit_id` int(11) NOT NULL COMMENT '充值通道ID',
+  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
   `channel_deposit_type_id` int(11) NOT NULL COMMENT '充值通道类型ID',
   `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
   `channel_deposit_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
@@ -379,6 +381,7 @@ DROP TABLE IF EXISTS `channel_withdraw`;
 CREATE TABLE `channel_withdraw`  (
   `channel_withdraw_id` int(11) NOT NULL AUTO_INCREMENT,
   `channel_id` int(11) NOT NULL COMMENT '渠道ID',
+  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
   `channel_withdraw_type_id` int(11) NOT NULL COMMENT '通道类型ID',
   `channel_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
   `channel_withdraw_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
@@ -405,6 +408,7 @@ CREATE TABLE `channel_withdraw_merchant`  (
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
   `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
   `channel_withdraw_id` int(11) NOT NULL COMMENT '提现通道ID',
+  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
   `channel_withdraw_type_id` int(11) NOT NULL COMMENT '提现通道类型ID',
   `channel_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
   `channel_withdraw_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
@@ -710,6 +714,7 @@ CREATE TABLE `merchant_balance_log`  (
   `merchant_balance_log_source` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '金钱来源',
   `merchant_balance_log_create_time` int(11) NOT NULL COMMENT '创建时间',
   `merchant_balance_type_id` int(11) NOT NULL COMMENT '账变类型ID',
+  `merchant_balance_log_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_balance_log_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -735,11 +740,12 @@ CREATE TABLE `merchant_deposit_order`  (
   `merchant_deposit_order_merchant_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户订单号',
   `merchant_deposit_order_amount` decimal(65, 2) NOT NULL COMMENT '充值金额',
   `merchant_deposit_order_fee` decimal(15, 2) NOT NULL COMMENT '订单手续费',
+  `merchant_deposit_order_fee_type` int(11) NOT NULL DEFAULT 1 COMMENT '手续费扣除方式 1=商户 2=商户客户',
   `merchant_deposit_order_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户异步通知地址',
   `merchant_deposit_order_request_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户请求地址',
   `merchant_deposit_order_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种',
   `merchant_deposit_order_merchant_sign` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '签名',
-  `merchant_deposit_order_create_time` bigint(14) NOT NULL COMMENT '创建时间',
+  `merchant_deposit_order_create_time` bigint(11) NOT NULL COMMENT '创建时间',
   `merchant_deposit_order_notify_merchant_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '商户异步通知状态  1=商户收到回调通知并返回成功',
   `merchant_deposit_order_notify_channel_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
   `merchant_deposit_order_extra` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '额外扩展',
@@ -788,6 +794,7 @@ CREATE TABLE `merchant_withdraw_order`  (
   `merchant_withdraw_order_channel_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道订单号',
   `merchant_withdraw_order_amount` decimal(65, 2) NOT NULL COMMENT '提现金额',
   `merchant_withdraw_order_fee` decimal(15, 2) NOT NULL COMMENT '手续费',
+  `merchant_withdraw_order_fee_type` int(11) NOT NULL DEFAULT 1 COMMENT '手续费扣除方式 1=商户 2=商户客户',
   `merchant_withdraw_order_real_name` varchar(65) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现用户真实姓名',
   `merchant_withdraw_order_bank_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现银行代码',
   `merchant_withdraw_order_bank_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '提现用户卡号',

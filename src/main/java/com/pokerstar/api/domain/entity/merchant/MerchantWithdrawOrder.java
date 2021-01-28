@@ -35,6 +35,8 @@ public class MerchantWithdrawOrder implements Serializable {
 
     private BigDecimal merchant_withdraw_order_fee;
 
+    private int merchant_withdraw_order_fee_type;
+
     private String merchant_withdraw_order_real_name;
 
     private String merchant_withdraw_order_bank_code;

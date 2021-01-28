@@ -1,0 +1,25 @@
+package com.pokerstar.api.domain.model.pay;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+@Data
+public class DepositRequest implements Serializable {
+    private static final long serialVersionUID = 6544725559702374894L;
+
+    private String merchant_no;
+
+    private BigDecimal pay_amount;
+
+    private String notify_url;
+
+    private long order_no;
+
+    private int pay_type;
+
+    private String sign;
+
+    private int pay_fee_type;
+}

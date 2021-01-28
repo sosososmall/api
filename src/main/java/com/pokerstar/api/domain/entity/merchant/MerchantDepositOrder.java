@@ -35,6 +35,8 @@ public class MerchantDepositOrder implements Serializable {
 
     private BigDecimal merchant_deposit_order_fee;
 
+    private int merchant_deposit_order_fee_type;
+
     private String merchant_deposit_order_notify_url;
 
     private String merchant_deposit_order_request_url;
