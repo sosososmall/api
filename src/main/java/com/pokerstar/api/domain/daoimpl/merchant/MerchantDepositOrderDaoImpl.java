@@ -34,8 +34,8 @@ public class MerchantDepositOrderDaoImpl implements IMerchantDepositOrderDao {
     }
 
     @Override
-    public MerchantDepositOrder getMerchantDepositOrderByOrderNo(String orderNo) {
-        return merchantDepositOrderMapper.getMerchantDepositOrderByOrderNo(orderNo);
+    public MerchantDepositOrder getMerchantDepositOrderByOrderNo(int merId, String orderNo) {
+        return merchantDepositOrderMapper.getMerchantDepositOrderByOrderNo(merId, orderNo);
     }
 
     @Override

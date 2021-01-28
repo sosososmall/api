@@ -13,7 +13,7 @@ public interface IMerchantDepositOrderDao {
 
     MerchantDepositOrder getMerchantDepositOrder(long orderId);
 
-    MerchantDepositOrder getMerchantDepositOrderByOrderNo(String orderNo);
+    MerchantDepositOrder getMerchantDepositOrderByOrderNo(int merId, String orderNo);
 
     MerchantDepositOrder getMerchantDepositOrderByPlatOrderNo(String orderNo);
 

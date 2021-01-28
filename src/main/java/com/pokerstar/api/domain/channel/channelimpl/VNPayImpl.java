@@ -10,25 +10,26 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class VNPayImpl extends AbsPay {
-    public VNPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+
+    public VNPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override
     protected String pay(PayData param) {
         SortedMap<String, Object> map = new TreeMap<>();
-        map.put("pay_memberid", _channelMerchant.getChannel_merchant_id());
-        map.put("pay_orderid", param.getOrderId());
+        map.put("pay_memberid", depositRequest.getMerchant_no());
+        map.put("pay_orderid", depositRequest.getPay_order_no());
         map.put("pay_applydate", "");
-        map.put("pay_bankcode", param.getPayType());
-        map.put("pay_notifyurl", param.getNotifyUrl());
-        map.put("pay_amount", param.getAmount());
+        map.put("pay_bankcode", param.getPay_code());
+        map.put("pay_notifyurl", depositRequest.getPay_notify_url());
+        map.put("pay_amount", depositRequest.getPay_amount());
 
         String sign = sign(map);
         map.put("pay_md5sign", sign);
         map.put("format", "json");
         map.put("pay_productname", "justshare");
-        map.put("pay_receive_bankcode", param.getPayCode());
+        map.put("pay_receive_bankcode", param.getPay_code_extra());
         return null;
     }
 

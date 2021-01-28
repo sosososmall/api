@@ -8,8 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class SunPayImpl extends AbsPay {
-    public SunPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+
+    public SunPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override

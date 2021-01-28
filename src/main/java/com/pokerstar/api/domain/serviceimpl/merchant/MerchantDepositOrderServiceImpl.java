@@ -34,8 +34,8 @@ public class MerchantDepositOrderServiceImpl implements IMerchantDepositOrderSer
     }
 
     @Override
-    public MerchantDepositOrder getMerchantDepositOrderByOrderNo(String orderNo) {
-        return merchantDepositOrderDao.getMerchantDepositOrderByOrderNo(orderNo);
+    public MerchantDepositOrder getMerchantDepositOrderByOrderNo(int merId, String orderNo) {
+        return merchantDepositOrderDao.getMerchantDepositOrderByOrderNo(merId, orderNo);
     }
 
     @Override

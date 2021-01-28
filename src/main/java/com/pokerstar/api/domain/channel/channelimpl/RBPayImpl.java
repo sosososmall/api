@@ -8,8 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class RBPayImpl extends AbsPay {
-    public RBPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+
+    public RBPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override

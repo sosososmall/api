@@ -9,8 +9,9 @@ import java.util.Set;
 
 public class ShineUPayImpl extends AbsPay {
 
-    public ShineUPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+
+    public ShineUPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override

@@ -19,6 +19,8 @@ public class ChannelDepositMerchant implements Serializable {
 
     private int channel_deposit_id;
 
+    private int channel_support_country_id;
+
     private int channel_deposit_type_id;
 
     private String channel_deposit_code;

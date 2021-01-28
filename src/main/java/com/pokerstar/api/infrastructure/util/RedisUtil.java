@@ -136,11 +136,16 @@ public class RedisUtil {
         List<ChannelMerchant> source = channelMerchantService.getAllChannelMerchant();
         for (ChannelMerchant item : source) {
             redisBaseUtil.hSet(RedisDirKeyEnum.CHANNEL_MERCHANT.getDirKey(), item.getChannel_merchant_id(), item);
+            redisBaseUtil.hSet(RedisDirKeyEnum.CHANNEL_MERCHANT.getDirKey(), item.getChannel_merchant_number(), item);
         }
     }
 
     public static ChannelMerchant getChannelMerById(int channelMerId) {
         return redisBaseUtil.hGetT(RedisDirKeyEnum.CHANNEL_MERCHANT.getDirKey(), channelMerId);
+    }
+
+    public static ChannelMerchant getChannelMerchantByNo(String merchantNo) {
+        return redisBaseUtil.hGetT(RedisDirKeyEnum.CHANNEL_MERCHANT.getDirKey(), merchantNo);
     }
 
     public static boolean refreshChannelMer(ChannelMerchant item) {

@@ -1,6 +1,7 @@
 package com.pokerstar.api.domain.channel.channelbase;
 
 import com.pokerstar.api.domain.entity.merchant.ChannelMerchant;
+import com.pokerstar.api.domain.model.pay.DepositRequest;
 import com.pokerstar.api.domain.model.pay.PayData;
 import com.pokerstar.api.infrastructure.util.Md5Util;
 import lombok.Data;
@@ -19,7 +20,9 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class AbsPay {
     private static Logger Log = LoggerFactory.getLogger(AbsPay.class);
 
-    protected ChannelMerchant _channelMerchant;
+    protected PayData payData;
+
+    protected DepositRequest depositRequest;
 
     protected String paySuccessMsg = "success";
 
@@ -30,28 +33,30 @@ public abstract class AbsPay {
     private AbsPay() {
     }
 
-    public AbsPay(ChannelMerchant channelMerchant) {
-        _channelMerchant = channelMerchant;
+    public AbsPay(PayData payData) {
+        this.payData = payData;
+        this.depositRequest = payData.getRequest();
     }
+
 
     /**
      * 获取支付通道实例
      *
-     * @param channelMerchant
+     * @param payData
      * @return
      */
-    public static AbsPay getInstance(ChannelMerchant channelMerchant) {
-        if (channelMap.containsKey(channelMerchant.getChannel_short_name())) {
-            return channelMap.get(channelMerchant.getChannel_short_name());
+    public static AbsPay getInstance(PayData payData) {
+        if (channelMap.containsKey(payData.getShort_name())) {
+            return channelMap.get(payData.getShort_name());
         }
 
-        String className = "com.pokerstar.api.domain.channel.channelimpl." + channelMerchant.getChannel_short_name() + "PayImpl";
+        String className = "com.pokerstar.api.domain.channel.channelimpl." + payData.getShort_name() + "PayImpl";
 
         AbsPay payImpl = null;
         try {
             Class<?> clz = Class.forName(className);
-            payImpl = (AbsPay) clz.getConstructor(ChannelMerchant.class).newInstance(channelMerchant);
-            channelMap.putIfAbsent(channelMerchant.getChannel_short_name(), payImpl);
+            payImpl = (AbsPay) clz.getConstructor(PayData.class).newInstance(payData);
+            channelMap.putIfAbsent(payData.getShort_name(), payImpl);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -90,7 +95,7 @@ public abstract class AbsPay {
 
     protected String concatSecretKey(String originalStr) {
         StringBuffer sb = new StringBuffer(256);
-        sb.append(originalStr).append("key=").append(_channelMerchant.getChannel_merchant_secret_key());
+        sb.append(originalStr).append("key=").append(payData.getSecret_key());
         return sb.toString();
     }
 

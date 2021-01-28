@@ -15,6 +15,10 @@ public class ChannelDTO implements Serializable {
 
     private String shortName;
 
+    private String number;
+
+    private String secret_key;
+
     private String depositUrl;
 
     private String withdrawUrl;

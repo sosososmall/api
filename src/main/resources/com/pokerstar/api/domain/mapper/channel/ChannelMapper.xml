@@ -8,6 +8,8 @@
         <id property="id" column="channel_id"/>
         <result property="fullName" column="channel_full_name"/>
         <result property="shortName" column="channel_short_name"/>
+        <result property="number" column="channel_number"/>
+        <result property="secret_key" column="channel_secret_key"/>
         <result property="depositUrl" column="channel_deposit_url"/>
         <result property="withdrawUrl" column="channel_withdraw_url"/>
         <result property="sort" column="channel_sort"/>
@@ -25,12 +27,12 @@
     <insert id="addChannel" parameterType="com.pokerstar.api.domain.entity.channel.Channel"
         useGeneratedKeys="true" keyProperty="channel_id" keyColumn="channel_id">
         insert into channel
-        (channel_full_name,channel_short_name,channel_deposit_url,channel_withdraw_url,
+        (channel_full_name,channel_short_name,channel_number,channel_number,channel_deposit_url,channel_withdraw_url,
         channel_sort,channel_status,channel_support_country_cn_name,channel_support_country_eg_name,
         channel_support_country_iso_code,channel_support_country_id,channel_ip,
         channel_create_time,channel_last_update_time,channel_remark)
         values
-        (#{channel_full_name},#{channel_short_name},#{channel_deposit_url},#{channel_withdraw_url},
+        (#{channel_full_name},#{channel_short_name},#{channel_number},#{channel_number},#{channel_deposit_url},#{channel_withdraw_url},
         #{channel_sort},#{channel_status},#{channel_support_country_cn_name},#{channel_support_country_eg_name},
         #{channel_support_country_iso_code},#{channel_support_country_id},#{channel_ip},
         #{channel_create_time},#{channel_last_update_time},#{channel_remark})

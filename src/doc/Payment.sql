@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 28/01/2021 18:45:40
+ Date: 28/01/2021 20:18:13
 */
 
 SET NAMES utf8mb4;
@@ -226,6 +226,8 @@ CREATE TABLE `channel`  (
   `channel_id` int(11) NOT NULL AUTO_INCREMENT,
   `channel_full_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道全程',
   `channel_short_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
+  `channel_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道商户号',
+  `channel_secret_key` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道密钥',
   `channel_deposit_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代收地址',
   `channel_withdraw_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代付地址',
   `channel_sort` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '排序  该值越大越前',
@@ -244,12 +246,12 @@ CREATE TABLE `channel`  (
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO `channel` VALUES (1, 'BenriPay', 'Benri', 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', 0, 1, 'indonisia', '', '', 0, NULL, 0, NULL, '');
-INSERT INTO `channel` VALUES (2, 'VNPay', 'VN', 'https://www.vn168pay.com/Pay_Index.html', 'https://www.vn168pay.com/Payment_Dfpay_add.html', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (3, 'JuHuaPay', 'JuHua', 'http://admin.juhua1212.com/yj_action/orderApi/new', 'http://admin.juhua1212.com/yj_action/agentApi/create', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (4, 'SJPay', 'SJ', 'https://api.rb131411.com/index/underorder.do', 'https://api.rb131411.com/withdrawal/create', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (5, 'ShineUPay', 'ShineU', 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', 0, 1, 'india', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (6, 'SubiPay', 'SUB', 'http://efupays.com:8084/api/pay/V2', 'http://efupays.com:8084/api/defray/V2', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `channel` VALUES (1, 'BenriPay', 'Benri', 'S820201218154906000002', '{   \"plat_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDFBPvOOdUi1uRP4x61Y6TrRrExgko0OSs9SkjlrpagA+PrBe10RRrxD2Tg892UxXmEFbFsDtgzvPXUzzVJXAo0PplRbVkWP2Wp3HLNrv46FQYKgiO+lknN6jIkYGHCJRKQIKroB+NIzw/p2WTGAMpIXKprQpsM+Dn17+M41F63wIDAQAB\",   \"merchant_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDolk5vCV5L+yM4DDu1B5QF3bVK doD/jzjxKImBQeAYMMKIZF21QaYqHuNDOvtUMWRIxbbl3KUtDCdmqgGS/wphU6J5 BkWrIBJaAFbVwyv3UmwnyBs/wwU0AJtPZHoV27s5Wo2qLZ8tuS6YmArh5i9hImSw oPQsl1/IfOjXU+Ps4QIDAQAB\",   \"merchant_private_key\" : \"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOiWTm8JXkv7IzgM O7UHlAXdtUp2gP+POPEoiYFB4BgwwohkXbVBpioe40M6+1QxZEjFtuXcpS0MJ2aq AZL/CmFTonkGRasgEloAVtXDK/dSbCfIGz/DBTQAm09kehXbuzlajaotny25LpiY CuHmL2EiZLCg9CyXX8h86NdT4+zhAgMBAAECgYBsUTub2HgS2JVxT7kquKnGBZed Ywz2d4PkQ6WuDbjIa0Tdcih19mnlKddbAwfzEMGMZo+kAxrlnMhotnnfNGlnQNqP b2B2/XqmqFuRJeTstRRMmHGPqEFSjXc0IfgrZ49r8mTmApnsENXCHkMa2OxT3sun +Ia8F3QEW3ZST5OYAQJBAPZUFKclQGyOGYM5SvNFDb68yR9oJ7ozz6g+RuO0waHm HyEmPrNRk1riqL44rxbR8nfQ5f8f5RvEspTlSOXQXiECQQDxuBuZyE0gdWm48Vfn S2qyVWGWo75dCea7tYBWDutU/j+CS0rnfGiy2IXjqG9z3u5khwktbXmMGFTxqZNL sjbBAkEAuCsfEeT5KPCJRKJGVmIPp8bwPGocIcxw+qItUDwp9YjfR2KXyGw6Vt5W OXqZ9d7cgRaPj1LicgN7XXWcLi6+4QJBAKjz9tbWmpJFf1A14StaG4nrA/s3GKgP c6dghgOhCfyuedWoqwKCguv/TBaEdOKYwCij+lY2Xu79UuJXlQ0j1AECQCfGTfoC YLsV8opK+zbnOxNH8OtMzrU2Z9c4SI31Iu+F9uCms8+dM0re+CaDWYdQwYIF943o 6g8tW/++loWuekU=\" }        ', 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', 0, 1, 'indonisia', '', '', 0, NULL, 0, NULL, '');
+INSERT INTO `channel` VALUES (2, 'VNPay', 'VN', '10449', '9559xtc2r8pxx1p5otfygzlvynelvb7o', 'https://www.vn168pay.com/Pay_Index.html', 'https://www.vn168pay.com/Payment_Dfpay_add.html', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `channel` VALUES (3, 'JuHuaPay', 'JuHua', '87A87384', '0d70a64a785f471cae2bd8b16ff629c3', 'http://admin.juhua1212.com/yj_action/orderApi/new', 'http://admin.juhua1212.com/yj_action/agentApi/create', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `channel` VALUES (4, 'SJPay', 'SJ', '1022905', 'IIhoISkqgR7JYPZ7UMlJ0CAS7mct0HmB', 'https://api.rb131411.com/index/underorder.do', 'https://api.rb131411.com/withdrawal/create', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `channel` VALUES (5, 'ShineUPay', 'ShineU', 'A5OCM6L0X91C2325', ' 55d41af7486e4b448824369e3787c423', 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', 0, 1, 'india', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `channel` VALUES (6, 'SubiPay', 'SUB', 'API19012960503135996', 'f0d400d243a748a4b5e600459a5030df', 'http://efupays.com:8084/api/pay/V2', 'http://efupays.com:8084/api/defray/V2', 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for channel_deposit
@@ -258,9 +260,9 @@ DROP TABLE IF EXISTS `channel_deposit`;
 CREATE TABLE `channel_deposit`  (
   `channel_deposit_id` int(11) NOT NULL AUTO_INCREMENT,
   `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
+  `channel_support_country_id` int(11) NOT NULL COMMENT '国家ID',
   `channel_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
-  `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
+  `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道编码(单个编码提供该值)',
   `channel_deposit_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
   `channel_deposit_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小充值金额(支付渠道提供)',
   `channel_deposit_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大充值金额(支付渠道提供)',
@@ -269,11 +271,12 @@ CREATE TABLE `channel_deposit`  (
   `channel_deposit_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
   `channel_deposit_type_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`channel_deposit_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n充值通道信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n充值通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of channel_deposit
 -- ----------------------------
+INSERT INTO `channel_deposit` VALUES (1, 1, 0, 1, '', '', 100000.00, 50000000.00, 1, 5000, 5.00, 'test');
 
 -- ----------------------------
 -- Table structure for channel_deposit_merchant
@@ -298,11 +301,12 @@ CREATE TABLE `channel_deposit_merchant`  (
   `channel_deposit_merchant_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
   `channel_deposit_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`channel_deposit_merchant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户充值通道信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户充值通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of channel_deposit_merchant
 -- ----------------------------
+INSERT INTO `channel_deposit_merchant` VALUES (1, 1, 1, 1, 1, 74, 1, '', '', 100000.00, 100000.00, 100000.00, 100000.00, 1, 8000, 8.00, 'test');
 
 -- ----------------------------
 -- Table structure for channel_deposit_type
@@ -316,11 +320,12 @@ CREATE TABLE `channel_deposit_type`  (
   `channel_deposit_type_native_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 本地语言',
   `channel_deposit_type_remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`channel_deposit_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n支付通道类型表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n支付通道类型表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of channel_deposit_type
 -- ----------------------------
+INSERT INTO `channel_deposit_type` VALUES (1, 1, '收银台', 'paydesk', 'meja kasir', 'test');
 
 -- ----------------------------
 -- Table structure for channel_merchant
@@ -345,11 +350,12 @@ CREATE TABLE `channel_merchant`  (
   `channel_merchant_create_time` int(11) NOT NULL COMMENT '商户通道创建时间',
   `channel_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`channel_merchant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户通道信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of channel_merchant
 -- ----------------------------
+INSERT INTO `channel_merchant` VALUES (1, 1, 1, 'BenriPay', 'Benri', '202101280001', 'e10adc3949ba59abbe56e057f20f883e', 74, 5000, 5000, 5.00, 5.00, 1, 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', 1611831168, 'test');
 
 -- ----------------------------
 -- Table structure for channel_merchant_daily_report
@@ -697,11 +703,15 @@ CREATE TABLE `merchant_balance`  (
   `merchant_balance_total_withdraw_fee` decimal(65, 2) NOT NULL DEFAULT 0.00 COMMENT '提现总花费(非实时数据，今天以前，每日凌晨统计后更新)',
   `merchant_balance_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_balance_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户资金信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户资金信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of merchant_balance
 -- ----------------------------
+INSERT INTO `merchant_balance` VALUES (1, 1, 'IDR', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '');
+INSERT INTO `merchant_balance` VALUES (2, 1, 'INR', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '');
+INSERT INTO `merchant_balance` VALUES (3, 1, 'VND', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '');
+INSERT INTO `merchant_balance` VALUES (4, 1, 'CNY', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '');
 
 -- ----------------------------
 -- Table structure for merchant_balance_log

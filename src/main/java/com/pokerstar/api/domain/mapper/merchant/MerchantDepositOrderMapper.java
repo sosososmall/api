@@ -20,7 +20,7 @@ public interface MerchantDepositOrderMapper {
 
     MerchantDepositOrder getMerchantDepositOrder(long orderId);
 
-    MerchantDepositOrder getMerchantDepositOrderByOrderNo(String merOrderNo);
+    MerchantDepositOrder getMerchantDepositOrderByOrderNo(@Param("merId") int merId, @Param("orderNO") String orderNO);
 
     MerchantDepositOrder getMerchantDepositOrderByPlatOrderNo(String platOrderNo);
 

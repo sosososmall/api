@@ -45,7 +45,7 @@
     <select id="getMerchantDepositOrderByOrderNo"
             resultType="com.pokerstar.api.domain.entity.merchant.MerchantDepositOrder">
         select * from merchant_deposit_order
-        where merchant_deposit_order_merchant_no = #{merOrderNo}
+        where merchant_deposit_order_merchant_no = #{orderNO} AND merchant_id = #{merId}
     </select>
 
     <select id="getMerchantDepositOrderByPlatOrderNo"

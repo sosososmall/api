@@ -16,6 +16,10 @@ public class Channel implements Serializable {
 
     private  String channel_short_name;
 
+    private String channel_number;
+
+    private String channel_secret_key;
+
     private String channel_deposit_url;
 
     private String channel_withdraw_url;

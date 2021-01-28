@@ -8,8 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class JuHuaPayImpl extends AbsPay {
-    public JuHuaPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+
+    public JuHuaPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override

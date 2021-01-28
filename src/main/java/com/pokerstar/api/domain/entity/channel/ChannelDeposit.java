@@ -13,6 +13,8 @@ public class ChannelDeposit implements Serializable {
 
     private int channel_id;
 
+    private int channel_support_country_id;
+
     private int channel_deposit_type_id;
 
     private String channel_deposit_code;

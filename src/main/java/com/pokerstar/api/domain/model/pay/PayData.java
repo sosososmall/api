@@ -9,23 +9,20 @@ import java.math.BigDecimal;
 public class PayData implements Serializable {
     private static final long serialVersionUID = 8069004465128589215L;
 
-    private String merchantNo;
+    private DepositRequest request;
 
-    private String secretKey;
+    private String merchant_no;
 
-    private String notifyUrl;
+    private String secret_key;
 
-    private String orderId;
+    private String short_name;
 
-    private BigDecimal amount;
+    private String request_url;
 
-    private String payType;
+    private String plat_notify_url;
 
-    private String payCode;
+    private String pay_code;
 
-    private long userId;
+    private String pay_code_extra;
 
-    private String desc;
-
-    private Object extra;
 }

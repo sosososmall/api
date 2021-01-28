@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class BenriPayImpl extends AbsPay {
 
-    public BenriPayImpl(ChannelMerchant channelMerchant) {
-        super(channelMerchant);
+    public BenriPayImpl(PayData payData) {
+        super(payData);
     }
 
     @Override
