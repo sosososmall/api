@@ -44,7 +44,7 @@
             agent_bank_code = #{agent_bank_code},
             agent_bank_card = #{agent_bank_card},
             agent_bank_branch = #{agent_bank_branch}
-        where admin_id = #{admin_id}
+        where agent_id = #{agent_id}
     </update>
 
     <update id="updateAgentPassword">

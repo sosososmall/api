@@ -23,6 +23,12 @@ public class Agent implements Serializable {
 
     private String agent_withdraw_password;
 
+    private String agent_bank_code;
+
+    private String agent_bank_card;
+
+    private String agent_bank_branch;
+
     private boolean agent_status;
 
     private long agent_create_time;

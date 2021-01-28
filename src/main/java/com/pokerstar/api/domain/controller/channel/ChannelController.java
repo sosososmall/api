@@ -1,8 +1,8 @@
 package com.pokerstar.api.domain.controller.channel;
 
-import com.pokerstar.api.domain.entity.channel.Channel;
+import com.pokerstar.api.domain.entity.channel.*;
 import com.pokerstar.api.domain.model.channel.ChannelRateBO;
-import com.pokerstar.api.domain.service.channel.IChannelService;
+import com.pokerstar.api.domain.service.channel.*;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
@@ -23,6 +23,18 @@ public class ChannelController {
     @Autowired
     private IChannelService channelService;
 
+    @Autowired
+    private IChannelDepositService channelDepositService;
+
+    @Autowired
+    private IChannelWithdrawService channelWithdrawService;
+
+    @Autowired
+    private IChannelWithdrawTypeService channelWithdrawTypeService;
+
+    @Autowired
+    private IChannelDepositTypeService channelDepositTypeService;
+
     @ApiOperation(value = "新增渠道", httpMethod = "POST")
     @PostMapping
     @ResponseBody
@@ -34,6 +46,58 @@ public class ChannelController {
             return Result.success(channelService.addChannel(channel));
         } catch (Exception ex) {
             Log.error("ChannelController add channel error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "新增充值通道", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addDeposit")
+    public Result addChannelDeposit(@RequestBody ChannelDeposit channelDeposit) {
+        try {
+            return Result.success(channelDepositService.addChannelDeposit(channelDeposit));
+        } catch (Exception ex) {
+            Log.error("add channel deposit error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "新增提现通道", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addWithdraw")
+    public Result addChannelWithdraw(@RequestBody ChannelWithdraw channelWithdraw) {
+        try {
+            return Result.success(channelWithdrawService.addChannelWithdraw(channelWithdraw));
+        } catch (Exception ex) {
+            Log.error("add channel withdraw error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "新增渠道充值通道类型", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addDepositType")
+    public Result addChannelDepositType(@RequestBody ChannelDepositType channelDepositType) {
+        try {
+            return Result.success(channelDepositTypeService.addChannelDepositType(channelDepositType));
+        } catch (Exception ex) {
+            Log.error("add channel deposit error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "新增渠道提现通道类型", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addWithdrawType")
+    public Result addChannelWithdrawType(@RequestBody ChannelWithdrawType channelWithdrawType) {
+        try {
+            return Result.success(channelWithdrawTypeService.addChannelWithdrawType(channelWithdrawType));
+        } catch (Exception ex) {
+            Log.error("add channel withdraw error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
         }
     }

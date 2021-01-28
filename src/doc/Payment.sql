@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 28/01/2021 13:32:46
+ Date: 28/01/2021 18:33:37
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `admin`  (
   `admin_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '账号状态  1=开启 0=禁用',
   `admin_phone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话,多个号码以 ; 隔开',
   `admin_type` tinyint(1) NOT NULL DEFAULT 3 COMMENT '账号类型  1=超管  2=普通管理  3-客服？？',
-  `admin_white_ip` varchar(56) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ip白名单,多个IP用;隔开,最多4个, 为空则不限制',
+  `admin_white_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ip白名单,多个IP用;隔开,最多4个, 为空则不限制',
   `admin_daily_max_login_fail_count` int(11) NOT NULL DEFAULT 6 COMMENT '管理员当日登录失败总次数  超过阀值即禁用该账号 默认 6 次',
   `admin_daily_login_fail_count` int(11) NOT NULL DEFAULT 0 COMMENT '管理员当日登录失败次数  (写脚本每天 0时0分0秒 重置该值)',
   `admin_max_confirm_withdraw_count` int(11) NOT NULL DEFAULT 0 COMMENT '管理员每日能通过的最大代理提现次数',
@@ -37,11 +37,12 @@ CREATE TABLE `admin`  (
   `admin_create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   `admin_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`admin_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n管理员表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n管理员表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
+INSERT INTO `admin` VALUES (1, 'tinker', 'jerry', 'e10adc3949ba59abbe56e057f20f883e', 1, '18223437401', 1, '192.168.2.132;192.168.2.236', 6, 0, 10, 10000000.00, 1611827541, 'hello world');
 
 -- ----------------------------
 -- Table structure for admin_log
@@ -73,7 +74,7 @@ CREATE TABLE `admin_login_log`  (
   `admin_account` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员名称',
   `admin_nick_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员昵称',
   `admin_type` tinyint(1) NOT NULL COMMENT '账号类型  1-超管  2-普通  3-客服？？',
-  `admin_login_log_ip` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录IP',
+  `admin_login_log_ip` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录IP',
   `admin_login_log_time` int(11) NOT NULL COMMENT '登陆时间',
   `admin_login_log_status` tinyint(1) NOT NULL COMMENT '登录状态 1=成功 0=失败',
   `admin_login_log_password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录密码  md5密文',
@@ -101,18 +102,19 @@ CREATE TABLE `agent`  (
   `agent_bank_branch` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '体现银行所属支行名称',
   `agent_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态  1=启用 0=禁用 默认1',
   `agent_create_time` int(11) NOT NULL COMMENT '创建时间',
-  `agent_white_ip` varchar(56) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip白名单,多个IP用;隔开,最多4个, 为空则不限制',
+  `agent_white_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip白名单,多个IP用;隔开,最多4个, 为空则不限制',
   `agent_belong` int(11) NULL DEFAULT 0 COMMENT '直属上级(如果有上级并且代理有盈利，会按照比例取该代理的盈利额给直属上级  比如代理月底盈利 100 比例10% 则该代理余额+90，上级 +10)',
   `agent_contribution_ratio` decimal(6, 2) NULL DEFAULT 5.00 COMMENT '像上级分红比例，默认5%',
   `agent_daily_max_login_fail_count` int(11) NULL DEFAULT 6 COMMENT '代理当日登录失败总次数  超过阀值即禁用该账号  默认6次',
   `agent_daily_login_fail_count` int(11) NULL DEFAULT 0 COMMENT '代理当日登录失败次数  (写脚本每天 0时0分0秒 重置该值)',
   `agent_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`agent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n代理信息表\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n代理信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
+INSERT INTO `agent` VALUES (1, 'tom and jerry', 'tomhanx', 'tinker', '18223437401', 'e10adc3949ba59abbe56e057f20f883e', 'e10adc3949ba59abbe56e057f20f883e', 'BOC', '54684665464984687468', '中国银行四川省成都分行', 1, 1611827925, '192.168.2.132;192.168.2.236', 0, 5.00, 6, 0, 'hello springboot');
 
 -- ----------------------------
 -- Table structure for agent_balance
@@ -667,15 +669,17 @@ CREATE TABLE `merchant`  (
   `merchant_password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户密码',
   `merchant_phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话',
   `merchant_email` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系邮件',
-  `merchant_ip` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户所在IP,如果不为空,则限制该商户所有不为此ip请求访问',
+  `merchant_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户所在IP,如果不为空,则限制该商户所有不为此ip请求访问',
   `merchant_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '商户状态 1=开启 0=禁用  默认开启',
+  `merchant_create_time` int(11) NOT NULL COMMENT '创建时间',
   `merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户信息\r\n*/' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户信息\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of merchant
 -- ----------------------------
+INSERT INTO `merchant` VALUES (1, 1, 'tomhanx', 'sipada', 'tinker', 'spicytinker', 'e10adc3949ba59abbe56e057f20f883e', '18223437401', 'god@gmail.com', '192.168.2.132;192.168.2.236', 1, 1611828843, 'hallo java');
 
 -- ----------------------------
 -- Table structure for merchant_balance

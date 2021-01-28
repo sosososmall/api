@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class AgentBankBO implements Serializable {
     private static final long serialVersionUID = 7765377632988100655L;
 
-    private int admin_id;
+    private int agent_id;
 
     private String agent_bank_code;
 

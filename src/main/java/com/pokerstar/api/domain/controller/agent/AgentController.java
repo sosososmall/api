@@ -1,6 +1,7 @@
 package com.pokerstar.api.domain.controller.agent;
 
 import com.pokerstar.api.domain.entity.agent.Agent;
+import com.pokerstar.api.domain.model.agent.AgentBankBO;
 import com.pokerstar.api.domain.service.agent.IAgentBalanceService;
 import com.pokerstar.api.domain.service.agent.IAgentLogService;
 import com.pokerstar.api.domain.service.agent.IAgentService;
@@ -67,6 +68,18 @@ public class AgentController {
         try {
 
             return Result.success();
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+    @ApiOperation(value = "修改代理银行信息", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/updateBankInfo")
+    public Result updateBankInfo(@RequestBody AgentBankBO agentBank) {
+        try {
+            return Result.success(agentService.updateAgentBankInfo(agentBank));
         } catch (Exception ex) {
             return Result.fail(0);
         }

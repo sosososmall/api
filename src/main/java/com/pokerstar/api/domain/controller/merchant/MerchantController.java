@@ -1,5 +1,6 @@
 package com.pokerstar.api.domain.controller.merchant;
 
+import com.pokerstar.api.domain.entity.merchant.ChannelMerchant;
 import com.pokerstar.api.domain.entity.merchant.Merchant;
 import com.pokerstar.api.domain.service.merchant.*;
 import com.pokerstar.api.domain.service.report.IChannelMerchantDailyReportService;
@@ -53,6 +54,19 @@ public class MerchantController {
         try {
             merchant.setMerchant_create_time(DateTimeUtil.getCurrentSecondTimestamp());
             return Result.success(merchantService.addMerchant(merchant));
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+    @ApiOperation(value = "新增商户渠道", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addCHMer")
+    public Result addChannelMerchant(@RequestBody ChannelMerchant channelMerchant) {
+        try {
+            channelMerchant.setChannel_merchant_create_time(DateTimeUtil.getCurrentSecondTimestamp());
+            return Result.success(channelMerchantService.addChannelMerchant(channelMerchant));
         } catch (Exception ex) {
             return Result.fail(0);
         }
