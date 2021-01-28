@@ -8,13 +8,11 @@
         insert into merchant_balance
             (merchant_id,merchant_balance_currency_iso_code,merchant_balance_amount,merchant_balance_freeze_amount,
             merchant_balance_transaction_deposit_amount,merchant_balance_transaction_withdraw_amount,
-            merchant_balance_total_deposit_fee,merchant_balance_total_withdraw_fee,
-            merchant_balance_freeze_balance,merchant_balance_remark)
+            merchant_balance_total_deposit_fee,merchant_balance_total_withdraw_fee,merchant_balance_remark)
         values
             (#{merchant_id},#{merchant_balance_currency_iso_code},#{merchant_balance_amount},#{merchant_balance_freeze_amount},
             #{merchant_balance_transaction_deposit_amount},#{merchant_balance_transaction_withdraw_amount},
-            #{merchant_balance_total_deposit_fee},#{merchant_balance_total_withdraw_fee},
-            #{merchant_balance_freeze_balance},#{merchant_balance_remark})
+            #{merchant_balance_total_deposit_fee},#{merchant_balance_total_withdraw_fee},#{merchant_balance_remark})
     </insert>
 
     <delete id="deleteMerchantBalanceById">

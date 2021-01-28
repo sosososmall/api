@@ -1,7 +1,6 @@
 package com.pokerstar.api.domain.controller.merchant;
 
-import com.pokerstar.api.domain.entity.merchant.ChannelMerchant;
-import com.pokerstar.api.domain.entity.merchant.Merchant;
+import com.pokerstar.api.domain.entity.merchant.*;
 import com.pokerstar.api.domain.service.merchant.*;
 import com.pokerstar.api.domain.service.report.IChannelMerchantDailyReportService;
 import com.pokerstar.api.infrastructure.entity.Result;
@@ -62,11 +61,49 @@ public class MerchantController {
     @ApiOperation(value = "新增商户渠道", httpMethod = "POST")
     @PostMapping
     @ResponseBody
-    @RequestMapping("/addCHMer")
+    @RequestMapping("/addChMer")
     public Result addChannelMerchant(@RequestBody ChannelMerchant channelMerchant) {
         try {
             channelMerchant.setChannel_merchant_create_time(DateTimeUtil.getCurrentSecondTimestamp());
             return Result.success(channelMerchantService.addChannelMerchant(channelMerchant));
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+
+    @ApiOperation(value = "新增商户充值通道", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addDeposit")
+    public Result addChannelDepositMerchant(@RequestBody ChannelDepositMerchant channelDepositMerchant) {
+        try {
+            return Result.success(channelDepositMerchantService.addChannelDepositMerchant(channelDepositMerchant));
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+    @ApiOperation(value = "新增商户提现通道", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addWithdraw")
+    public Result addChannelWithdrawMerchant(@RequestBody ChannelWithdrawMerchant channelWithdrawMerchant) {
+        try {
+            return Result.success(channelWithdrawMerchantService.addChannelWithdrawMerchant(channelWithdrawMerchant));
+        } catch (Exception ex) {
+            return Result.fail(0);
+        }
+    }
+
+
+    @ApiOperation(value = "新增商户余额信息", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addBalance")
+    public Result addMerchantBalance(@RequestBody MerchantBalance merchantBalance) {
+        try {
+            return Result.success(merchantBalanceService.addMerchantBalance(merchantBalance));
         } catch (Exception ex) {
             return Result.fail(0);
         }

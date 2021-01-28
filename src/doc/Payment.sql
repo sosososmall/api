@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 28/01/2021 18:33:37
+ Date: 28/01/2021 18:45:40
 */
 
 SET NAMES utf8mb4;
@@ -695,7 +695,6 @@ CREATE TABLE `merchant_balance`  (
   `merchant_balance_transaction_withdraw_amount` decimal(65, 2) NOT NULL DEFAULT 0.00 COMMENT '提现总额(非实时数据，今天以前，每日凌晨统计后更新)',
   `merchant_balance_total_deposit_fee` decimal(65, 2) NOT NULL DEFAULT 0.00 COMMENT '充值总花费(非实时数据，今天以前，每日凌晨统计后更新)',
   `merchant_balance_total_withdraw_fee` decimal(65, 2) NOT NULL DEFAULT 0.00 COMMENT '提现总花费(非实时数据，今天以前，每日凌晨统计后更新)',
-  `merchant_balance_freeze_balance` decimal(65, 2) NOT NULL DEFAULT 0.00 COMMENT '冻结金额',
   `merchant_balance_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_balance_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户资金信息表\r\n*/' ROW_FORMAT = Compact;
