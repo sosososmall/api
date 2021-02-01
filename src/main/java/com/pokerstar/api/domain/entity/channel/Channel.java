@@ -14,7 +14,7 @@ public class Channel implements Serializable {
 
     private String channel_full_name;
 
-    private  String channel_short_name;
+    private String channel_short_name;
 
     private String channel_number;
 
@@ -24,15 +24,19 @@ public class Channel implements Serializable {
 
     private String channel_withdraw_url;
 
+    private String channel_deposit_notify_url;
+
+    private String channel_withdraw_notify_url;
+
     private int channel_sort;
 
     private boolean channel_status;
 
-    private  String channel_support_country_cn_name;
+    private String channel_support_country_cn_name;
 
-    private  String channel_support_country_eg_name;
+    private String channel_support_country_eg_name;
 
-    private  String channel_support_country_iso_code;
+    private String channel_support_country_iso_code;
 
     private int channel_support_country_id;
 
@@ -42,5 +46,5 @@ public class Channel implements Serializable {
 
     private long channel_last_update_time;
 
-    private  String channel_remark;
+    private String channel_remark;
 }

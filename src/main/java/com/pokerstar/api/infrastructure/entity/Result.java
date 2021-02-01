@@ -43,6 +43,24 @@ public class Result<T> implements Serializable {
         return result;
     }
 
+    public static Result success(String msg, Object data) {
+        Result result = new Result();
+        result.code = 0;
+        result.status = true;
+        result.msg = msg;
+        result.data = data;
+        return result;
+    }
+
+    public static Result success(int code, boolean status, String msg, Object data) {
+        Result result = new Result();
+        result.code = code;
+        result.status = status;
+        result.msg = msg;
+        result.data = data;
+        return result;
+    }
+
     public static Result fail(int code) {
         Result result = new Result();
         result.code = code;

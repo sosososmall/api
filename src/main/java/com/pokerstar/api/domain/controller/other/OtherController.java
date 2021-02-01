@@ -5,6 +5,7 @@ import com.pokerstar.api.domain.service.other.ICountryService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import com.pokerstar.api.infrastructure.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -71,6 +72,19 @@ public class OtherController {
         } catch (Exception ex) {
             Log.error("ChannelController updateCurrencyRate error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "test", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/test")
+    public Result test(@RequestParam(value = "country_id") int country_id,
+                       @RequestParam(value = "country_name") String country_name) {
+        try {
+            return Result.success();
+        } catch (Exception ex) {
+            return Result.fail(0);
         }
     }
 }

@@ -19,10 +19,6 @@ public class ChannelMerchant implements Serializable {
 
     private String channel_short_name;
 
-    private String channel_merchant_number;
-
-    private String channel_merchant_secret_key;
-
     private int channel_support_country_id;
 
     private int channel_merchant_deduct_deposit_amount;
@@ -40,6 +36,8 @@ public class ChannelMerchant implements Serializable {
     private String channel_merchant_withdraw_url;
 
     private long channel_merchant_create_time;
+
+    private String channel_merchant_ip;
 
     private String channel_merchant_remark;
 }

@@ -11,17 +11,17 @@ public class WithdrawRequest implements Serializable {
 
     private String merchant_no;
 
-    private String pay_order_no;
+    private String order_no;
 
     private BigDecimal pay_amount;
 
-    private String pay_real_name;
+    private String real_name;
 
-    private String pay_bank_card;
+    private String bank_card;
 
-    private String pay_bank_branch;
+    private String bank_branch;
 
-    private String pay_notify_url;
+    private String notify_url;
 
     private int pay_type;
 
@@ -33,4 +33,12 @@ public class WithdrawRequest implements Serializable {
 
     private String sign;
 
+
+    private String request_url;
+
+    private String secret_key;
+
+    private String pay_code;
+
+    private String pay_code_extra;
 }

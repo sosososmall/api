@@ -22,6 +22,10 @@ public class Merchant implements Serializable {
 
     private String merchant_password;
 
+    private String merchant_number;
+
+    private String merchant_secret;
+
     private String merchant_phone;
 
     private String merchant_email;

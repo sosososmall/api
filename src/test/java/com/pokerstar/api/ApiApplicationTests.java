@@ -1,11 +1,9 @@
 package com.pokerstar.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pokerstar.api.domain.entity.channel.Channel;
 import com.pokerstar.api.domain.entity.other.Country;
-import com.pokerstar.api.infrastructure.util.DateTimeUtil;
-import com.pokerstar.api.infrastructure.util.HttpUtil;
-import com.pokerstar.api.infrastructure.util.PropertyUtil;
-import com.pokerstar.api.infrastructure.util.RedisBaseUtil;
+import com.pokerstar.api.infrastructure.util.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,9 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest
 class ApiApplicationTests {
@@ -30,21 +26,19 @@ class ApiApplicationTests {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
-    @Autowired
-    private RedisBaseUtil redisBaseUtil;
-
     @Test
     void contextLoads() {
     }
 
     public static void main(String[] args) {
-        String host = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.address");
-        String port = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.port");
-        String apiHost = "http://" + host + ":" + port;
+//        String host = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.address");
+//        String port = PropertyUtil.getPropValByName(PropertyUtil.APPLICATION_PROPERTIES, "server.port");
+//        String apiHost = "http://" + host + ":" + port;
 
         // updateCurrencyExchangeRate(apiHost);
         //initCurrency(domain);
         //initCountry(domain);
+        int a = 1;
     }
 
     /**
@@ -83,7 +77,7 @@ class ApiApplicationTests {
                     country.setCountry_sort(0);
 
                     json = mapper.writeValueAsString(country);
-                    HttpUtil.sendPost(url, json);
+                    HttpUtil.sendPostJson(url, json);
                 } catch (Exception ex) {
                     Log.debug("error ????:", ex);
                     continue;
@@ -137,7 +131,7 @@ class ApiApplicationTests {
                     country.setCountry_currency_code(els.get(3).text().trim());
 
                     json = mapper.writeValueAsString(country);
-                    HttpUtil.sendPost(url, json);
+                    HttpUtil.sendPostJson(url, json);
                 } catch (Exception ex) {
                     Log.debug("error ????:", ex);
                     continue;
@@ -177,7 +171,7 @@ class ApiApplicationTests {
                     country.setCountry_currency_rate_update_time(DateTimeUtil.getDateTimeTimestamp(LocalDateTime.parse(datetime, DateTimeUtil.dateTimeFormatter)));
 
                     json = mapper.writeValueAsString(country);
-                    HttpUtil.sendPost(url, json);
+                    HttpUtil.sendPostJson(url, json);
                 } catch (Exception ex) {
                     Log.debug("error ????:", ex);
                     continue;

@@ -48,6 +48,11 @@ public enum RedisDirKeyEnum {
      * key = merchant_id + "_" + channel_withdraw_type_id, value = channel_deposit_merchant
      */
     CHANNEL_WITHDRAW_MERCHANT("CH_W_MER"),
+    /**
+     * dir = CH_D_T,
+     * key = channel_deposit_type_id, value = channel_deposit_type
+     */
+    CHANNEL_DEPOSIT_TYPE("CH_D_T"),
     ;
 
     private String dirKey;

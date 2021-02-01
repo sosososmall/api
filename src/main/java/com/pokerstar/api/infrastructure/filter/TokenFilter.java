@@ -19,7 +19,8 @@ public class TokenFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
         String requestUrl = request.getRequestURL().toString();
-        boolean isPayRequest = requestUrl.contains("/pay/") || requestUrl.contains("/callback/") || requestUrl.contains("/order/");
+        boolean isPayRequest = requestUrl.contains("/pay/") || requestUrl.contains("/callback/") ||
+                requestUrl.contains("/order/") || requestUrl.contains("/withdraw/");
         if (!isPayRequest) {
             // 非支付类请求需要验证请求token
             //todo add token check

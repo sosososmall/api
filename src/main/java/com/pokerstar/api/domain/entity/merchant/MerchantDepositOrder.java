@@ -21,7 +21,7 @@ public class MerchantDepositOrder implements Serializable {
 
     private int channel_deposit_merchant_id;
 
-    private int channel_merchant_number;
+    private String channel_merchant_number;
 
     private int channel_deposit_type_id;
 

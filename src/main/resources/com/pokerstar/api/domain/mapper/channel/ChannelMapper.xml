@@ -27,15 +27,17 @@
     <insert id="addChannel" parameterType="com.pokerstar.api.domain.entity.channel.Channel"
         useGeneratedKeys="true" keyProperty="channel_id" keyColumn="channel_id">
         insert into channel
-        (channel_full_name,channel_short_name,channel_number,channel_number,channel_deposit_url,channel_withdraw_url,
+        (channel_full_name,channel_short_name,channel_number,channel_secret_key,channel_deposit_url,channel_withdraw_url,
         channel_sort,channel_status,channel_support_country_cn_name,channel_support_country_eg_name,
         channel_support_country_iso_code,channel_support_country_id,channel_ip,
-        channel_create_time,channel_last_update_time,channel_remark)
+        channel_create_time,channel_last_update_time,channel_remark,
+        channel_deposit_notify_url,channel_withdraw_notify_url)
         values
-        (#{channel_full_name},#{channel_short_name},#{channel_number},#{channel_number},#{channel_deposit_url},#{channel_withdraw_url},
+        (#{channel_full_name},#{channel_short_name},#{channel_number},#{channel_secret_key},#{channel_deposit_url},#{channel_withdraw_url},
         #{channel_sort},#{channel_status},#{channel_support_country_cn_name},#{channel_support_country_eg_name},
         #{channel_support_country_iso_code},#{channel_support_country_id},#{channel_ip},
-        #{channel_create_time},#{channel_last_update_time},#{channel_remark})
+        #{channel_create_time},#{channel_last_update_time},#{channel_remark},
+        #{channel_deposit_notify_url},#{channel_withdraw_notify_url})
     </insert>
 
     <delete id="deleteChannel" parameterType="int">

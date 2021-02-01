@@ -6,17 +6,16 @@
 <mapper namespace="com.pokerstar.api.domain.mapper.merchant.ChannelMerchantMapper">
     <insert id="addChannelMerchant">
         insert into channel_merchant
-        (channel_id,merchant_id,channel_full_name,channel_short_name,channel_merchant_number,
-        channel_merchant_secret_key,channel_support_country_id,channel_merchant_deduct_deposit_amount,
-        channel_merchant_deduct_withdraw_amount,channel_merchant_deposit_rate,channel_merchant_withdraw_rate,
-        channel_status,channel_merchant_deposit_url,channel_merchant_withdraw_url,
-        channel_merchant_create_time,channel_merchant_remark)
+        (channel_id,merchant_id,channel_full_name,channel_short_name,channel_support_country_id,
+        channel_merchant_deduct_deposit_amount,channel_merchant_deduct_withdraw_amount,channel_merchant_deposit_rate,
+        channel_merchant_withdraw_rate,channel_status,channel_merchant_deposit_url,channel_merchant_withdraw_url,
+        channel_merchant_create_time,channel_merchant_ip,channel_merchant_remark)
         values
-         (#{channel_id},#{merchant_id},#{channel_full_name},#{channel_short_name},#{channel_merchant_number},
-        #{channel_merchant_secret_key},#{channel_support_country_id},#{channel_merchant_deduct_deposit_amount},
-        #{channel_merchant_deduct_withdraw_amount},#{channel_merchant_deposit_rate},#{channel_merchant_withdraw_rate},
-        #{channel_status},#{channel_merchant_deposit_url},#{channel_merchant_withdraw_url},
-        #{channel_merchant_create_time},#{channel_merchant_remark})
+         (#{channel_id},#{merchant_id},#{channel_full_name},#{channel_short_name},#{channel_support_country_id},
+         #{channel_merchant_deduct_deposit_amount},#{channel_merchant_deduct_withdraw_amount},
+         #{channel_merchant_deposit_rate},#{channel_merchant_withdraw_rate},
+         #{channel_status},#{channel_merchant_deposit_url},#{channel_merchant_withdraw_url},
+         #{channel_merchant_create_time},#{channel_merchant_ip},#{channel_merchant_remark})
     </insert>
 
     <delete id="deleteChannelMerchant">
