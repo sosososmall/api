@@ -15,6 +15,15 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class BenriPayImpl extends AbsPay {
+       /*
+        请求  application/json
+        回调  application/x-www-form-urlencoded
+     */
+
+    @Override
+    public String getCallback_sign_key() {
+        return "platSign";
+    }
 
     public BenriPayImpl(DepositRequest request) {
         super(request);
@@ -24,8 +33,8 @@ public class BenriPayImpl extends AbsPay {
         super(request);
     }
 
-    public BenriPayImpl(HttpServletRequest request) {
-        super(request);
+    public BenriPayImpl(HttpServletRequest request, String requestBody) {
+        super(request, requestBody);
     }
 
     @Override
@@ -137,4 +146,13 @@ public class BenriPayImpl extends AbsPay {
         return result;
     }
 
+    @Override
+    protected String callback_plat_order_no_key() {
+        return "orderNum";
+    }
+
+    @Override
+    protected Map<String, Object> callbackMap() {
+        return formCallBack2Map();
+    }
 }

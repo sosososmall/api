@@ -16,6 +16,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class SunPayImpl extends AbsPay {
+    /*
+    请求 回调皆为 application/json
+  */
     public SunPayImpl(DepositRequest request) {
         super(request);
     }
@@ -24,8 +27,8 @@ public class SunPayImpl extends AbsPay {
         super(request);
     }
 
-    public SunPayImpl(HttpServletRequest request) {
-        super(request);
+    public SunPayImpl(HttpServletRequest request, String requestBody) {
+        super(request, requestBody);
     }
 
     @Override
@@ -117,5 +120,13 @@ public class SunPayImpl extends AbsPay {
         return result;
     }
 
+    @Override
+    protected String callback_plat_order_no_key() {
+        return "orderNo";
+    }
 
+    @Override
+    protected Map<String, Object> callbackMap() {
+        return jsonCallBack2Map();
+    }
 }

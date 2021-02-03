@@ -4,11 +4,10 @@ import com.pokerstar.api.domain.entity.other.Bank;
 import com.pokerstar.api.domain.entity.other.Country;
 import com.pokerstar.api.domain.service.other.IBankService;
 import com.pokerstar.api.domain.service.other.ICountryService;
-import com.pokerstar.api.infrastructure.util.HttpServletUtil;
-import com.pokerstar.api.infrastructure.util.RedisPropertiesUtil;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
+import com.pokerstar.api.infrastructure.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Api(tags = "杂项信息管理")
@@ -108,9 +106,8 @@ public class OtherController {
                        @RequestBody String requestBody
     ) {
         try {
-
-            Map<String, Object> map = HttpServletUtil.body2Map(request);
-
+            Map<String, Object> map = StringUtil.json2Map(requestBody);
+            Map<String, Object> body = (Map<String, Object>) map.get("body");
             return Result.success();
         } catch (Exception ex) {
             return Result.fail(0);

@@ -19,6 +19,9 @@ import java.util.Map;
 
 
 public class ShineUPayImpl extends AbsPay {
+    /*
+    请求 回调皆为 application/json
+     */
 
     private static Logger Log = LoggerFactory.getLogger(ShineUPayImpl.class);
 
@@ -30,8 +33,8 @@ public class ShineUPayImpl extends AbsPay {
         super(request);
     }
 
-    public ShineUPayImpl(HttpServletRequest request) {
-        super(request);
+    public ShineUPayImpl(HttpServletRequest request, String requestBody) {
+        super(request, requestBody);
     }
 
     private String doRequest(String url, String param) {
@@ -164,4 +167,28 @@ public class ShineUPayImpl extends AbsPay {
         return result;
     }
 
+    @Override
+    protected String callback_plat_order_no_key() {
+        return "platformOrderId";
+    }
+
+
+    @Override
+    protected Map<String, Object> callbackMap() {
+        /**
+         * callback request body :
+         * {
+         *   "merchantId": "A6205J1AJL6O8942",
+         *   "timestamp": "1612029799815",
+         *   "body": {
+         *     "orderId": "4408184592159277057",
+         *     "platformOrderId": "20210130AARJ38X3EVWG8473",
+         *     "status": 1,
+         *     "message": null,
+         *     "amount": 18.0000
+         *   }
+         * }
+         */
+        return jsonCallBack2Map();
+    }
 }

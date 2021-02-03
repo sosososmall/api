@@ -77,4 +77,22 @@ public class StringUtil {
             return new HashMap<>(0);
         }
     }
+
+    public static Map<String, Object> queryString2Map(String source) {
+        if (StringUtils.isBlank(source)) {
+            return new HashMap<>(0);
+        }
+
+        String[] params = source.split("&");
+        String[] tmp;
+        Map<String, Object> result = new HashMap<>(params.length);
+        for (String item : params) {
+            if (StringUtils.isNotBlank(item)) {
+                tmp = item.split("=");
+                result.put(tmp[0], tmp[1]);
+            }
+        }
+
+        return result;
+    }
 }
