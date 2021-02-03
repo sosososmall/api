@@ -45,6 +45,10 @@ public class DateTimeUtil {
         return LocalDateTime.now(ZoneOffset.of("+8")).format(dateTimeFormatter);
     }
 
+    public static String getCurrentTimeSimpleStr() {
+        return LocalDateTime.now(ZoneOffset.of("+8")).format(dateTimeFormatterWithNoJoiner);
+    }
+
     public static String getTimeStr(DateTimeFormatter formatter) {
         return LocalDateTime.now(ZoneOffset.of("+8")).format(formatter);
     }

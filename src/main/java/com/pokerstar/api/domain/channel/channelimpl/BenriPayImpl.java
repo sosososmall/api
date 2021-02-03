@@ -4,11 +4,11 @@ import com.pokerstar.api.domain.channel.channelbase.AbsPay;
 import com.pokerstar.api.domain.model.pay.BenriPaySecretKey;
 import com.pokerstar.api.domain.model.pay.DepositRequest;
 import com.pokerstar.api.domain.model.pay.WithdrawRequest;
-import com.pokerstar.api.infrastructure.util.DateTimeUtil;
-import com.pokerstar.api.infrastructure.util.HttpUtil;
-import com.pokerstar.api.infrastructure.util.RsaUtil;
-import com.pokerstar.api.infrastructure.util.StringUtil;
+import com.pokerstar.api.infrastructure.constant.Constant;
+import com.pokerstar.api.infrastructure.util.*;
 import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 import java.util.SortedMap;
@@ -16,12 +16,15 @@ import java.util.TreeMap;
 
 public class BenriPayImpl extends AbsPay {
 
-
     public BenriPayImpl(DepositRequest request) {
         super(request);
     }
 
     public BenriPayImpl(WithdrawRequest request) {
+        super(request);
+    }
+
+    public BenriPayImpl(HttpServletRequest request) {
         super(request);
     }
 
@@ -33,21 +36,38 @@ public class BenriPayImpl extends AbsPay {
 
     @Override
     public String withdraw() {
+        String response = HttpUtil.sendPostForm(withdrawRequest.getRequest_url(), StringUtil.map2KeyValStr(withdrawMap()));
         return null;
     }
 
     @Override
-    public boolean verifySign() {
-        return true;
+    public String merDepositNotify() {
+        return null;
     }
 
     @Override
-    public boolean verifyPaySign() {
+    public String merWithdrawNotify() {
+        return null;
+    }
+
+    @Override
+    public String channelDepositCallBack() {
+        Map<String, Object> source = HttpServletUtil.body2Map(servletRequest);
+        return null;
+    }
+
+    @Override
+    public String channelWithdrawCallBack() {
+        return null;
+    }
+
+    @Override
+    public boolean verifyChannelPaySign() {
         return false;
     }
 
     @Override
-    public boolean verifyWithdrawSign() {
+    public boolean verifyChannelWithdrawSign() {
         return false;
     }
 
@@ -60,7 +80,7 @@ public class BenriPayImpl extends AbsPay {
     protected String buildValStr(Map<String, Object> source) {
         StringBuffer sb = new StringBuffer(256);
         for (Map.Entry<String, Object> item : source.entrySet()) {
-            if (!(item.getValue() == null || StringUtils.isNotBlank(item.getValue().toString()))) {
+            if (item.getValue() != null && StringUtils.isNotBlank(item.getValue().toString())) {
                 sb.append(item.getValue());
             }
         }
@@ -85,9 +105,10 @@ public class BenriPayImpl extends AbsPay {
         result.put("bankCode", withdrawRequest.getPay_code());
         result.put("number", withdrawRequest.getBank_card());
         result.put("notifyUrl", withdrawRequest.getNotify_url());
-        result.put("feeType", 1);
+        result.put("feeType", Constant.BENRI_PAY_FEE_TYPE);
         result.put("dateTime", DateTimeUtil.getTimeStr(DateTimeUtil.dateTimeFormatterWithNoJoiner));
         result.put("appId", "");
+
         String sign = sign(buildValStr(result));
         result.put("sign", sign);
 
@@ -102,26 +123,18 @@ public class BenriPayImpl extends AbsPay {
         result.put("payMoney", depositRequest.getPay_amount());
         result.put("method", "");
         result.put("productDetail", "");
-        result.put("phone", "628177662994");
-        result.put("name", "jordan");
+        result.put("phone", Constant.BENRI_PAY_PHONE);
+        result.put("name", Constant.BENRI_PAY_NAME);
         result.put("orderNum", depositRequest.getOrder_no());
         result.put("notifyUrl", depositRequest.getNotify_url());
-        result.put("expiryPeriod", 3000);
+        result.put("expiryPeriod", Constant.BENRI_PAY_EXPIRY_PERIOD);
         result.put("email", "");
         result.put("appId", "");
+
         String sign = sign(buildValStr(result));
         result.put("sign", sign);
 
         return result;
     }
 
-    @Override
-    protected String payCallBack() {
-        return null;
-    }
-
-    @Override
-    protected String withdrawCallBack() {
-        return null;
-    }
 }

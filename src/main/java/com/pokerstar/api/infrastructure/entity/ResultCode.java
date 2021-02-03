@@ -3,9 +3,13 @@ package com.pokerstar.api.infrastructure.entity;
 public enum ResultCode {
     SUCCESS(1, "成功"),
     /*
-     * 1xxxxx 段为系统类
+     * 1xxxxx 段为全局类
      * */
     UNKNOW_ERROR(10001, "未知错误!"),
+    PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY(10002, "参数不能为空"),
+    PARAMETER_IS_INVALID(10003, "无效参数"),
+    PARAMETER_VALUE_IS_INVALID(10004, "参数值无效"),
+
     /*
      * 2xxxx 段为用户类
      * */
@@ -24,11 +28,13 @@ public enum ResultCode {
     /*
      * 4xxxx 段为支付类
      * */
-    GET_CHANNEL_ERROR(40001, "获取支付通道失败"),
-    ADD_CHANNEL_ERROR(40002, "新增支付通道失败"),
-    DELETE_CHANNEL_ERROR(40003, "删除支付通道失败"),
-    ENABLE_CHANNEL_ERROR(40004, "禁用支付通道失败"),
-    UPDATE_CHANNEL_RATE_ERROR(40005, "修改支付通道费用信息失败"),
+    GET_CHANNEL_ERROR(40001, "获取支付渠道失败"),
+    ADD_CHANNEL_ERROR(40002, "新增支付渠道失败"),
+    DELETE_CHANNEL_ERROR(40003, "删除支付渠道失败"),
+    ENABLE_CHANNEL_ERROR(40004, "禁用支付渠道失败"),
+    UPDATE_CHANNEL_RATE_ERROR(40005, "修改支付渠道费用信息失败"),
+    ADD_CHANNEL_BANK_ERROR(40006, "添加渠道银行失败"),
+    ADD_CHANNEL_BANKS_ERROR(40007, "批量添加渠道银行失败"),
 
     PAY_SYSTEM_ERROR(41000, "支付系统错误"),
     MERCHANT_NOT_EXIST(41001, "商户不存在"),
@@ -42,7 +48,13 @@ public enum ResultCode {
     IP_ADDR_IS_NOT_ALLOWED(41009, "IP地址不在白名单内"),
     /*
      * 5xxxx 段为统计类
-     * */;
+     * */
+
+    /*
+     * 6xxxx 段为杂项类
+     * */
+    ADD_BANK_ERROR(60001, "添加银行失败"),
+    ;
 
     private int code;
 

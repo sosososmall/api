@@ -65,7 +65,7 @@ public class PayController {
                 return Result.fail(ResultCode.PAY_SYSTEM_ERROR);
             }
 
-            boolean verifySign = payImpl.verifySign();
+            boolean verifySign = payImpl.verifyMerPaySign(request.getSign());
             if (!verifySign) {
                 return Result.fail(ResultCode.SIGN_ERROR);
             }

@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 
+@EnableOpenApi
 @ServletComponentScan
 @EnableAsync
 @SpringBootApplication
-@EnableOpenApi
 @MapperScan(basePackages = {"com.pokerstar.api.domain.mapper"})
 public class ApiApplication {
 

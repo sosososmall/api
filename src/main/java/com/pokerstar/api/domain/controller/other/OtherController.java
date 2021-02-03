@@ -1,17 +1,24 @@
 package com.pokerstar.api.domain.controller.other;
 
+import com.pokerstar.api.domain.entity.other.Bank;
 import com.pokerstar.api.domain.entity.other.Country;
+import com.pokerstar.api.domain.service.other.IBankService;
 import com.pokerstar.api.domain.service.other.ICountryService;
+import com.pokerstar.api.infrastructure.util.HttpServletUtil;
+import com.pokerstar.api.infrastructure.util.RedisPropertiesUtil;
 import com.pokerstar.api.infrastructure.entity.Result;
 import com.pokerstar.api.infrastructure.entity.ResultCode;
 import com.pokerstar.api.infrastructure.util.DateTimeUtil;
-import com.pokerstar.api.infrastructure.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @Api(tags = "杂项信息管理")
 @RestController
@@ -22,6 +29,9 @@ public class OtherController {
     @Autowired
     private ICountryService countryService;
 
+    @Autowired
+    private IBankService bankService;
+
     @ApiOperation(value = "新增国家", httpMethod = "POST")
     @PostMapping
     @ResponseBody
@@ -30,7 +40,7 @@ public class OtherController {
         try {
             return Result.success(countryService.addCountry(country));
         } catch (Exception ex) {
-            Log.error("ChannelController add channel error:", ex);
+            Log.error(" add country error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
         }
     }
@@ -56,7 +66,7 @@ public class OtherController {
         try {
             return Result.success(countryService.updateCountryCurrency(country));
         } catch (Exception ex) {
-            Log.error("ChannelController initCurrency error:", ex);
+            Log.error(" initCurrency error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
         }
     }
@@ -70,8 +80,21 @@ public class OtherController {
             country.setCountry_currency_update_time(DateTimeUtil.getCurrentSecondTimestamp());
             return Result.success(countryService.updateCountryCurrencyRate(country));
         } catch (Exception ex) {
-            Log.error("ChannelController updateCurrencyRate error:", ex);
+            Log.error(" updateCurrencyRate error:", ex);
             return Result.fail(ResultCode.ADD_CHANNEL_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "添加银行", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addBank")
+    public Result addBank(@RequestBody Bank bank) {
+        try {
+            return Result.success(bankService.addBank(bank));
+        } catch (Exception ex) {
+            Log.error("add bank error:", ex);
+            return Result.fail(ResultCode.ADD_BANK_ERROR);
         }
     }
 
@@ -79,9 +102,15 @@ public class OtherController {
     @PostMapping
     @ResponseBody
     @RequestMapping("/test")
-    public Result test(@RequestParam(value = "country_id") int country_id,
-                       @RequestParam(value = "country_name") String country_name) {
+    public Result test(HttpServletRequest request,
+//                       @RequestParam(value = "country_id") int country_id,
+//                       @RequestParam(value = "country_name") String country_name
+                       @RequestBody String requestBody
+    ) {
         try {
+
+            Map<String, Object> map = HttpServletUtil.body2Map(request);
+
             return Result.success();
         } catch (Exception ex) {
             return Result.fail(0);

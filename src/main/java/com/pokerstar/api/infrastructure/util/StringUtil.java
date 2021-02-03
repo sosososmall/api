@@ -1,10 +1,12 @@
 package com.pokerstar.api.infrastructure.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class StringUtil {
         try {
             return mapper.readValue(json, mapper.getTypeFactory().constructType(Class.forName(target.getName())));
         } catch (Exception ex) {
-            Log.error("json 2 entity error:", ex);
+            Log.error("json 2 entity error:source=" + json, ex);
         }
 
         return null;
@@ -37,7 +39,7 @@ public class StringUtil {
         try {
             return mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(List.class, Class.forName(target.getName())));
         } catch (Exception ex) {
-            Log.error("json 2 list entity error:", ex);
+            Log.error("json 2 list entity error:source=" + json, ex);
         }
 
         return null;
@@ -60,5 +62,19 @@ public class StringUtil {
 
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    public static Map<String, Object> json2Map(String source) {
+        if (StringUtils.isBlank(source)) {
+            return new HashMap<>(0);
+        }
+
+        try {
+            return mapper.readValue(source, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (Exception ex) {
+            Log.error("json 2 map error:source = " + source, ex);
+            return new HashMap<>(0);
+        }
     }
 }

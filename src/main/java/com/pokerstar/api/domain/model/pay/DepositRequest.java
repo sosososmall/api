@@ -19,13 +19,14 @@ public class DepositRequest implements Serializable {
 
     private int pay_type;
 
-    private int pay_fee_type;
-
     private long datetime;
 
     private String extra;
 
     private String sign;
+
+
+    private int pay_fee_type;
 
 
     private String request_url;

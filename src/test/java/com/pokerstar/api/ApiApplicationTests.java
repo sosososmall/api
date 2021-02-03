@@ -1,7 +1,6 @@
 package com.pokerstar.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pokerstar.api.domain.entity.channel.Channel;
 import com.pokerstar.api.domain.entity.other.Country;
 import com.pokerstar.api.infrastructure.util.*;
 import org.jsoup.Jsoup;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -38,6 +36,7 @@ class ApiApplicationTests {
         // updateCurrencyExchangeRate(apiHost);
         //initCurrency(domain);
         //initCountry(domain);
+
         int a = 1;
     }
 

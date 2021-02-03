@@ -17,6 +17,8 @@ public class WithdrawRequest implements Serializable {
 
     private String real_name;
 
+    private String phone_no;
+
     private String bank_card;
 
     private String bank_branch;

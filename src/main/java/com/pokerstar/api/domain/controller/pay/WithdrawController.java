@@ -1,11 +1,13 @@
 package com.pokerstar.api.domain.controller.pay;
 
 import com.pokerstar.api.domain.model.pay.WithdrawRequest;
+import com.pokerstar.api.domain.service.merchant.IMerchantWithdrawOrderService;
 import com.pokerstar.api.infrastructure.entity.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "提现")
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class WithdrawController {
     private static Logger Log = LoggerFactory.getLogger(WithdrawController.class);
 
+    @Autowired
+    private IMerchantWithdrawOrderService merchantWithdrawOrderService;
 
     @ApiOperation(value = "提现", httpMethod = "POST")
     @PostMapping

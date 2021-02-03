@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 01/02/2021 11:38:45
+ Date: 03/02/2021 15:13:26
 */
 
 SET NAMES utf8mb4;
@@ -219,6 +219,25 @@ CREATE TABLE `balance_change_type`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for bank
+-- ----------------------------
+DROP TABLE IF EXISTS `bank`;
+CREATE TABLE `bank`  (
+  `bank_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bank_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行名称',
+  `bank_iso_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行国际编码',
+  `bank_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台自定义编码',
+  `bank_support_country_id` int(11) NOT NULL COMMENT '所属国家ID',
+  `bank_support_country_cn_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '国家名称',
+  `bank_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`bank_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of bank
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for channel
 -- ----------------------------
 DROP TABLE IF EXISTS `channel`;
@@ -255,6 +274,26 @@ INSERT INTO `channel` VALUES (4, 'SJPay', 'SJ', '1022905', 'IIhoISkqgR7JYPZ7UMlJ
 INSERT INTO `channel` VALUES (5, 'ShineUPay', 'ShineU', 'A5OCM6L0X91C2325', ' 55d41af7486e4b448824369e3787c423', 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', NULL, NULL, 0, 1, 'india', '', '', 0, NULL, 0, NULL, NULL);
 INSERT INTO `channel` VALUES (6, 'SubiPay', 'SUB', 'API19012960503135996', 'f0d400d243a748a4b5e600459a5030df', 'http://efupays.com:8084/api/pay/V2', 'http://efupays.com:8084/api/defray/V2', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
 INSERT INTO `channel` VALUES (7, 'ShineUPay', 'ShineU', 'A85WG8BCOSU89640', '58d900d68980440c9d274d561ed65d7b|e10adc3949ba59abbe56e057f20f883e', 'https://gateway.shineupay.com/pay/create', 'https://gateway.shineupay.com/withdraw/create', 'www', 'www', 0, 1, '印度', 'India', 'IN', 77, 'string', 1611920596, 1611920596, 'string');
+
+-- ----------------------------
+-- Table structure for channel_bank
+-- ----------------------------
+DROP TABLE IF EXISTS `channel_bank`;
+CREATE TABLE `channel_bank`  (
+  `channel_bank_id` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_id` int(11) NOT NULL,
+  `bank_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `bank_iso_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行国际编码',
+  `bank_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台自定义编码',
+  `bank_support_country_id` int(11) NOT NULL COMMENT '所属国家ID',
+  `bank_support_country_cn_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '国家名称',
+  `channel_bank_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`channel_bank_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of channel_bank
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for channel_deposit
@@ -681,8 +720,8 @@ CREATE TABLE `merchant`  (
   `merchant_nick_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户昵称',
   `merchant_account` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户账号',
   `merchant_password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户密码',
-  `merchant_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `merchant_secret` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `merchant_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
+  `merchant_secret` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户密钥',
   `merchant_phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话',
   `merchant_email` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系邮件',
   `merchant_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户所在IP,如果不为空,则限制该商户所有不为此ip请求访问',

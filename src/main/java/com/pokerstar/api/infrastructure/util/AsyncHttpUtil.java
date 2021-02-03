@@ -59,9 +59,7 @@ public class AsyncHttpUtil {
     public static String readResponseResult(CompletableFuture<Response> future) {
         StringBuffer sb = new StringBuffer();
         try {
-            Log.debug("future status:", future.isDone());
             future.get();
-            Log.debug("future status:", future.isDone());
             future.whenCompleteAsync((p, p1) -> {
                 Log.debug("future body:", p.getResponseBody());
                 sb.append(p.getResponseBody());

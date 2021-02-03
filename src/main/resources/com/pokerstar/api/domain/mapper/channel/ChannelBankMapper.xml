@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.channel.ChannelBankMapper">
+
+
+    <insert id="addChannelBank">
+        insert into channel_bank
+            (channel_id,bank_name,bank_iso_code,bank_code,bank_support_country_id,
+            bank_support_country_cn_name,channel_bank_remark)
+        values
+            (#{channel_id},#{bank_name},#{bank_iso_code},#{bank_code},#{bank_support_country_id},
+            #{bank_support_country_cn_name},#{channel_bank_remark})
+    </insert>
+
+    <insert id="addChannelBanks" parameterType="java.util.List">
+        insert into channel_bank
+            (channel_id,bank_name,bank_iso_code,bank_code,bank_support_country_id,
+            bank_support_country_cn_name,channel_bank_remark)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.channel_id},#{item.bank_name},#{item.bank_iso_code},
+            #{item.bank_code},#{item.bank_support_country_id},
+            #{item.bank_support_country_cn_name},#{item.channel_bank_remark})
+        </foreach>
+    </insert>
+
+    <update id="updateChannelBank">
+        update channel_bank set
+            bank_name = #{bank_name},
+            bank_iso_code = #{bank_iso_code},
+            bank_code = #{bank_code},
+            bank_support_country_id = #{bank_support_country_id},
+            bank_support_country_cn_name = #{bank_support_country_cn_name},
+            channel_bank_remark = #{channel_bank_remark}
+        where channel_bank_id = #{channel_bank_id}
+    </update>
+
+    <delete id="deleteChannelBank">
+        delete from channel_bank where channel_bank_id = #{channelBankId}
+    </delete>
+
+    <delete id="deleteChannelBanks">
+        delete from channel_bank where channel_id = #{channelId}
+    </delete>
+
+    <select id="getAllChannelBank" resultType="com.pokerstar.api.domain.entity.channel.ChannelBank">
+        select * from channel_bank
+    </select>
+
+    <select id="lstChannelBank" resultType="com.pokerstar.api.domain.entity.channel.ChannelBank">
+        select * from channel_bank where channel_id = #{channelId}
+    </select>
+
+    <select id="getChannelBank" resultType="com.pokerstar.api.domain.entity.channel.ChannelBank">
+        select * from channel_bank where channel_bank_id = #{channelBankId}
+    </select>
+
+</mapper>

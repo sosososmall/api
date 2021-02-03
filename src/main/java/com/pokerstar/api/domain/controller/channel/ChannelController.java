@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Api(tags = "渠道信息管理")
 @RestController
 @RequestMapping("/channel")
@@ -35,12 +38,18 @@ public class ChannelController {
     @Autowired
     private IChannelDepositTypeService channelDepositTypeService;
 
+    @Autowired
+    private IChannelBankService channelBankService;
+
     @ApiOperation(value = "新增渠道", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     @RequestMapping("/add")
     public Result addChannel(@RequestBody Channel channel) {
         try {
+            if (channel == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
             channel.setChannel_create_time(DateTimeUtil.getCurrentSecondTimestamp());
             channel.setChannel_last_update_time(DateTimeUtil.getCurrentSecondTimestamp());
             return Result.success(channelService.addChannel(channel));
@@ -56,6 +65,9 @@ public class ChannelController {
     @RequestMapping("/addDeposit")
     public Result addChannelDeposit(@RequestBody ChannelDeposit channelDeposit) {
         try {
+            if (channelDeposit == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
             return Result.success(channelDepositService.addChannelDeposit(channelDeposit));
         } catch (Exception ex) {
             Log.error("add channel deposit error:", ex);
@@ -69,6 +81,9 @@ public class ChannelController {
     @RequestMapping("/addWithdraw")
     public Result addChannelWithdraw(@RequestBody ChannelWithdraw channelWithdraw) {
         try {
+            if (channelWithdraw == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
             return Result.success(channelWithdrawService.addChannelWithdraw(channelWithdraw));
         } catch (Exception ex) {
             Log.error("add channel withdraw error:", ex);
@@ -82,6 +97,9 @@ public class ChannelController {
     @RequestMapping("/addDepositType")
     public Result addChannelDepositType(@RequestBody ChannelDepositType channelDepositType) {
         try {
+            if (channelDepositType == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
             return Result.success(channelDepositTypeService.addChannelDepositType(channelDepositType));
         } catch (Exception ex) {
             Log.error("add channel deposit error:", ex);
@@ -95,6 +113,9 @@ public class ChannelController {
     @RequestMapping("/addWithdrawType")
     public Result addChannelWithdrawType(@RequestBody ChannelWithdrawType channelWithdrawType) {
         try {
+            if (channelWithdrawType == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
             return Result.success(channelWithdrawTypeService.addChannelWithdrawType(channelWithdrawType));
         } catch (Exception ex) {
             Log.error("add channel withdraw error:", ex);
@@ -108,6 +129,9 @@ public class ChannelController {
     @RequestMapping("/delete")
     public Result deleteChannel(@RequestParam(value = "channelId") int channelId) {
         try {
+            if (channelId <= 0) {
+                return Result.fail(ResultCode.PARAMETER_VALUE_IS_INVALID);
+            }
             return Result.success(channelService.deleteChannel(channelId));
         } catch (Exception ex) {
             Log.error("ChannelController delete channel error:", ex);
@@ -122,6 +146,9 @@ public class ChannelController {
     public Result getChannels(@RequestParam(value = "index") int index,
                               @RequestParam(value = "pageSize") int pageSize) {
         try {
+            if (index <= 0 || pageSize <= 0) {
+                return Result.fail(ResultCode.PARAMETER_VALUE_IS_INVALID);
+            }
             return Result.success(channelService.getChannels(index, pageSize));
         } catch (Exception ex) {
             Log.error("ChannelController get channels error:", ex);
@@ -136,6 +163,9 @@ public class ChannelController {
     @RequestMapping("/enableChannel")
     public Result enableChannel(@RequestParam(value = "channelId") int channelId) {
         try {
+            if (channelId <= 0) {
+                return Result.fail(ResultCode.PARAMETER_VALUE_IS_INVALID);
+            }
             return Result.success(channelService.enableChannel(channelId));
         } catch (Exception ex) {
             Log.error("ChannelController enable channel error:", ex);
@@ -149,6 +179,10 @@ public class ChannelController {
     @RequestMapping("/updateChannelRate")
     public Result updateChannelRateInfo(@RequestBody ChannelRateBO param) {
         try {
+            if (param == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
+
             return Result.success(channelService.updateChannelRateInfo(param));
         } catch (Exception ex) {
             Log.error("ChannelController updateChannelRate error:", ex);
@@ -156,4 +190,37 @@ public class ChannelController {
         }
     }
 
+    @ApiOperation(value = "添加支付渠道相关银行", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addChannelBank")
+    public Result addChannelBank(@RequestBody ChannelBank channelBank) {
+        try {
+            if (channelBank == null) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
+
+            return Result.success(channelBankService.addChannelBank(channelBank));
+        } catch (Exception ex) {
+            Log.error("add channel bank error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_BANK_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "批量添加支付渠道相关银行", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    @RequestMapping("/addChannelBanks")
+    public Result addChannelBanks(@RequestBody List<ChannelBank> channelBanks) {
+        try {
+            if (channelBanks.isEmpty()) {
+                return Result.fail(ResultCode.PARAMETER_CAN_NOT_BE_NULL_OR_EMPTY);
+            }
+
+            return Result.success(channelBankService.addChannelBanks(channelBanks));
+        } catch (Exception ex) {
+            Log.error("add channel banks error:", ex);
+            return Result.fail(ResultCode.ADD_CHANNEL_BANK_ERROR);
+        }
+    }
 }

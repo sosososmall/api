@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pokerstar.api.domain.mapper.other.BankMapper">
+    <insert id="addBank">
+        insert into bank
+            (bank_name,bank_iso_code,bank_code,bank_support_country_id,
+            bank_support_country_cn_name,bank_remark)
+        values
+            (#{bank_name},#{bank_iso_code},#{bank_code},#{bank_support_country_id},
+            #{bank_support_country_cn_name},#{bank_remark})
+    </insert>
+
+    <update id="updateBank">
+        update bank set
+            bank_name = #{bank_name},
+            bank_iso_code = #{bank_iso_code},
+            bank_code = #{bank_code},
+            bank_support_country_id = #{bank_support_country_id},
+            bank_support_country_cn_name = #{bank_support_country_cn_name},
+            bank_remark = #{bank_remark}
+        where bank_id = #{bank_id}
+    </update>
+
+    <delete id="deleteBank">
+        delete from bank where bank_id = #{bankId}
+    </delete>
+
+    <select id="getAllBank" resultType="com.pokerstar.api.domain.entity.other.Bank">
+        select * from bank
+    </select>
+
+    <select id="lstCountryBank" resultType="com.pokerstar.api.domain.entity.other.Bank">
+        select * from bank where bank_support_country_id = #{countryId}
+    </select>
+
+    <select id="getBank" resultType="com.pokerstar.api.domain.entity.other.Bank">
+        select * from bank where bank_id = #{bankId}
+    </select>
+
+
+</mapper>
