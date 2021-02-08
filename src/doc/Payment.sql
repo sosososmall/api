@@ -11,7 +11,7 @@
  Target Server Version : 50568
  File Encoding         : 65001
 
- Date: 03/02/2021 15:13:26
+ Date: 06/02/2021 18:52:52
 */
 
 SET NAMES utf8mb4;
@@ -26,15 +26,17 @@ CREATE TABLE `admin`  (
   `admin_account` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号',
   `admin_nick_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称',
   `admin_password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码  md5密文',
-  `admin_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '账号状态  1=开启 0=禁用',
+  `admin_account_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '账号状态  1=开启 0=禁用',
   `admin_phone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话,多个号码以 ; 隔开',
   `admin_type` tinyint(1) NOT NULL DEFAULT 3 COMMENT '账号类型  1=超管  2=普通管理  3-客服？？',
   `admin_white_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ip白名单,多个IP用;隔开,最多4个, 为空则不限制',
-  `admin_daily_max_login_fail_count` int(11) NOT NULL DEFAULT 6 COMMENT '管理员当日登录失败总次数  超过阀值即禁用该账号 默认 6 次',
-  `admin_daily_login_fail_count` int(11) NOT NULL DEFAULT 0 COMMENT '管理员当日登录失败次数  (写脚本每天 0时0分0秒 重置该值)',
-  `admin_max_confirm_withdraw_count` int(11) NOT NULL DEFAULT 0 COMMENT '管理员每日能通过的最大代理提现次数',
-  `admin_max_confirm_withdraw_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '管理员能通过的代理最大提现金额',
+  `admin_daily_max_login_fail_count` int(11) NULL DEFAULT 6 COMMENT '管理员当日登录失败总次数  超过阀值即禁用该账号 默认 6 次',
+  `admin_daily_login_fail_count` int(11) NULL DEFAULT 0 COMMENT '管理员当日登录失败次数  (写脚本每天 0时0分0秒 重置该值)',
+  `admin_max_confirm_withdraw_count` int(11) NULL DEFAULT 0 COMMENT '管理员每日能通过的最大代理提现次数',
+  `admin_max_confirm_withdraw_amount` decimal(15, 2) NULL DEFAULT 0.00 COMMENT '管理员能通过的代理最大提现金额',
   `admin_create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `admin_token` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `admin_status` tinyint(1) NULL DEFAULT NULL COMMENT '是否在线 1=在线 0=离线',
   `admin_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`admin_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n管理员表\r\n*/' ROW_FORMAT = Compact;
@@ -42,7 +44,7 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'tinker', 'jerry', 'e10adc3949ba59abbe56e057f20f883e', 1, '18223437401', 1, '192.168.2.132;192.168.2.236', 6, 0, 10, 10000000.00, 1611827541, 'hello world');
+INSERT INTO `admin` VALUES (1, 'tinker', 'jerry', 'e10adc3949ba59abbe56e057f20f883e', 1, '18223437401', 1, '192.168.2.132;192.168.2.236', 6, 0, 10, 10000000.00, 1611827541, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGlua2VyIiwiZXhwIjoxNjEyNjA1NjgzLCJuYmYiOiIxNjEyNjA1NjIzIiwiaXNzIjoidGlua2VyIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4LjIuMTMyL2FwaS8ifQ.tp0aQoSWRA_uzmZeFFdQXxE13dNPRCKnb8M1z0ydf_I', NULL, 'hello world');
 
 -- ----------------------------
 -- Table structure for admin_log
@@ -238,266 +240,228 @@ CREATE TABLE `bank`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for channel
+-- Table structure for provider_bank
 -- ----------------------------
-DROP TABLE IF EXISTS `channel`;
-CREATE TABLE `channel`  (
-  `channel_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_full_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道全程',
-  `channel_short_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
-  `channel_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道商户号',
-  `channel_secret_key` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道密钥',
-  `channel_deposit_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代收地址',
-  `channel_withdraw_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代付地址',
-  `channel_deposit_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `channel_withdraw_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `channel_sort` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '排序  该值越大越前',
-  `channel_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '渠道状态  1=开启 0=禁用 新增渠道默认开启',
-  `channel_support_country_cn_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 中',
-  `channel_support_country_eg_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 英',
-  `channel_support_country_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 iso 编码',
-  `channel_support_country_id` int(11) NOT NULL COMMENT '渠道支持的国家 id(如果某个渠道支持多个国家,需要为该渠道每个国家配置一个)',
-  `channel_ip` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '渠道IP   如果该值不为空 每次该渠道回调不为该IP的请求都拒绝',
-  `channel_create_time` int(11) NOT NULL COMMENT '创建时间',
-  `channel_last_update_time` int(11) NULL DEFAULT NULL COMMENT '最后更新时间',
-  `channel_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n渠道信息表\r\n*/' ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of channel
--- ----------------------------
-INSERT INTO `channel` VALUES (1, 'BenriPay', 'Benri', 'S820201218154906000002', '{   \"plat_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDFBPvOOdUi1uRP4x61Y6TrRrExgko0OSs9SkjlrpagA+PrBe10RRrxD2Tg892UxXmEFbFsDtgzvPXUzzVJXAo0PplRbVkWP2Wp3HLNrv46FQYKgiO+lknN6jIkYGHCJRKQIKroB+NIzw/p2WTGAMpIXKprQpsM+Dn17+M41F63wIDAQAB\",   \"merchant_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDolk5vCV5L+yM4DDu1B5QF3bVK doD/jzjxKImBQeAYMMKIZF21QaYqHuNDOvtUMWRIxbbl3KUtDCdmqgGS/wphU6J5 BkWrIBJaAFbVwyv3UmwnyBs/wwU0AJtPZHoV27s5Wo2qLZ8tuS6YmArh5i9hImSw oPQsl1/IfOjXU+Ps4QIDAQAB\",   \"merchant_private_key\" : \"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOiWTm8JXkv7IzgM O7UHlAXdtUp2gP+POPEoiYFB4BgwwohkXbVBpioe40M6+1QxZEjFtuXcpS0MJ2aq AZL/CmFTonkGRasgEloAVtXDK/dSbCfIGz/DBTQAm09kehXbuzlajaotny25LpiY CuHmL2EiZLCg9CyXX8h86NdT4+zhAgMBAAECgYBsUTub2HgS2JVxT7kquKnGBZed Ywz2d4PkQ6WuDbjIa0Tdcih19mnlKddbAwfzEMGMZo+kAxrlnMhotnnfNGlnQNqP b2B2/XqmqFuRJeTstRRMmHGPqEFSjXc0IfgrZ49r8mTmApnsENXCHkMa2OxT3sun +Ia8F3QEW3ZST5OYAQJBAPZUFKclQGyOGYM5SvNFDb68yR9oJ7ozz6g+RuO0waHm HyEmPrNRk1riqL44rxbR8nfQ5f8f5RvEspTlSOXQXiECQQDxuBuZyE0gdWm48Vfn S2qyVWGWo75dCea7tYBWDutU/j+CS0rnfGiy2IXjqG9z3u5khwktbXmMGFTxqZNL sjbBAkEAuCsfEeT5KPCJRKJGVmIPp8bwPGocIcxw+qItUDwp9YjfR2KXyGw6Vt5W OXqZ9d7cgRaPj1LicgN7XXWcLi6+4QJBAKjz9tbWmpJFf1A14StaG4nrA/s3GKgP c6dghgOhCfyuedWoqwKCguv/TBaEdOKYwCij+lY2Xu79UuJXlQ0j1AECQCfGTfoC YLsV8opK+zbnOxNH8OtMzrU2Z9c4SI31Iu+F9uCms8+dM0re+CaDWYdQwYIF943o 6g8tW/++loWuekU=\" }        ', 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', NULL, NULL, 0, 1, 'indonisia', '', '', 0, NULL, 0, NULL, '');
-INSERT INTO `channel` VALUES (2, 'VNPay', 'VN', '10449', '9559xtc2r8pxx1p5otfygzlvynelvb7o', 'https://www.vn168pay.com/Pay_Index.html', 'https://www.vn168pay.com/Payment_Dfpay_add.html', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (3, 'JuHuaPay', 'JuHua', '87A87384', '0d70a64a785f471cae2bd8b16ff629c3', 'http://admin.juhua1212.com/yj_action/orderApi/new', 'http://admin.juhua1212.com/yj_action/agentApi/create', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (4, 'SJPay', 'SJ', '1022905', 'IIhoISkqgR7JYPZ7UMlJ0CAS7mct0HmB', 'https://api.rb131411.com/index/underorder.do', 'https://api.rb131411.com/withdrawal/create', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (5, 'ShineUPay', 'ShineU', 'A5OCM6L0X91C2325', ' 55d41af7486e4b448824369e3787c423', 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', NULL, NULL, 0, 1, 'india', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (6, 'SubiPay', 'SUB', 'API19012960503135996', 'f0d400d243a748a4b5e600459a5030df', 'http://efupays.com:8084/api/pay/V2', 'http://efupays.com:8084/api/defray/V2', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
-INSERT INTO `channel` VALUES (7, 'ShineUPay', 'ShineU', 'A85WG8BCOSU89640', '58d900d68980440c9d274d561ed65d7b|e10adc3949ba59abbe56e057f20f883e', 'https://gateway.shineupay.com/pay/create', 'https://gateway.shineupay.com/withdraw/create', 'www', 'www', 0, 1, '印度', 'India', 'IN', 77, 'string', 1611920596, 1611920596, 'string');
-
--- ----------------------------
--- Table structure for channel_bank
--- ----------------------------
-DROP TABLE IF EXISTS `channel_bank`;
-CREATE TABLE `channel_bank`  (
-  `channel_bank_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `provider_bank`;
+CREATE TABLE `provider_bank`  (
+  `provider_bank_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL,
   `bank_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `bank_iso_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行国际编码',
   `bank_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台自定义编码',
   `bank_support_country_id` int(11) NOT NULL COMMENT '所属国家ID',
   `bank_support_country_cn_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '国家名称',
-  `channel_bank_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_bank_id`) USING BTREE
+  `provider_bank_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_bank_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_bank
+-- Records of provider_bank
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for channel_deposit
+-- Table structure for provider_deposit
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_deposit`;
-CREATE TABLE `channel_deposit`  (
-  `channel_deposit_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_support_country_id` int(11) NOT NULL COMMENT '国家ID',
-  `channel_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
-  `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道编码(单个编码提供该值)',
-  `channel_deposit_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
-  `channel_deposit_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小充值金额(支付渠道提供)',
-  `channel_deposit_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大充值金额(支付渠道提供)',
-  `channel_deposit_type_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态(支付渠道提供,如果渠道通道不可用则修改该值)  1=可用 0=禁用 默认开启',
-  `channel_deduct_deposit_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
-  `channel_deposit_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
-  `channel_deposit_type_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_deposit_id`) USING BTREE
+DROP TABLE IF EXISTS `provider_deposit`;
+CREATE TABLE `provider_deposit`  (
+  `provider_deposit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_support_country_id` int(11) NOT NULL COMMENT '国家ID',
+  `provider_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
+  `provider_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道编码(单个编码提供该值)',
+  `provider_deposit_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
+  `provider_deposit_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小充值金额(支付渠道提供)',
+  `provider_deposit_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大充值金额(支付渠道提供)',
+  `provider_deposit_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态(支付渠道提供,如果渠道通道不可用则修改该值)  1=可用 0=禁用 默认开启',
+  `provider_deposit_deduct_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
+  `provider_deposit_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
+  `provider_deposit_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_deposit_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n充值通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_deposit
+-- Records of provider_deposit
 -- ----------------------------
-INSERT INTO `channel_deposit` VALUES (1, 1, 74, 1, '', '', 100000.00, 50000000.00, 1, 5000, 5.00, 'test');
-INSERT INTO `channel_deposit` VALUES (2, 5, 77, 2, 'string', 'string', 10.00, 100000.00, 1, 1, 5.00, 'string');
+INSERT INTO `provider_deposit` VALUES (1, 1, 74, 1, '', '', 100000.00, 50000000.00, 1, 5000, 5.00, 'test');
+INSERT INTO `provider_deposit` VALUES (2, 5, 77, 2, 'string', 'string', 10.00, 100000.00, 1, 1, 5.00, 'string');
 
 -- ----------------------------
--- Table structure for channel_deposit_merchant
+-- Table structure for provider_deposit_merchant
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_deposit_merchant`;
-CREATE TABLE `channel_deposit_merchant`  (
-  `channel_deposit_merchant_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商户充值渠道ID',
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
+DROP TABLE IF EXISTS `provider_deposit_merchant`;
+CREATE TABLE `provider_deposit_merchant`  (
+  `provider_deposit_merchant_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商户充值渠道ID',
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
-  `channel_deposit_id` int(11) NOT NULL COMMENT '充值通道ID',
-  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
-  `channel_deposit_type_id` int(11) NOT NULL COMMENT '充值通道类型ID',
-  `channel_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
-  `channel_deposit_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
-  `channel_deposit_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小充值金额(支付渠道提供)',
-  `channel_deposit_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大充值金额(支付渠道提供)',
-  `channel_deposit_merchant_min_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最小充值金额(商户自行修改，不能低于渠道提供值，默认为渠道值)',
-  `channel_deposit_merchant_max_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最大充值金额(商户自行修改，不能高于渠道提供值，默认为渠道值)',
-  `channel_deposit_merchant_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态  1=开启 0=禁用  默认开启',
-  `channel_deposit_merchant_deduct_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
-  `channel_deposit_merchant_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
-  `channel_deposit_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_deposit_merchant_id`) USING BTREE
+  `provider_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
+  `provider_deposit_id` int(11) NOT NULL COMMENT '充值通道ID',
+  `provider_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
+  `provider_deposit_type_id` int(11) NOT NULL COMMENT '充值通道类型ID',
+  `provider_deposit_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
+  `provider_deposit_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
+  `provider_deposit_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小充值金额(支付渠道提供)',
+  `provider_deposit_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大充值金额(支付渠道提供)',
+  `provider_deposit_merchant_min_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最小充值金额(商户自行修改，不能低于渠道提供值，默认为渠道值)',
+  `provider_deposit_merchant_max_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最大充值金额(商户自行修改，不能高于渠道提供值，默认为渠道值)',
+  `provider_deposit_merchant_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态  1=开启 0=禁用  默认开启',
+  `provider_deposit_merchant_deduct_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
+  `provider_deposit_merchant_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
+  `provider_deposit_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_deposit_merchant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户充值通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_deposit_merchant
+-- Records of provider_deposit_merchant
 -- ----------------------------
-INSERT INTO `channel_deposit_merchant` VALUES (1, 1, 1, 1, 1, 74, 1, '', '', 100000.00, 100000.00, 100000.00, 100000.00, 1, 8000, 8.00, 'test');
-INSERT INTO `channel_deposit_merchant` VALUES (2, 5, 1, 2, 2, 77, 2, '', '', 10.00, 100000.00, 10.00, 100000.00, 1, 1, 5.00, 'string');
+INSERT INTO `provider_deposit_merchant` VALUES (1, 1, 1, 1, 1, 74, 1, '', '', 100000.00, 100000.00, 100000.00, 100000.00, 1, 8000, 8.00, 'test');
+INSERT INTO `provider_deposit_merchant` VALUES (2, 5, 1, 2, 2, 77, 2, '', '', 10.00, 100000.00, 10.00, 100000.00, 1, 1, 5.00, 'string');
 
 -- ----------------------------
--- Table structure for channel_deposit_type
+-- Table structure for provider_deposit_type
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_deposit_type`;
-CREATE TABLE `channel_deposit_type`  (
-  `channel_deposit_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_deposit_type_cn_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 中文',
-  `channel_deposit_type_eg_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 英语',
-  `channel_deposit_type_native_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 本地语言',
-  `channel_deposit_type_remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_deposit_type_id`) USING BTREE
+DROP TABLE IF EXISTS `provider_deposit_type`;
+CREATE TABLE `provider_deposit_type`  (
+  `provider_deposit_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_deposit_type_cn_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 中文',
+  `provider_deposit_type_eg_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 英语',
+  `provider_deposit_type_native_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 本地语言',
+  `provider_deposit_type_remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_deposit_type_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n支付通道类型表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_deposit_type
+-- Records of provider_deposit_type
 -- ----------------------------
-INSERT INTO `channel_deposit_type` VALUES (1, 1, '收银台', 'paydesk', 'meja kasir', 'test');
-INSERT INTO `channel_deposit_type` VALUES (2, 5, '收银台', 'paydesk', 'चेकआउट काउंटर', NULL);
+INSERT INTO `provider_deposit_type` VALUES (1, 1, '收银台', 'paydesk', 'meja kasir', 'test');
+INSERT INTO `provider_deposit_type` VALUES (2, 5, '收银台', 'paydesk', 'चेकआउट काउंटर', NULL);
 
 -- ----------------------------
--- Table structure for channel_merchant
+-- Table structure for provider_merchant
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_merchant`;
-CREATE TABLE `channel_merchant`  (
-  `channel_merchant_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
+DROP TABLE IF EXISTS `provider_merchant`;
+CREATE TABLE `provider_merchant`  (
+  `provider_merchant_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_full_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道全称',
-  `channel_short_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
-  `channel_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
-  `channel_merchant_secret_key` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户密钥',
-  `channel_support_country_id` int(11) NOT NULL COMMENT '渠道支持的国家',
-  `channel_merchant_deduct_deposit_amount` int(11) NOT NULL COMMENT '商户代收扣除基额',
-  `channel_merchant_deduct_withdraw_amount` int(11) NOT NULL COMMENT '商户代付扣除基额',
-  `channel_merchant_deposit_rate` decimal(6, 2) NOT NULL COMMENT '商户代收扣除利率',
-  `channel_merchant_withdraw_rate` decimal(6, 2) NOT NULL COMMENT '商户代付扣除利率',
-  `channel_status` tinyint(1) NOT NULL COMMENT '渠道状态 1=启用 0=禁用 (管理员切换某个渠道的状态时，需要同步修改该表状态值，该值商户不可修改)',
-  `channel_merchant_deposit_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '充值地址',
-  `channel_merchant_withdraw_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代付地址',
-  `channel_merchant_create_time` int(11) NOT NULL COMMENT '商户通道创建时间',
-  `channel_merchant_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ip白名单 多个以 ; 隔开',
-  `channel_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_merchant_id`) USING BTREE
+  `provider_full_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道全称',
+  `provider_short_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
+  `provider_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
+  `provider_merchant_secret_key` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户密钥',
+  `provider_support_country_id` int(11) NOT NULL COMMENT '渠道支持的国家',
+  `provider_merchant_deduct_deposit_amount` int(11) NOT NULL COMMENT '商户代收扣除基额',
+  `provider_merchant_deduct_withdraw_amount` int(11) NOT NULL COMMENT '商户代付扣除基额',
+  `provider_merchant_deposit_rate` decimal(6, 2) NOT NULL COMMENT '商户代收扣除利率',
+  `provider_merchant_withdraw_rate` decimal(6, 2) NOT NULL COMMENT '商户代付扣除利率',
+  `provider_status` tinyint(1) NOT NULL COMMENT '渠道状态 1=启用 0=禁用 (管理员切换某个渠道的状态时，需要同步修改该表状态值，该值商户不可修改)',
+  `provider_merchant_deposit_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '充值地址',
+  `provider_merchant_withdraw_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代付地址',
+  `provider_merchant_create_time` int(11) NOT NULL COMMENT '商户通道创建时间',
+  `provider_merchant_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ip白名单 多个以 ; 隔开',
+  `provider_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_merchant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_merchant
+-- Records of provider_merchant
 -- ----------------------------
-INSERT INTO `channel_merchant` VALUES (1, 1, 1, 'BenriPay', 'Benri', '202101280001', 'e10adc3949ba59abbe56e057f20f883e', 74, 5000, 5000, 5.00, 5.00, 1, 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', 1611831168, '192.168.2.132;192.168.2.236', 'test');
-INSERT INTO `channel_merchant` VALUES (2, 5, 1, 'ShineUPay', 'ShineU', '202101280001', 'e10adc3949ba59abbe56e057f20f883e', 77, 10, 10, 5.00, 5.00, 1, 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', 1611921020, '58d900d68980440c9d274d561ed65d7b|192.168.2.132;192.168.2.236', 'string');
+INSERT INTO `provider_merchant` VALUES (1, 1, 1, 'BenriPay', 'Benri', '202101280001', 'e10adc3949ba59abbe56e057f20f883e', 74, 5000, 5000, 5.00, 5.00, 1, 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', 1611831168, '192.168.2.132;192.168.2.236', 'test');
+INSERT INTO `provider_merchant` VALUES (2, 5, 1, 'ShineUPay', 'ShineU', '202101280001', 'e10adc3949ba59abbe56e057f20f883e', 77, 10, 10, 5.00, 5.00, 1, 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', 1611921020, '58d900d68980440c9d274d561ed65d7b|192.168.2.132;192.168.2.236', 'string');
 
 -- ----------------------------
--- Table structure for channel_merchant_daily_report
+-- Table structure for provider_merchant_daily_report
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_merchant_daily_report`;
-CREATE TABLE `channel_merchant_daily_report`  (
-  `channel_merchant_daily_report_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `provider_merchant_daily_report`;
+CREATE TABLE `provider_merchant_daily_report`  (
+  `provider_merchant_daily_report_id` int(11) NOT NULL AUTO_INCREMENT,
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_merchant_daily_report_deposit_amount` decimal(15, 2) NOT NULL COMMENT '当日充值金额',
-  `channel_merchant_daily_report_withdraw_amount` decimal(15, 2) NOT NULL COMMENT '当日提现金额',
-  `channel_merchant_daily_report_deposit_fee` decimal(15, 2) NOT NULL COMMENT '充值花费',
-  `channel_merchant_daily_report_withdraw_fee` decimal(5, 2) NOT NULL COMMENT '提现花费',
-  `channel_merchant_daily_report_year` int(11) NOT NULL COMMENT '年',
-  `channel_merchant_daily_report_month` int(11) NOT NULL COMMENT '月',
-  `channel_merchant_daily_report_week` int(11) NOT NULL COMMENT '周',
-  `channel_merchant_daily_report_day` int(11) NOT NULL COMMENT '日',
-  `channel_merchant_daily_report_add_time` int(11) NOT NULL COMMENT '创建时间',
-  `channel_merchant_daily_report_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种',
-  PRIMARY KEY (`channel_merchant_daily_report_id`) USING BTREE
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_merchant_daily_report_deposit_amount` decimal(15, 2) NOT NULL COMMENT '当日充值金额',
+  `provider_merchant_daily_report_withdraw_amount` decimal(15, 2) NOT NULL COMMENT '当日提现金额',
+  `provider_merchant_daily_report_deposit_fee` decimal(15, 2) NOT NULL COMMENT '充值花费',
+  `provider_merchant_daily_report_withdraw_fee` decimal(5, 2) NOT NULL COMMENT '提现花费',
+  `provider_merchant_daily_report_year` int(11) NOT NULL COMMENT '年',
+  `provider_merchant_daily_report_month` int(11) NOT NULL COMMENT '月',
+  `provider_merchant_daily_report_week` int(11) NOT NULL COMMENT '周',
+  `provider_merchant_daily_report_day` int(11) NOT NULL COMMENT '日',
+  `provider_merchant_daily_report_add_time` int(11) NOT NULL COMMENT '创建时间',
+  `provider_merchant_daily_report_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种',
+  PRIMARY KEY (`provider_merchant_daily_report_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户渠道每日统计表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_merchant_daily_report
+-- Records of provider_merchant_daily_report
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for channel_withdraw
+-- Table structure for provider_withdraw
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_withdraw`;
-CREATE TABLE `channel_withdraw`  (
-  `channel_withdraw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
-  `channel_withdraw_type_id` int(11) NOT NULL COMMENT '通道类型ID',
-  `channel_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
-  `channel_withdraw_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
-  `channel_withdraw_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小提现金额(支付渠道提供)',
-  `channel_withdraw_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大提现金额(支付渠道提供)',
-  `channel_withdraw_type_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态(支付渠道提供,如果渠道通道不可用则修改该值)  1=可用 0=禁用 默认开启',
-  `channel_deduct_withdraw_amount` int(11) NOT NULL COMMENT '代付扣除基额(平台盈利来源)',
-  `channel_withdraw_rate` decimal(6, 2) NOT NULL COMMENT '代付扣除费率(平台盈利来源)',
-  `channel_withdraw_type_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_withdraw_id`) USING BTREE
+DROP TABLE IF EXISTS `provider_withdraw`;
+CREATE TABLE `provider_withdraw`  (
+  `provider_withdraw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
+  `provider_withdraw_type_id` int(11) NOT NULL COMMENT '通道类型ID',
+  `provider_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
+  `provider_withdraw_code_extra` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
+  `provider_withdraw_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小提现金额(支付渠道提供)',
+  `provider_withdraw_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大提现金额(支付渠道提供)',
+  `provider_withdraw_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态(支付渠道提供,如果渠道通道不可用则修改该值)  1=可用 0=禁用 默认开启',
+  `provider_withdraw_deduct_amount` int(11) NOT NULL COMMENT '代付扣除基额(平台盈利来源)',
+  `provider_withdraw_rate` decimal(6, 2) NOT NULL COMMENT '代付扣除费率(平台盈利来源)',
+  `provider_withdraw_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_withdraw_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_withdraw
+-- Records of provider_withdraw
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for channel_withdraw_merchant
+-- Table structure for provider_withdraw_merchant
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_withdraw_merchant`;
-CREATE TABLE `channel_withdraw_merchant`  (
-  `channel_withdraw_merchant_id` int(11) NOT NULL AUTO_INCREMENT,
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
+DROP TABLE IF EXISTS `provider_withdraw_merchant`;
+CREATE TABLE `provider_withdraw_merchant`  (
+  `provider_withdraw_merchant_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
-  `channel_withdraw_id` int(11) NOT NULL COMMENT '提现通道ID',
-  `channel_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
-  `channel_withdraw_type_id` int(11) NOT NULL COMMENT '提现通道类型ID',
-  `channel_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
-  `channel_withdraw_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
-  `channel_withdraw_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小提现金额(支付渠道提供)',
-  `channel_withdraw_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大提现金额(支付渠道提供)',
-  `channel_withdraw_merchant_min_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最小提现金额(商户自行修改，不能低于渠道提供值，默认为渠道值)',
-  `channel_withdraw_merchant_max_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最大提现金额(商户自行修改，不能高于渠道提供值，默认为渠道值)',
-  `channel_withdraw_merchant_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态  1=开启 0=禁用 默认开启',
-  `channel_withdraw_merchant_deduct_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
-  `channel_withdraw_merchant_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
-  `channel_withdraw_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_withdraw_merchant_id`) USING BTREE
+  `provider_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
+  `provider_withdraw_id` int(11) NOT NULL COMMENT '提现通道ID',
+  `provider_support_country_id` int(11) NULL DEFAULT NULL COMMENT '国家ID',
+  `provider_withdraw_type_id` int(11) NOT NULL COMMENT '提现通道类型ID',
+  `provider_withdraw_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '通道编码(单个编码提供该值)',
+  `provider_withdraw_extra_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '通道额外编码(需要2个编码的时候提供该值)',
+  `provider_withdraw_min_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最小提现金额(支付渠道提供)',
+  `provider_withdraw_max_amount` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT '通道最大提现金额(支付渠道提供)',
+  `provider_withdraw_merchant_min_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最小提现金额(商户自行修改，不能低于渠道提供值，默认为渠道值)',
+  `provider_withdraw_merchant_max_amount` decimal(15, 2) NOT NULL COMMENT '商户设置该通道最大提现金额(商户自行修改，不能高于渠道提供值，默认为渠道值)',
+  `provider_withdraw_merchant_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '通道当前状态  1=开启 0=禁用 默认开启',
+  `provider_withdraw_merchant_deduct_amount` int(11) NOT NULL COMMENT '代收扣除基额(平台盈利来源)',
+  `provider_withdraw_merchant_rate` decimal(6, 2) NOT NULL COMMENT '代收扣除费率(平台盈利来源)',
+  `provider_withdraw_merchant_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_withdraw_merchant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户提现通道信息表\r\n*/' ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_withdraw_merchant
+-- Records of provider_withdraw_merchant
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for channel_withdraw_type
+-- Table structure for provider_withdraw_type
 -- ----------------------------
-DROP TABLE IF EXISTS `channel_withdraw_type`;
-CREATE TABLE `channel_withdraw_type`  (
-  `channel_withdraw_type_id` int(11) NOT NULL,
-  `channel_id` int(11) NOT NULL,
-  `channel_withdraw_type_cn_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 中文',
-  `channel_withdraw_type_eg_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 英语',
-  `channel_withdraw_type_native_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 本地语言',
-  `channel_withdraw_type_remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`channel_withdraw_type_id`) USING BTREE
+DROP TABLE IF EXISTS `provider_withdraw_type`;
+CREATE TABLE `provider_withdraw_type`  (
+  `provider_withdraw_type_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `provider_withdraw_type_cn_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 中文',
+  `provider_withdraw_type_eg_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 英语',
+  `provider_withdraw_type_native_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '支付类型名称 本地语言',
+  `provider_withdraw_type_remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_withdraw_type_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of channel_withdraw_type
+-- Records of provider_withdraw_type
 -- ----------------------------
 
 -- ----------------------------
@@ -772,7 +736,7 @@ CREATE TABLE `merchant_balance_log`  (
   `merchant_balance_log_currency_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '币种iso code',
   `merchant_balance_log_before` decimal(15, 2) NOT NULL COMMENT '变动前金额',
   `merchant_balance_log_after` decimal(15, 2) NOT NULL COMMENT '变动后金额',
-  `merchant_balance_log_balance` decimal(15, 2) NOT NULL COMMENT '变动金额',
+  `merchant_balance_log_amount` decimal(15, 2) NOT NULL COMMENT '变动金额',
   `merchant_balance_log_source` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '金钱来源',
   `merchant_balance_log_create_time` int(11) NOT NULL COMMENT '创建时间',
   `merchant_balance_type_id` int(11) NOT NULL COMMENT '账变类型ID',
@@ -790,15 +754,15 @@ CREATE TABLE `merchant_balance_log`  (
 DROP TABLE IF EXISTS `merchant_deposit_order`;
 CREATE TABLE `merchant_deposit_order`  (
   `merchant_deposit_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_short_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
+  `provider_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_short_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_deposit_merchant_id` int(11) NOT NULL COMMENT '商户支付通道ID',
-  `channel_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
-  `channel_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
+  `provider_deposit_merchant_id` int(11) NOT NULL COMMENT '商户支付通道ID',
+  `provider_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
+  `provider_deposit_type_id` int(11) NOT NULL COMMENT '通道类型ID',
   `merchant_deposit_order_plat_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台订单号',
-  `merchant_deposit_order_channel_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '渠道订单号',
+  `merchant_deposit_order_provider_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '渠道订单号',
   `merchant_deposit_order_merchant_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户订单号',
   `merchant_deposit_order_amount` decimal(65, 2) NOT NULL COMMENT '充值金额',
   `merchant_deposit_order_fee` decimal(15, 2) NOT NULL COMMENT '订单手续费',
@@ -809,7 +773,7 @@ CREATE TABLE `merchant_deposit_order`  (
   `merchant_deposit_order_merchant_sign` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '签名',
   `merchant_deposit_order_create_time` bigint(11) NOT NULL COMMENT '创建时间',
   `merchant_deposit_order_notify_merchant_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '商户异步通知状态  1=商户收到回调通知并返回成功',
-  `merchant_deposit_order_notify_channel_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
+  `merchant_deposit_order_notify_provider_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
   `merchant_deposit_order_extra` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '额外扩展',
   `merchant_deposit_order_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_deposit_order_id`) USING BTREE
@@ -846,16 +810,16 @@ CREATE TABLE `merchant_login_log`  (
 DROP TABLE IF EXISTS `merchant_withdraw_order`;
 CREATE TABLE `merchant_withdraw_order`  (
   `merchant_withdraw_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `channel_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
-  `channel_id` int(11) NOT NULL COMMENT '渠道ID',
-  `channel_short_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
+  `provider_merchant_id` int(11) NOT NULL COMMENT '商户渠道ID',
+  `provider_id` int(11) NOT NULL COMMENT '渠道ID',
+  `provider_short_name` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
   `merchant_id` int(11) NOT NULL COMMENT '商户ID',
-  `channel_withdraw_merchant_id` int(11) NOT NULL COMMENT '商户提现通道ID',
-  `channel_withdraw_type_id` int(11) NOT NULL COMMENT '通道类型ID',
-  `channel_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
+  `provider_withdraw_merchant_id` int(11) NOT NULL COMMENT '商户提现通道ID',
+  `provider_withdraw_type_id` int(11) NOT NULL COMMENT '通道类型ID',
+  `provider_merchant_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
   `merchant_withdraw_order_merchant_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户订单号',
   `merchant_withdraw_order_plat_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台订单号',
-  `merchant_withdraw_order_channel_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道订单号',
+  `merchant_withdraw_order_provider_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道订单号',
   `merchant_withdraw_order_amount` decimal(65, 2) NOT NULL COMMENT '提现金额',
   `merchant_withdraw_order_fee` decimal(15, 2) NOT NULL COMMENT '手续费',
   `merchant_withdraw_order_fee_type` int(11) NOT NULL DEFAULT 1 COMMENT '手续费扣除方式 1=商户 2=商户客户',
@@ -869,7 +833,7 @@ CREATE TABLE `merchant_withdraw_order`  (
   `merchant_withdraw_order_merchant_sign` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '签名',
   `merchant_withdraw_order_create_time` int(11) NOT NULL COMMENT '创建时间',
   `merchant_withdraw_order_notify_merchant_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '商户异步通知状态  1=商户收到回调通知并返回成功',
-  `merchant_withdraw_order_notify_channel_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
+  `merchant_withdraw_order_notify_provider_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '渠道异步通知状态  1=渠道已向平台回调成功',
   `merchant_withdraw_order_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`merchant_withdraw_order_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n商户提现订单信息表\r\n*/' ROW_FORMAT = Compact;
@@ -877,5 +841,88 @@ CREATE TABLE `merchant_withdraw_order`  (
 -- ----------------------------
 -- Records of merchant_withdraw_order
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for provider
+-- ----------------------------
+DROP TABLE IF EXISTS `provider`;
+CREATE TABLE `provider`  (
+  `provider_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_full_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道全程',
+  `provider_short_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道简称',
+  `provider_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道商户号',
+  `provider_secret_key` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道密钥',
+  `provider_deposit_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代收地址',
+  `provider_withdraw_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代付地址',
+  `provider_deposit_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `provider_withdraw_notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `provider_sort` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '排序  该值越大越前',
+  `provider_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '渠道状态  1=开启 0=禁用 新增渠道默认开启',
+  `provider_support_country_cn_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 中',
+  `provider_support_country_eg_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 英',
+  `provider_support_country_iso_code` char(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支持的国家 iso 编码',
+  `provider_support_country_id` int(11) NOT NULL COMMENT '渠道支持的国家 id(如果某个渠道支持多个国家,需要为该渠道每个国家配置一个)',
+  `provider_ip` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '渠道IP   如果该值不为空 每次该渠道回调不为该IP的请求都拒绝',
+  `provider_create_time` int(11) NOT NULL COMMENT '创建时间',
+  `provider_last_update_time` int(11) NULL DEFAULT NULL COMMENT '最后更新时间',
+  `provider_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`provider_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '/*\r\n渠道信息表\r\n*/' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of provider
+-- ----------------------------
+INSERT INTO `provider` VALUES (1, 'BenriPay', 'Benri', 'S820201218154906000002', '{   \"plat_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDFBPvOOdUi1uRP4x61Y6TrRrExgko0OSs9SkjlrpagA+PrBe10RRrxD2Tg892UxXmEFbFsDtgzvPXUzzVJXAo0PplRbVkWP2Wp3HLNrv46FQYKgiO+lknN6jIkYGHCJRKQIKroB+NIzw/p2WTGAMpIXKprQpsM+Dn17+M41F63wIDAQAB\",   \"merchant_public_key\" : \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDolk5vCV5L+yM4DDu1B5QF3bVK doD/jzjxKImBQeAYMMKIZF21QaYqHuNDOvtUMWRIxbbl3KUtDCdmqgGS/wphU6J5 BkWrIBJaAFbVwyv3UmwnyBs/wwU0AJtPZHoV27s5Wo2qLZ8tuS6YmArh5i9hImSw oPQsl1/IfOjXU+Ps4QIDAQAB\",   \"merchant_private_key\" : \"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOiWTm8JXkv7IzgM O7UHlAXdtUp2gP+POPEoiYFB4BgwwohkXbVBpioe40M6+1QxZEjFtuXcpS0MJ2aq AZL/CmFTonkGRasgEloAVtXDK/dSbCfIGz/DBTQAm09kehXbuzlajaotny25LpiY CuHmL2EiZLCg9CyXX8h86NdT4+zhAgMBAAECgYBsUTub2HgS2JVxT7kquKnGBZed Ywz2d4PkQ6WuDbjIa0Tdcih19mnlKddbAwfzEMGMZo+kAxrlnMhotnnfNGlnQNqP b2B2/XqmqFuRJeTstRRMmHGPqEFSjXc0IfgrZ49r8mTmApnsENXCHkMa2OxT3sun +Ia8F3QEW3ZST5OYAQJBAPZUFKclQGyOGYM5SvNFDb68yR9oJ7ozz6g+RuO0waHm HyEmPrNRk1riqL44rxbR8nfQ5f8f5RvEspTlSOXQXiECQQDxuBuZyE0gdWm48Vfn S2qyVWGWo75dCea7tYBWDutU/j+CS0rnfGiy2IXjqG9z3u5khwktbXmMGFTxqZNL sjbBAkEAuCsfEeT5KPCJRKJGVmIPp8bwPGocIcxw+qItUDwp9YjfR2KXyGw6Vt5W OXqZ9d7cgRaPj1LicgN7XXWcLi6+4QJBAKjz9tbWmpJFf1A14StaG4nrA/s3GKgP c6dghgOhCfyuedWoqwKCguv/TBaEdOKYwCij+lY2Xu79UuJXlQ0j1AECQCfGTfoC YLsV8opK+zbnOxNH8OtMzrU2Z9c4SI31Iu+F9uCms8+dM0re+CaDWYdQwYIF943o 6g8tW/++loWuekU=\" }        ', 'https://openapi.benri-pay.com/gateway/prepaidOrder', 'https://openapi.benri-pay.com/gateway/cash', NULL, NULL, 0, 1, 'indonisia', '', '', 0, NULL, 0, NULL, '');
+INSERT INTO `provider` VALUES (2, 'VNPay', 'VN', '10449', '9559xtc2r8pxx1p5otfygzlvynelvb7o', 'https://www.vn168pay.com/Pay_Index.html', 'https://www.vn168pay.com/Payment_Dfpay_add.html', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `provider` VALUES (3, 'JuHuaPay', 'JuHua', '87A87384', '0d70a64a785f471cae2bd8b16ff629c3', 'http://admin.juhua1212.com/yj_action/orderApi/new', 'http://admin.juhua1212.com/yj_action/agentApi/create', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `provider` VALUES (4, 'SJPay', 'SJ', '1022905', 'IIhoISkqgR7JYPZ7UMlJ0CAS7mct0HmB', 'https://api.rb131411.com/index/underorder.do', 'https://api.rb131411.com/withdrawal/create', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `provider` VALUES (5, 'ShineUPay', 'ShineU', 'A5OCM6L0X91C2325', ' 55d41af7486e4b448824369e3787c423', 'https://testgateway.shineupay.com/pay/create', 'https://testgateway.shineupay.com/withdraw/create', NULL, NULL, 0, 1, 'india', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `provider` VALUES (6, 'SubiPay', 'SUB', 'API19012960503135996', 'f0d400d243a748a4b5e600459a5030df', 'http://efupays.com:8084/api/pay/V2', 'http://efupays.com:8084/api/defray/V2', NULL, NULL, 0, 1, 'vitenan', '', '', 0, NULL, 0, NULL, NULL);
+INSERT INTO `provider` VALUES (7, 'ShineUPay', 'ShineU', 'A85WG8BCOSU89640', '58d900d68980440c9d274d561ed65d7b|e10adc3949ba59abbe56e057f20f883e', 'https://gateway.shineupay.com/pay/create', 'https://gateway.shineupay.com/withdraw/create', 'www', 'www', 0, 1, '印度', 'India', 'IN', 77, 'string', 1611920596, 1611920596, 'string');
+
+-- ----------------------------
+-- Procedure structure for sp_pager
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `sp_pager`;
+delimiter ;;
+CREATE PROCEDURE `sp_pager`(IN    p_table_name        VARCHAR(1024),        
+    IN    p_fields            VARCHAR(1024),        
+    IN    p_page_size         INT,                
+    IN    p_page_index        INT,                
+    IN    p_order_string      VARCHAR(128),        
+    IN    p_where_string      VARCHAR(1024),        
+    OUT   p_out_rows_count    INT)
+  COMMENT '分页存储过程'
+BEGIN
+	  DECLARE m_start_index INT DEFAULT 0;
+    DECLARE m_limit_string CHAR(64);
+
+		if p_page_size <= 0 THEN
+				SET p_page_size = 10;
+		END IF;
+		
+		if p_page_index < 1 THEN
+			  SET p_page_index = 1;
+		END IF;
+
+    SET m_start_index = (p_page_index - 1) * p_page_size;	
+		
+    SET m_limit_string = CONCAT(' LIMIT ', m_start_index, ', ', p_page_size);
+    
+    SET @COUNT_STRING = CONCAT('SELECT COUNT(1) INTO @ROWS_TOTAL FROM ', p_table_name, ' ', p_where_string);
+    SET @MAIN_STRING = CONCAT('SELECT ', p_fields, ' FROM ', p_table_name, ' ', p_where_string, ' ', p_order_string, m_limit_string);
+    
+    PREPARE count_stmt FROM @COUNT_STRING;
+    EXECUTE count_stmt;
+    DEALLOCATE PREPARE count_stmt;
+    SET p_out_rows_count = @ROWS_TOTAL;
+
+    PREPARE main_stmt FROM @MAIN_STRING;
+    EXECUTE main_stmt;
+    DEALLOCATE PREPARE main_stmt;
+    
+END
+;;
+delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;

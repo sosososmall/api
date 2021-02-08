@@ -1,7 +1,7 @@
 package com.pokerstar.api.infrastructure.entity;
 
 public enum ResultCode {
-    SUCCESS(1, "成功"),
+    SUCCESS(0, "成功"),
     /*
      * 1xxxxx 段为全局类
      * */

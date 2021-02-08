@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ShineUPayImpl extends AbsPay {
     /*
     请求 回调皆为 application/json
@@ -103,12 +102,10 @@ public class ShineUPayImpl extends AbsPay {
         return false;
     }
 
-
     @Override
     protected String sign(String originalStr) {
         return Md5Util.md5(originalStr + "|" + getSecret_key().split("|")[0]);
     }
-
 
     @Override
     protected Map<String, Object> withdrawMap() {
@@ -176,6 +173,8 @@ public class ShineUPayImpl extends AbsPay {
     @Override
     protected Map<String, Object> callbackMap() {
         /**
+         *
+         *
          * callback request body :
          * {
          *   "merchantId": "A6205J1AJL6O8942",
